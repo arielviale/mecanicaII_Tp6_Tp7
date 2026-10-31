@@ -1,0 +1,17 @@
+node_modules/
+.git/
+.next/
+dist/
+build/
+out/
+venv/
+.venv/
+__pycache__/
+*.lock
+package-lock.json
+pnpm-lock.yaml
+*.min.js
+*.map
+*.sqlite
+*.db
+*.log
