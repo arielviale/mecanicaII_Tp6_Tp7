@@ -1,7 +1,7 @@
 # Mecánica II — Plataforma SCADA Industrial y Motor de Cálculo SKF
 ### Entrega de Trabajos Prácticos N° 6 (Rodamientos) y N° 7 (Correas Trapezoidales)
 
-[![Vercel Deployment](https://img.shields.io/badge/Vercel-Deployed-black?style=for-the-badge&logo=vercel)](https://vercel.com)
+[![Vercel Deployment](https://img.shields.io/badge/Vercel-Deployed-black?style=for-the-badge&logo=vercel)](https://mecanicaii-tp6-tp7.vercel.app/)
 [![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org/es/docs/Web/HTML)
 [![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 [![SQLite3](https://img.shields.io/badge/SQLite3-07405E?style=for-the-badge&logo=sqlite&logoColor=white)](https://www.sqlite.org/)
@@ -18,9 +18,9 @@
 
 ---
 
-## 🌐 Acceso a la Plataforma Web
-* 🚀 **Demo Interactiva en Vercel:** `https://<tu-repositorio>.vercel.app` *(o abrir directamente [**`index.html`**](index.html) en cualquier navegador)*.
-* 📦 **Repositorio GitHub:** [https://github.com/arielviale/mecanicaII_Tp6_Tp7](https://github.com/arielviale/mecanicaII_Tp6_Tp7)
+## 🌐 Enlaces Oficiales de Entrega
+* 🚀 **Plataforma Web SCADA en Vivo:** [**https://mecanicaii-tp6-tp7.vercel.app/**](https://mecanicaii-tp6-tp7.vercel.app/)
+* 📦 **Repositorio Oficial en GitHub:** [**https://github.com/arielviale/mecanicaII_Tp6_Tp7**](https://github.com/arielviale/mecanicaII_Tp6_Tp7)
 
 ---
 
