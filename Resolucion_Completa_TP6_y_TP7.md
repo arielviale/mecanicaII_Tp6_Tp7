@@ -1,5 +1,7 @@
 # Entrega Final — Mecánica II (Mecatrónica 2026)
 ## Resolución Completa de Trabajo Práctico N° 6 (Rodamientos SKF) y Trabajo Práctico N° 7 (Correas SKF)
+### Estudiante / Autor: **Hugo Ariel Martinez** | Docente: **Prof. Ing. Andrés Lanfranco**
+### Universidad Tecnológica Nacional — Facultad Regional Córdoba (UTN-FRC)
 
 ---
 
