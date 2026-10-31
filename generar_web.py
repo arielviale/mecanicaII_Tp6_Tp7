@@ -177,11 +177,11 @@ def build_web():
         <div class="scada-panel rounded-xl p-4">
           <div class="flex justify-between items-center text-xs text-slate-400">
             <span>RODAMIENTO 2 SELECCIONADO</span>
-            <span class="px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-400 font-mono font-bold" id="kpi-tp6-desig2">* 6206</span>
+            <span class="px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-400 font-mono font-bold" id="kpi-tp6-desig2">61906 (Cátedra)</span>
           </div>
-          <div class="text-2xl font-black text-indigo-400 mt-1" id="kpi-tp6-l10h2">200.758 h</div>
+          <div class="text-2xl font-black text-indigo-400 mt-1" id="kpi-tp6-l10h2">9261 h</div>
           <div class="text-xs text-slate-400 mt-1">
-            Capacidad: <span class="text-slate-200 font-semibold" id="kpi-tp6-c2">C = 20,3 kN</span>
+            Capacidad: <span class="text-slate-200 font-semibold" id="kpi-tp6-c2">C = 7,28 kN</span>
           </div>
         </div>
       </div>
@@ -409,7 +409,7 @@ def build_web():
                 <text x="723" y="48" text-anchor="middle" fill="#60a5fa" font-size="12" font-weight="bold">Rodamiento 2</text>
                 <polygon points="723,72 719,63 727,63" fill="#60a5fa"/>
                 <line x1="723" y1="52" x2="723" y2="68" stroke="#60a5fa" stroke-width="1.5"/>
-                <text x="723" y="204" text-anchor="middle" fill="#60a5fa" font-size="10" font-weight="bold" id="cad-lbl-b2">* 6206 (d=30)</text>
+                <text x="723" y="204" text-anchor="middle" fill="#60a5fa" font-size="10" font-weight="bold" id="cad-lbl-b2">61906 (d=30)</text>
               </g>
 
               <!-- ENGINEERING DIMENSION LINES (100, 200, 250 mm) CON MÁXIMO CONTRASTE -->
@@ -735,7 +735,7 @@ def build_web():
               <div class="text-blue-400 font-bold mb-1">APOYO 2 (d₂ = <span id="mem-d2">30</span> mm)</div>
               <div id="mem-fr2">Fr₂ = √(39² + 55²) = 67,42 kgf</div>
               <div id="mem-p2" class="font-bold text-slate-100">P₂ = Fr₂ · 0,00981 = 0,6614 kN</div>
-              <div id="mem-life2" class="mt-1 text-blue-300">L₁₀ = (20,3 / 0,6614)³ = 28.914 × 10⁶ rev → 200.758 h</div>
+              <div id="mem-life2" class="mt-1 text-blue-300">L₁₀ = (20,3 / 0,6614)³ = 28.914 × 10⁶ rev → 9261 h</div>
             </div>
           </div>
 
@@ -937,7 +937,7 @@ def build_web():
                 <img src="catalogo_rodamientos_skf.jpg" alt="Tabla 1.1 Catálogo SKF Oficial" class="max-h-96 w-auto rounded border border-slate-800 shadow-xl">
               </div>
               <p class="text-[11px] text-slate-400 mt-2">
-                Tabla oficial del Catálogo General SKF (página 326/328) con dimensiones principales (d, D, B), capacidad de carga básica dinámica (C), estática (C0), carga límite de fatiga (Pu) y velocidades admisibles para los asientos de d = 40 mm (Apoyo 1, SKF * 6308) y d = 30 mm (Apoyo 2, SKF * 6206).
+                Tabla oficial del Catálogo General SKF (página 326/328) con dimensiones principales (d, D, B), capacidad de carga básica dinámica (C), estática (C0), carga límite de fatiga (Pu) y velocidades admisibles para los asientos de d = 40 mm (Apoyo 1, SKF * 6308) y d = 30 mm (Apoyo 2, SKF 61906).
               </p>
             </div>
           </div>
@@ -1008,7 +1008,7 @@ def build_web():
               <div class="border-t border-slate-800 pt-3 space-y-2">
                 <div>
                   <div class="flex justify-between items-center mb-1">
-                    <label class="text-emerald-400 font-bold">Diámetro Asiento d₁:</label>
+                    <label class="text-emerald-400 font-bold">Diámetro Asiento d₁ (Apoyo 1):</label>
                     <select id="sel-tp6-d1" onchange="onDiameterChange(1)" class="bg-slate-900 border border-slate-700 text-slate-100 rounded px-2 py-0.5 font-bold">
                       <option value="25">25 mm</option>
                       <option value="30">30 mm</option>
@@ -1024,7 +1024,7 @@ def build_web():
 
                 <div>
                   <div class="flex justify-between items-center mb-1">
-                    <label class="text-blue-400 font-bold">Diámetro Asiento d₂:</label>
+                    <label class="text-blue-400 font-bold">Diámetro Asiento d₂ (Apoyo 2 — Seleccionado en clase: 61906):</label>
                     <select id="sel-tp6-d2" onchange="onDiameterChange(2)" class="bg-slate-900 border border-slate-700 text-slate-100 rounded px-2 py-0.5 font-bold">
                       <option value="25">25 mm</option>
                       <option value="30" selected>30 mm (TP 6)</option>
@@ -1183,7 +1183,7 @@ def build_web():
           <!-- Support 2 Status -->
           <div class="p-4 rounded-xl scada-card border border-blue-500/40 space-y-2">
             <div class="flex justify-between items-center pb-2 border-b border-slate-800">
-              <span class="text-blue-400 font-bold text-sm">APOYO 2: <span id="adv-desig-2">* 6206</span> (d = <span id="adv-d-2">30</span> mm)</span>
+              <span class="text-blue-400 font-bold text-sm">APOYO 2: <span id="adv-desig-2">61906</span> (d = <span id="adv-d-2">30</span> mm)</span>
               <span id="badge-adv-2" class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-500/20 text-blue-300 border border-blue-500/40">VIDA INFINITA (> 20 AÑOS)</span>
             </div>
             <div class="grid grid-cols-2 gap-2 text-[11px]">
@@ -1206,7 +1206,7 @@ def build_web():
               <div class="col-span-2 pt-1 border-t border-slate-800/80">
                 <span class="text-slate-400">Vida Básica ISO 281 vs Vida SKF Modificada:</span>
                 <div class="flex justify-between items-center mt-0.5">
-                  <span class="text-slate-300 font-bold">L₁₀h = <span id="adv-l10h-2" class="text-slate-100">200.758 h</span></span>
+                  <span class="text-slate-300 font-bold">L₁₀h = <span id="adv-l10h-2" class="text-slate-100">9261 h</span></span>
                   <span class="text-blue-300 font-bold text-sm">L₁₀mh = <span id="adv-l10mh-2">> 1.000.000 h</span></span>
                 </div>
                 <div class="text-[10px] text-blue-400 mt-1 flex items-center gap-1">
@@ -1284,7 +1284,7 @@ def build_web():
               </p>
               <ul class="list-disc list-inside space-y-1 text-slate-300">
                 <li><strong>Apoyo 1:</strong> Asiento d₁ = <span id="doc-d1-val">40</span> mm → Se consulta la Tabla 1.1 (Pág. 328). Se comparan las series 618, 619, 160, 60, 62 y 63. El modelo seleccionado es <strong class="text-emerald-400" id="doc-b1-name">* 6308</strong> con C = <span id="doc-c1-val">42,3</span> kN, C₀ = <span id="doc-c01-val">24,0</span> kN y Pu = <span id="doc-pu1-val">1,02</span> kN.</li>
-                <li><strong>Apoyo 2:</strong> Asiento d₂ = <span id="doc-d2-val">30</span> mm → Se consulta la Tabla 1.1 (Pág. 326). El modelo seleccionado es <strong class="text-blue-400" id="doc-b2-name">* 6206</strong> con C = <span id="doc-c2-val">20,3</span> kN, C₀ = <span id="doc-c02-val">11,2</span> kN y Pu = <span id="doc-pu2-val">0,475</span> kN.</li>
+                <li><strong>Apoyo 2:</strong> Asiento d₂ = <span id="doc-d2-val">30</span> mm → Se consulta la Tabla 1.1 (Pág. 326). El modelo seleccionado es <strong class="text-blue-400" id="doc-b2-name">61906</strong> con C = <span id="doc-c2-val">20,3</span> kN, C₀ = <span id="doc-c02-val">11,2</span> kN y Pu = <span id="doc-pu2-val">0,475</span> kN.</li>
               </ul>
               <div class="p-2.5 rounded bg-slate-950 border border-slate-800 text-[11px] text-slate-400">
                 <span class="text-amber-400 font-bold">Designación SKF:</span> El asterisco (*) denota la clase de rendimiento <strong>SKF Explorer</strong>, que posee acero ultra-limpio tratado térmicamente para maximizar la resistencia a la fatiga por contacto rodante.
@@ -1316,7 +1316,7 @@ def build_web():
                     <div class="text-emerald-300 font-bold">L₁₀h = (10⁶ / (60 · <span id="doc-n-val">2400</span>)) · <span id="doc-l10-1b">290,9</span> = <span id="doc-l10h-1">2020,1</span> horas</div>
                   </div>
                   <div>
-                    <span class="text-blue-400 font-bold">Apoyo 2 (<span id="doc-b2-name2">* 6206</span>):</span>
+                    <span class="text-blue-400 font-bold">Apoyo 2 (<span id="doc-b2-name2">61906</span>):</span>
                     <div>L₁₀ = (<span id="doc-c2-val2">20,3</span> / <span id="doc-p2-val2">0,661</span>)³ = <strong id="doc-l10-2">28.914</strong> × 10⁶ rev</div>
                     <div class="text-blue-300 font-bold">L₁₀h = (10⁶ / (60 · <span id="doc-n-val2">2400</span>)) · <span id="doc-l10-2b">28.914</span> = <span id="doc-l10h-2">200.758</span> horas</div>
                   </div>
@@ -1407,7 +1407,7 @@ def build_web():
                     <div>s₀,₁ = <span id="doc-c01-val3">24,0</span> / <span id="doc-p1-val3">6,384</span> = <strong id="doc-s0-1">3,76</strong> ≥ 1,5 <span class="text-emerald-400 font-bold">✓ CUMPLE AMPLIO</span></div>
                   </div>
                   <div>
-                    <span class="text-blue-400 font-bold">Apoyo 2 (<span id="doc-b2-name3">* 6206</span>):</span>
+                    <span class="text-blue-400 font-bold">Apoyo 2 (<span id="doc-b2-name3">61906</span>):</span>
                     <div>s₀,₂ = <span id="doc-c02-val3">11,2</span> / <span id="doc-p2-val3">0,661</span> = <strong id="doc-s0-2">16,94</strong> ≥ 1,5 <span class="text-blue-400 font-bold">✓ CUMPLE AMPLIO</span></div>
                   </div>
                 </div>
@@ -1440,7 +1440,7 @@ def build_web():
                     <div class="text-slate-400 mt-1">Velocidad: 2400 &lt; <span id="doc-nlim1-val">10.000</span> rpm (n_lim) <span class="text-emerald-400 font-bold">✓ OK</span></div>
                   </div>
                   <div>
-                    <span class="text-blue-400 font-bold">Apoyo 2 (<span id="doc-b2-name4">* 6206</span>):</span>
+                    <span class="text-blue-400 font-bold">Apoyo 2 (<span id="doc-b2-name4">61906</span>):</span>
                     <div>Frm₂ = <span id="doc-frm2-val">0,081</span> kN</div>
                     <div class="text-blue-300">P₂ = <span id="doc-p2-val4">0,661</span> kN &gt; <span id="doc-frm2-val2">0,081</span> kN <span class="font-bold">✓ Sin patinado</span></div>
                     <div class="text-slate-400 mt-1">Velocidad: 2400 &lt; <span id="doc-nlim2-val">15.000</span> rpm (n_lim) <span class="text-blue-400 font-bold">✓ OK</span></div>
@@ -1928,11 +1928,27 @@ def build_web():
       const d = parseFloat(document.getElementById("sel-tp6-d" + supportIdx).value);
       const sel = document.getElementById("sel-tp6-bearing" + supportIdx);
       const rows = SKF_DATABASE.rodamientos_bolas.filter(r => r.d_int === d).sort((a,b) => a.C_din - b.C_din);
-      sel.innerHTML = rows.map(r => 
-        `<option value="${r.designacion}" ${r.designacion === defDesig ? 'selected' : ''}>${r.designacion} (C=${r.C_din} kN, D=${r.D_ext}, B=${r.B_ancho})</option>`
-      ).join("");
-      if (!defDesig && rows.length > 0) {
-        sel.selectedIndex = Math.min(rows.length - 2, rows.length - 1);
+      
+      // Auto-choose official class bearing if none specified
+      let targetDesig = defDesig;
+      if (!targetDesig) {
+        if (d === 40) targetDesig = "* 6308";
+        else if (d === 30) targetDesig = "61906";
+        else targetDesig = (rows[rows.length - 2] || rows[0]).designacion;
+      }
+
+      sel.innerHTML = rows.map(r => {
+        let star = "";
+        if (r.designacion === "61906" || r.designacion === "* 6308") {
+          star = " ★ Elección Cátedra";
+        }
+        const isSel = (r.designacion === targetDesig);
+        return `<option value="${r.designacion}" ${isSel ? 'selected' : ''}>${r.designacion} (C=${r.C_din} kN, D=${r.D_ext}, B=${r.B_ancho})${star}</option>`;
+      }).join("");
+
+      // Ensure select element reflects the value
+      if (targetDesig) {
+        sel.value = targetDesig;
       }
     }
 
@@ -1998,7 +2014,7 @@ def build_web():
       const rows2 = SKF_DATABASE.rodamientos_bolas.filter(r => r.d_int === d2).sort((a,b) => a.C_din - b.C_din);
 
       const desig1 = document.getElementById("sel-tp6-bearing1").value || (rows1[rows1.length-2] || rows1[0]).designacion;
-      const desig2 = document.getElementById("sel-tp6-bearing2").value || (rows2[4] || rows2[0]).designacion;
+      const desig2 = document.getElementById("sel-tp6-bearing2").value || "61906";
 
       const bRow1 = rows1.find(r => r.designacion === desig1) || rows1[0];
       const bRow2 = rows2.find(r => r.designacion === desig2) || rows2[0];
@@ -2165,7 +2181,7 @@ def build_web():
       const rows2 = SKF_DATABASE.rodamientos_bolas.filter(r => r.d_int === d2).sort((a,b) => a.C_din - b.C_din);
 
       const desig1 = document.getElementById("sel-tp6-bearing1").value || (rows1[rows1.length-2] || rows1[0]).designacion;
-      const desig2 = document.getElementById("sel-tp6-bearing2").value || (rows2[4] || rows2[0]).designacion;
+      const desig2 = document.getElementById("sel-tp6-bearing2").value || "61906";
 
       const b1 = rows1.find(r => r.designacion === desig1) || rows1[0];
       const b2 = rows2.find(r => r.designacion === desig2) || rows2[0];
@@ -2718,7 +2734,7 @@ def build_web():
       document.getElementById("sel-tp6-d1").value = "40";
       document.getElementById("sel-tp6-d2").value = "30";
       populateBearingSelect(1, "* 6308");
-      populateBearingSelect(2, "* 6206");
+      populateBearingSelect(2, "61906");
 
       document.getElementById("tp7-hp").value = 75;
       document.getElementById("tp7-ccp").value = 650;
@@ -2931,7 +2947,7 @@ def build_web():
     }
 
     populateBearingSelect(1, "* 6308");
-    populateBearingSelect(2, "* 6206");
+    populateBearingSelect(2, "61906");
     computeTP6();
     computeTP7();
     requestAnimationFrame(animate);
