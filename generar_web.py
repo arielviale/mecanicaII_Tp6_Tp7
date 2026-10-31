@@ -217,61 +217,39 @@ def build_web():
             </div>
           </div>
 
-          <!-- COMMON SVG DEFINITIONS (GRADIENTS & FILTERS) -->
-          <svg class="hidden">
-            <defs>
-              <!-- Chrome Metallic Shaft Gradient -->
-              <linearGradient id="grad-shaft-metal" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stop-color="#94a3b8"/>
-                <stop offset="18%" stop-color="#e2e8f0"/>
-                <stop offset="35%" stop-color="#ffffff"/>
-                <stop offset="65%" stop-color="#cbd5e1"/>
-                <stop offset="88%" stop-color="#64748b"/>
-                <stop offset="100%" stop-color="#334155"/>
-              </linearGradient>
 
-              <!-- Pulley Metallic Blue Gradient -->
-              <linearGradient id="grad-pulley-blue" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#0284c7"/>
-                <stop offset="30%" stop-color="#38bdf8"/>
-                <stop offset="70%" stop-color="#0284c7"/>
-                <stop offset="100%" stop-color="#0369a1"/>
-              </linearGradient>
-
-              <!-- Pulley Cross-Section Gradient (Vertical) -->
-              <linearGradient id="grad-pulley-v" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stop-color="#38bdf8"/>
-                <stop offset="50%" stop-color="#bae6fd"/>
-                <stop offset="100%" stop-color="#0284c7"/>
-              </linearGradient>
-
-              <!-- Spur Gear Precision Green Gradient -->
-              <linearGradient id="grad-gear-green" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stop-color="#22c55e"/>
-                <stop offset="25%" stop-color="#86efac"/>
-                <stop offset="50%" stop-color="#16a34a"/>
-                <stop offset="85%" stop-color="#15803d"/>
-                <stop offset="100%" stop-color="#14532d"/>
-              </linearGradient>
-
-              <!-- Structural Beam Blue Gradient -->
-              <linearGradient id="grad-beam-blue" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stop-color="#2563eb"/>
-                <stop offset="25%" stop-color="#60a5fa"/>
-                <stop offset="75%" stop-color="#1d4ed8"/>
-                <stop offset="100%" stop-color="#1e3a8a"/>
-              </linearGradient>
-
-              <!-- Glow filter for 3D vectors -->
-              <filter id="glow-vector" x="-20%" y="-20%" width="140%" height="140%">
-                <feDropShadow dx="0" dy="0" stdDeviation="2.5" flood-color="#22c55e" flood-opacity="0.8"/>
-              </filter>
-            </defs>
-          </svg>
 
           <!-- 1. VISTA: ENSAMBLAJE CAD FOTORREALISTA (CORTE TÉCNICO) -->
           <div id="view-shaft-cad" class="bg-slate-950/85 rounded-xl border border-slate-800 p-4 overflow-x-auto">
-            <svg id="svg-shaft-cad" viewBox="0 0 860 300" class="w-full min-w-[720px] h-auto select-none font-sans">
+                        <svg id="svg-shaft-cad" viewBox="0 0 860 300" class="w-full min-w-[720px] h-auto select-none font-sans">
+              <defs>
+                <linearGradient id="grad-shaft-metal" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#94a3b8"/>
+                  <stop offset="18%" stop-color="#e2e8f0"/>
+                  <stop offset="35%" stop-color="#ffffff"/>
+                  <stop offset="65%" stop-color="#cbd5e1"/>
+                  <stop offset="88%" stop-color="#64748b"/>
+                  <stop offset="100%" stop-color="#334155"/>
+                </linearGradient>
+                <linearGradient id="grad-pulley-v" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#38bdf8"/>
+                  <stop offset="50%" stop-color="#bae6fd"/>
+                  <stop offset="100%" stop-color="#0284c7"/>
+                </linearGradient>
+                <linearGradient id="grad-gear-green" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#22c55e"/>
+                  <stop offset="25%" stop-color="#86efac"/>
+                  <stop offset="50%" stop-color="#16a34a"/>
+                  <stop offset="85%" stop-color="#15803d"/>
+                  <stop offset="100%" stop-color="#14532d"/>
+                </linearGradient>
+                <linearGradient id="grad-beam-blue" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#2563eb"/>
+                  <stop offset="25%" stop-color="#60a5fa"/>
+                  <stop offset="75%" stop-color="#1d4ed8"/>
+                  <stop offset="100%" stop-color="#1e3a8a"/>
+                </linearGradient>
+              </defs>
               <!-- Centerline axis (Dash-dot) -->
               <line x1="20" y1="130" x2="840" y2="130" stroke="#0284c7" stroke-width="1.2" stroke-dasharray="14 3 3 3" opacity="0.7"/>
 
@@ -452,105 +430,176 @@ def build_web():
           </div>
 
           <!-- 2. VISTA: PROYECCIÓN ISOMÉTRICA 3D (CARGAS ESPACIALES) -->
-          <div id="view-shaft-3d" class="hidden bg-slate-950/85 rounded-xl border border-slate-800 p-4 overflow-x-auto">
-            <svg id="svg-shaft-3d" viewBox="0 0 860 360" class="w-full min-w-[720px] h-auto select-none font-sans">
-              <!-- Spatial Reference System (Axes x, y, z at left origin) -->
-              <g id="iso-axes" stroke-width="1.8">
-                <!-- Origin at (110, 240) -->
-                <!-- Axis y (Vertical Upwards) -->
-                <line x1="110" y1="240" x2="110" y2="175" stroke="#94a3b8"/>
-                <polygon points="110,170 106,179 114,179" fill="#94a3b8"/>
-                <text x="110" y="162" text-anchor="middle" fill="#94a3b8" font-size="12" font-weight="bold">y</text>
+          <div id="view-shaft-3d" class="hidden bg-slate-950/95 rounded-xl border border-slate-800 p-5 overflow-x-auto shadow-2xl">
+            <svg id="svg-shaft-3d" viewBox="0 0 880 390" class="w-full min-w-[760px] h-auto select-none font-sans">
+              <defs>
+                <!-- Dedicated 3D cylinder linear gradient -->
+                <linearGradient id="grad-3d-shaft" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#cbd5e1"/>
+                  <stop offset="20%" stop-color="#f8fafc"/>
+                  <stop offset="45%" stop-color="#e2e8f0"/>
+                  <stop offset="80%" stop-color="#94a3b8"/>
+                  <stop offset="100%" stop-color="#475569"/>
+                </linearGradient>
+                <!-- Marker for green 3D vector arrowheads -->
+                <marker id="arrow-green" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#22c55e"/>
+                </marker>
+              </defs>
 
-                <!-- Axis z (Oblique Front-Left) -->
-                <line x1="110" y1="240" x2="45" y2="275" stroke="#94a3b8"/>
-                <polygon points="40,278 47,270 52,277" fill="#94a3b8"/>
-                <text x="35" y="295" text-anchor="middle" fill="#94a3b8" font-size="12" font-weight="bold">z</text>
+              <!-- ===== 1. SPATIAL REFERENCE SYSTEM (Axes x, y, z at Left Origin) ===== -->
+              <g id="iso-axes" stroke-width="2">
+                <!-- Origin at (130, 240) -->
+                <!-- Axis y (Vertical Upwards) -->
+                <line x1="130" y1="240" x2="130" y2="160" stroke="#94a3b8"/>
+                <polygon points="130,154 125,165 135,165" fill="#94a3b8"/>
+                <text x="144" y="162" fill="#cbd5e1" font-size="14" font-weight="900" font-style="italic">y</text>
+
+                <!-- Axis z (Oblique Front-Right down at angle ~30 deg) -->
+                <line x1="130" y1="240" x2="220" y2="290" stroke="#94a3b8"/>
+                <polygon points="227,294 216,288 221,299" fill="#94a3b8"/>
+                <text x="238" y="302" fill="#cbd5e1" font-size="14" font-weight="900" font-style="italic">z</text>
 
                 <!-- Axis x (Shaft center line into 3D space) -->
-                <line x1="110" y1="240" x2="810" y2="60" stroke="#64748b" stroke-dasharray="10 3 3 3"/>
-                <polygon points="815,58 804,60 809,69" fill="#94a3b8"/>
-                <text x="825" y="60" text-anchor="middle" fill="#94a3b8" font-size="12" font-weight="bold">x</text>
+                <line x1="130" y1="240" x2="840" y2="40" stroke="#64748b" stroke-width="1.5" stroke-dasharray="14 3 3 3"/>
+                <polygon points="847,38 835,42 841,51" fill="#94a3b8"/>
+                <text x="835" y="28" fill="#cbd5e1" font-size="14" font-weight="900" font-style="italic">x</text>
               </g>
 
-              <!-- 3D ISOMETRIC SHAFT CYLINDER -->
+              <!-- ===== 2. 3D ISOMETRIC SHAFT CYLINDER WITH CROSSHAIRS ===== -->
               <g id="iso-shaft-cylinder">
-                <!-- Shaft top & bottom contour paths -->
-                <path d="M 110,225 L 750,55" stroke="#cbd5e1" stroke-width="2"/>
-                <path d="M 110,255 L 750,85" stroke="#475569" stroke-width="2"/>
-                <!-- Shaded body with linear gradient -->
-                <polygon points="110,225 750,55 750,85 110,255" fill="url(#grad-shaft-metal)" fill-opacity="0.85"/>
+                <!-- Top & Bottom cylinder contour lines -->
+                <path d="M 130,225 L 750,50" stroke="#cbd5e1" stroke-width="2"/>
+                <path d="M 130,255 L 750,80" stroke="#475569" stroke-width="2"/>
+                <!-- Shaded cylindrical body -->
+                <polygon points="130,225 750,50 750,80 130,255" fill="url(#grad-3d-shaft)" fill-opacity="0.9"/>
 
-                <!-- Front face ellipse at x=0 (Polea) -->
-                <ellipse cx="110" cy="240" rx="14" ry="15" fill="#cbd5e1" stroke="#334155" stroke-width="2"/>
-                
-                <!-- Cross section lines along shaft -->
-                <!-- Apoyo 1 at x=10 cm -> (226, 207) -->
-                <ellipse cx="226" cy="207" rx="12" ry="15" fill="none" stroke="#10b981" stroke-width="1.5" stroke-dasharray="3 3"/>
-                <!-- Engranaje at x=30 cm -> (458, 140) -->
-                <ellipse cx="458" cy="140" rx="12" ry="15" fill="none" stroke="#22c55e" stroke-width="1.5" stroke-dasharray="3 3"/>
-                <!-- Apoyo 2 at x=55 cm -> (748, 70) -->
-                <ellipse cx="748" cy="70" rx="12" ry="15" fill="#94a3b8" stroke="#3b82f6" stroke-width="2"/>
+                <!-- Front elliptical end face at x=0 (Polea) -->
+                <ellipse cx="130" cy="240" rx="14" ry="16" fill="#cbd5e1" stroke="#334155" stroke-width="2"/>
+
+                <!-- Right elliptical end face at x=55 cm (Rodamiento 2) -->
+                <ellipse cx="750" cy="65" rx="12" ry="15" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+
+                <!-- Cross section 1: Rodamiento 1 (x=10 cm, pos (243, 208)) -->
+                <ellipse cx="243" cy="208" rx="12" ry="15" fill="none" stroke="#10b981" stroke-width="1.8" stroke-dasharray="3 3"/>
+                <!-- Crosshair lines at Rodamiento 1 -->
+                <line x1="243" y1="193" x2="243" y2="223" stroke="#10b981" stroke-width="1.2"/>
+                <line x1="233" y1="208" x2="253" y2="208" stroke="#10b981" stroke-width="1.2"/>
+
+                <!-- Cross section 2: Engranaje (x=30 cm, pos (468, 145)) -->
+                <ellipse cx="468" cy="145" rx="12" ry="15" fill="none" stroke="#22c55e" stroke-width="1.8" stroke-dasharray="3 3"/>
+                <!-- Crosshair lines at Engranaje -->
+                <line x1="468" y1="130" x2="468" y2="160" stroke="#22c55e" stroke-width="1.2"/>
+                <line x1="458" y1="145" x2="478" y2="145" stroke="#22c55e" stroke-width="1.2"/>
+
+                <!-- Crosshair lines at Rodamiento 2 (x=55 cm, pos (750, 65)) -->
+                <line x1="750" y1="50" x2="750" y2="80" stroke="#3b82f6" stroke-width="1.2"/>
+                <line x1="740" y1="65" x2="760" y2="65" stroke="#3b82f6" stroke-width="1.2"/>
               </g>
 
-              <!-- 3D VECTOR FORCES (BRIGHT VIBRANT GREEN #22c55e AS IN IMAGE 2) -->
-              <g id="iso-vectors" filter="url(#glow-vector)">
+              <!-- ===== 3. ALL 8 3D FORCE VECTORS (VIBRANT GREEN #22c55e WITH BADGES) ===== -->
+              <g id="iso-vectors" stroke="#22c55e" stroke-width="3.5" fill="#22c55e">
                 
-                <!-- 1. POLEA (x=0, origin (110, 240)) -->
-                <!-- Ftp downwards along -y -->
-                <g id="iso-ftp-grp">
-                  <line x1="110" y1="240" x2="110" y2="330" stroke="#22c55e" stroke-width="3.5"/>
-                  <polygon points="110,338 104,324 116,324" fill="#22c55e"/>
-                  <text x="135" y="325" fill="#22c55e" font-size="13" font-weight="bold" id="iso-ftp-lbl">Ftp</text>
-                </g>
-                <!-- Frp forwards along +z -->
-                <g id="iso-frp-grp">
-                  <line x1="110" y1="240" x2="25" y2="285" stroke="#22c55e" stroke-width="3.5"/>
-                  <polygon points="18,289 27,277 34,285" fill="#22c55e"/>
-                  <text x="50" y="260" fill="#22c55e" font-size="13" font-weight="bold" id="iso-frp-lbl">Frp</text>
-                </g>
-
-                <!-- 2. RODAMIENTO 1 (x=10 cm, pos (226, 207)) -->
-                <!-- Ray upwards along +y -->
-                <g id="iso-ray-grp">
-                  <line x1="226" y1="290" x2="226" y2="215" stroke="#22c55e" stroke-width="3.5"/>
-                  <polygon points="226,207 220,221 232,221" fill="#22c55e"/>
-                  <text x="245" y="270" fill="#22c55e" font-size="13" font-weight="bold" id="iso-ray-lbl">Ray</text>
-                </g>
-                <!-- Raz backwards along -z -->
-                <g id="iso-raz-grp">
-                  <line x1="300" y1="168" x2="233" y2="203" stroke="#22c55e" stroke-width="3.5"/>
-                  <polygon points="226,207 236,201 241,211" fill="#22c55e"/>
-                  <text x="270" y="160" fill="#22c55e" font-size="13" font-weight="bold" id="iso-raz-lbl">Raz</text>
+                <!-- ---------------------------------------------------- -->
+                <!-- A) EN LA POLEA (x=0, centro (130, 240)) -->
+                <!-- ---------------------------------------------------- -->
+                <!-- Ftp: apunta VERTICALMENTE HACIA ABAJO -->
+                <g id="grp-iso-ftp">
+                  <line x1="130" y1="240" x2="130" y2="335"/>
+                  <polygon points="130,344 123,328 137,328"/>
+                  <!-- Badge -->
+                  <g transform="translate(145, 325)">
+                    <rect x="0" y="0" width="105" height="22" rx="4" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+                    <text x="52" y="15" text-anchor="middle" fill="#86efac" font-size="12" font-weight="900" id="iso-ftp-lbl">Ftp = 227 kgf</text>
+                  </g>
                 </g>
 
-                <!-- 3. ENGRANAJE (x=30 cm, pos (458, 140)) -->
-                <!-- Fte downwards along -y -->
-                <g id="iso-fte-grp">
-                  <line x1="458" y1="75" x2="458" y2="132" stroke="#22c55e" stroke-width="3.5"/>
-                  <polygon points="458,140 452,126 464,126" fill="#22c55e"/>
-                  <text x="480" y="95" fill="#22c55e" font-size="13" font-weight="bold" id="iso-fte-lbl">Fte</text>
-                </g>
-                <!-- Fre forwards along +z -->
-                <g id="iso-fre-grp">
-                  <line x1="535" y1="100" x2="465" y2="136" stroke="#22c55e" stroke-width="3.5"/>
-                  <polygon points="458,140 467,129 473,139" fill="#22c55e"/>
-                  <text x="530" y="130" fill="#22c55e" font-size="13" font-weight="bold" id="iso-fre-lbl">Fre</text>
+                <!-- Frp: apunta HACIA EL OBSERVADOR a lo largo de +z (hacia abajo-izquierda) -->
+                <g id="grp-iso-frp">
+                  <line x1="130" y1="240" x2="40" y2="290"/>
+                  <polygon points="32,294 42,283 48,294"/>
+                  <!-- Badge -->
+                  <g transform="translate(10, 305)">
+                    <rect x="0" y="0" width="105" height="22" rx="4" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+                    <text x="52" y="15" text-anchor="middle" fill="#86efac" font-size="12" font-weight="900" id="iso-frp-lbl">Frp = 393 kgf</text>
+                  </g>
                 </g>
 
-                <!-- 4. RODAMIENTO 2 (x=55 cm, pos (748, 70)) -->
-                <!-- Rby upwards along +y -->
-                <g id="iso-rby-grp">
-                  <line x1="748" y1="140" x2="748" y2="78" stroke="#22c55e" stroke-width="3.5"/>
-                  <polygon points="748,70 742,84 754,84" fill="#22c55e"/>
-                  <text x="765" y="125" fill="#22c55e" font-size="13" font-weight="bold" id="iso-rby-lbl">RBy</text>
+                <!-- ---------------------------------------------------- -->
+                <!-- B) EN RODAMIENTO 1 (x=10 cm, centro (243, 208)) -->
+                <!-- ---------------------------------------------------- -->
+                <!-- Ray: apunta VERTICALMENTE HACIA ARRIBA hacia el centro -->
+                <g id="grp-iso-ray">
+                  <line x1="243" y1="300" x2="243" y2="220"/>
+                  <polygon points="243,211 236,227 250,227"/>
+                  <!-- Badge -->
+                  <g transform="translate(255, 275)">
+                    <rect x="0" y="0" width="105" height="22" rx="4" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+                    <text x="52" y="15" text-anchor="middle" fill="#86efac" font-size="12" font-weight="900" id="iso-ray-lbl">Ray = 390 kgf</text>
+                  </g>
                 </g>
-                <!-- Rbz backwards along -z -->
-                <g id="iso-rbz-grp">
-                  <line x1="820" y1="33" x2="755" y2="66" stroke="#22c55e" stroke-width="3.5"/>
-                  <polygon points="748,70 758,63 763,73" fill="#22c55e"/>
-                  <text x="805" y="30" fill="#22c55e" font-size="13" font-weight="bold" id="iso-rbz-lbl">RBz</text>
+
+                <!-- Raz: apunta HACIA EL EJE desde atrás a lo largo de -z -->
+                <g id="grp-iso-raz">
+                  <line x1="155" y1="160" x2="235" y2="204"/>
+                  <polygon points="243,208 229,206 235,195"/>
+                  <!-- Badge -->
+                  <g transform="translate(130, 130)">
+                    <rect x="0" y="0" width="105" height="22" rx="4" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+                    <text x="52" y="15" text-anchor="middle" fill="#86efac" font-size="12" font-weight="900" id="iso-raz-lbl">Raz = 521 kgf</text>
+                  </g>
                 </g>
+
+                <!-- ---------------------------------------------------- -->
+                <!-- C) EN ENGRANAJE (x=30 cm, centro (468, 145)) -->
+                <!-- ---------------------------------------------------- -->
+                <!-- Fte: apunta VERTICALMENTE HACIA ABAJO hacia el centro -->
+                <g id="grp-iso-fte">
+                  <line x1="468" y1="55" x2="468" y2="133"/>
+                  <polygon points="468,142 461,126 475,126"/>
+                  <!-- Badge -->
+                  <g transform="translate(480, 50)">
+                    <rect x="0" y="0" width="105" height="22" rx="4" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+                    <text x="52" y="15" text-anchor="middle" fill="#86efac" font-size="12" font-weight="900" id="iso-fte-lbl">Fte = 202 kgf</text>
+                  </g>
+                </g>
+
+                <!-- Fre: apunta HACIA EL OBSERVADOR a lo largo de +z (hacia abajo-derecha) -->
+                <g id="grp-iso-fre">
+                  <line x1="468" y1="145" x2="550" y2="190"/>
+                  <polygon points="558,194 548,183 543,194"/>
+                  <!-- Badge -->
+                  <g transform="translate(565, 185)">
+                    <rect x="0" y="0" width="105" height="22" rx="4" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+                    <text x="52" y="15" text-anchor="middle" fill="#86efac" font-size="12" font-weight="900" id="iso-fre-lbl">Fre = 73 kgf</text>
+                  </g>
+                </g>
+
+                <!-- ---------------------------------------------------- -->
+                <!-- D) EN RODAMIENTO 2 (x=55 cm, centro (750, 65)) -->
+                <!-- ---------------------------------------------------- -->
+                <!-- RBy: apunta VERTICALMENTE HACIA ARRIBA hacia el centro -->
+                <g id="grp-iso-rby">
+                  <line x1="750" y1="155" x2="750" y2="77"/>
+                  <polygon points="750,68 743,84 757,84"/>
+                  <!-- Badge -->
+                  <g transform="translate(760, 135)">
+                    <rect x="0" y="0" width="105" height="22" rx="4" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+                    <text x="52" y="15" text-anchor="middle" fill="#86efac" font-size="12" font-weight="900" id="iso-rby-lbl">RBy = 39 kgf</text>
+                  </g>
+                </g>
+
+                <!-- RBz: apunta HACIA EL EJE desde el frente a lo largo de -z -->
+                <g id="grp-iso-rbz">
+                  <line x1="835" y1="110" x2="758" y2="69"/>
+                  <polygon points="750,65 760,76 765,65"/>
+                  <!-- Badge -->
+                  <g transform="translate(760, 100)">
+                    <rect x="0" y="0" width="105" height="22" rx="4" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+                    <text x="52" y="15" text-anchor="middle" fill="#86efac" font-size="12" font-weight="900" id="iso-rbz-lbl">RBz = 55 kgf</text>
+                  </g>
+                </g>
+
               </g>
             </svg>
           </div>
