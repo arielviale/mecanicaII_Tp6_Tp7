@@ -125,7 +125,7 @@ $$L_{10} = \left(\frac{C}{P}\right)^3 \text{ [millones de revoluciones]} \qquad 
 #### Paso 4: Cinemática, Velocidad Lineal y Factor de Arco ($C_3$)
 * **Velocidad Lineal de la Correa ($v$):**
   $$v = \frac{\pi \cdot d \cdot n_2}{60\,000} = \frac{\pi \cdot 250\text{ mm} \cdot 1856\text{ rpm}}{60\,000} = \mathbf{24,30\text{ m/s}}$$
-  * Verificación: $v = 24,30\text{ m/s} \le 30\text{ m/s}$ (admisible para correas en V estándar $\checkmark$).
+  * Verificación: $v = 24,30\text{ m/s} \le 30\text{ m/s}$ (admisible para correas trapezoidales estándar $\checkmark$).
 * **Arco de Contacto sobre la Polea Menor ($\beta$) y Factor $C_3$ (Tabla 7 pág. 40):**
   $$\frac{D - d}{CC} = \frac{320 - 250}{641,4} = \frac{70}{641,4} = 0,1091 \approx 0,11$$
   * De la Tabla 7:

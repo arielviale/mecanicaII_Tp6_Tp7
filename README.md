@@ -1,5 +1,5 @@
 # Mecánica II — Plataforma SCADA Industrial y Motor de Cálculo SKF
-### Entrega de Trabajos Prácticos N° 6 (Rodamientos) y N° 7 (Correas en V)
+### Entrega de Trabajos Prácticos N° 6 (Rodamientos) y N° 7 (Correas Trapezoidales)
 
 [![Vercel Deployment](https://img.shields.io/badge/Vercel-Deployed-black?style=for-the-badge&logo=vercel)](https://vercel.com)
 [![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org/es/docs/Web/HTML)
@@ -80,7 +80,7 @@ La aplicación permite tanto la **verificación instantánea de los enunciados o
 
 ---
 
-## 🔄 Módulo 2: Trabajo Práctico N° 7 — Transmisión por Correas en V SKF
+## 🔄 Módulo 2: Trabajo Práctico N° 7 — Transmisión por Correas Trapezoidales SKF
 
 ### Enunciado Oficial
 * **Motor conductor:** Eléctrico trifásico, $P_r = 75\text{ HP} = 55,93\text{ kW}$, $n_1 = 1450\text{ rpm}$, **Arranque Directo** (*Heavy starts*), polea mayor $D = 320\text{ mm}$.
