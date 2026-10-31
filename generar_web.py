@@ -286,6 +286,209 @@ def build_web():
               <div id="mem-life2" class="mt-1 text-blue-300">L₁₀ = (20,3 / 0,6614)³ = 28.914 × 10⁶ rev → 200.758 h</div>
             </div>
           </div>
+
+          <!-- TP6 TECHNICAL CAD & SKF CROSS-SECTION 1.1 -->
+          <div class="scada-card rounded-xl p-4 border border-emerald-500/30">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-emerald-400 animate-pulse"></span>
+                <h4 class="text-xs font-bold uppercase tracking-wider text-emerald-300">
+                  Plano Técnico CAD y Corte Seccional SKF 1.1 — Rodamientos Rígidos de Bolas
+                </h4>
+              </div>
+              <div class="flex flex-wrap items-center gap-2">
+                <div class="inline-flex rounded-lg bg-slate-900 border border-slate-700 p-0.5 text-xs font-bold">
+                  <button type="button" id="btn-cad-b1" onclick="switchCadSupport(1)" class="px-2.5 py-1 rounded bg-emerald-600 text-white cursor-pointer transition">
+                    Apoyo 1 (d = 40 mm)
+                  </button>
+                  <button type="button" id="btn-cad-b2" onclick="switchCadSupport(2)" class="px-2.5 py-1 rounded text-slate-400 hover:text-white cursor-pointer transition">
+                    Apoyo 2 (d = 30 mm)
+                  </button>
+                </div>
+                <button type="button" onclick="toggleBearingScan()" class="text-[11px] text-amber-400 hover:text-amber-300 underline font-semibold cursor-pointer">
+                  [Ver Facsímil Catálogo SKF pág. 326/328]
+                </button>
+              </div>
+            </div>
+
+            <!-- SVG CAD WORKSPACE -->
+            <div class="bg-slate-950/90 rounded-lg p-3 border border-slate-800 overflow-x-auto">
+              <svg id="svg-bearing-cad" viewBox="0 0 780 270" class="w-full min-w-[700px] h-auto select-none font-mono text-[11px]">
+                <defs>
+                  <!-- Steel Ball Metallic Gradient -->
+                  <radialGradient id="grad-ball" cx="35%" cy="35%" r="65%">
+                    <stop offset="0%" stop-color="#ffffff"/>
+                    <stop offset="40%" stop-color="#cbd5e1"/>
+                    <stop offset="80%" stop-color="#475569"/>
+                    <stop offset="100%" stop-color="#1e293b"/>
+                  </radialGradient>
+                  <!-- Steel Ring Linear Gradient -->
+                  <linearGradient id="grad-ring" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#334155"/>
+                    <stop offset="50%" stop-color="#1e293b"/>
+                    <stop offset="100%" stop-color="#0f172a"/>
+                  </linearGradient>
+                </defs>
+
+                <!-- 1. VISTA FRONTAL CON BOLAS ROTANDO (Left) -->
+                <g id="cad-front-view">
+                  <text x="140" y="24" text-anchor="middle" fill="#10b981" font-size="11" font-weight="bold">VISTA FRONTAL (Rotación a 2400 rpm)</text>
+                  
+                  <!-- Outer ring -->
+                  <circle id="cad-front-d-ext" cx="140" cy="140" r="90" fill="url(#grad-ring)" stroke="#10b981" stroke-width="2.5"/>
+                  <circle id="cad-front-groove-ext" cx="140" cy="140" r="76" fill="#090d16" stroke="#475569" stroke-width="1" stroke-dasharray="3 3"/>
+                  
+                  <!-- Pitch circle -->
+                  <circle id="cad-front-pcd" cx="140" cy="140" r="63" fill="none" stroke="#64748b" stroke-width="1" stroke-dasharray="4 4" stroke-opacity="0.6"/>
+
+                  <!-- Steel Balls (Rotating group) -->
+                  <g id="cad-front-balls" transform="rotate(0 140 140)">
+                    <circle cx="203" cy="140" r="13" fill="url(#grad-ball)" stroke="#64748b" stroke-width="1"/>
+                    <circle cx="185" cy="185" r="13" fill="url(#grad-ball)" stroke="#64748b" stroke-width="1"/>
+                    <circle cx="140" cy="203" r="13" fill="url(#grad-ball)" stroke="#64748b" stroke-width="1"/>
+                    <circle cx="95" cy="185" r="13" fill="url(#grad-ball)" stroke="#64748b" stroke-width="1"/>
+                    <circle cx="77" cy="140" r="13" fill="url(#grad-ball)" stroke="#64748b" stroke-width="1"/>
+                    <circle cx="95" cy="95" r="13" fill="url(#grad-ball)" stroke="#64748b" stroke-width="1"/>
+                    <circle cx="140" cy="77" r="13" fill="url(#grad-ball)" stroke="#64748b" stroke-width="1"/>
+                    <circle cx="185" cy="95" r="13" fill="url(#grad-ball)" stroke="#64748b" stroke-width="1"/>
+                  </g>
+
+                  <!-- Inner ring -->
+                  <circle id="cad-front-groove-int" cx="140" cy="140" r="50" fill="url(#grad-ring)" stroke="#475569" stroke-width="1"/>
+                  <circle id="cad-front-d-int" cx="140" cy="140" r="38" fill="#020617" stroke="#10b981" stroke-width="2.5"/>
+                  
+                  <!-- Shaft cross inside bore -->
+                  <line x1="130" y1="140" x2="150" y2="140" stroke="#10b981" stroke-width="1.5"/>
+                  <line x1="140" y1="130" x2="140" y2="150" stroke="#10b981" stroke-width="1.5"/>
+                  <text id="cad-front-bore-lbl" x="140" y="144" text-anchor="middle" fill="#e2e8f0" font-size="10" font-weight="bold">d = 40</text>
+                  <text id="cad-front-ext-lbl" x="140" y="248" text-anchor="middle" fill="#94a3b8" font-size="10">D = 90 mm</text>
+                </g>
+
+                <!-- Separator line -->
+                <line x1="270" y1="20" x2="270" y2="255" stroke="#1f293d" stroke-width="1.5" stroke-dasharray="4 4"/>
+
+                <!-- 2. CORTE LONGITUDINAL TÉCNICO (Figura 1.1 Catálogo SKF) -->
+                <g id="cad-section-view">
+                  <text x="410" y="24" text-anchor="middle" fill="#38bdf8" font-size="11" font-weight="bold">CORTE TÉCNICO 1.1 (Plano Normalizado SKF)</text>
+                  
+                  <!-- Centerline -->
+                  <line x1="320" y1="140" x2="500" y2="140" stroke="#64748b" stroke-dasharray="8 3 2 3" stroke-width="1.2"/>
+
+                  <!-- Upper Outer & Inner Rings with Ball -->
+                  <!-- Upper Outer Ring Section -->
+                  <rect id="cad-sec-up-out" x="385" y="50" width="50" height="26" fill="url(#grad-ring)" stroke="#38bdf8" stroke-width="1.5"/>
+                  <!-- Upper Ball Seated in Raceway -->
+                  <circle id="cad-sec-up-ball" cx="410" cy="88" r="14" fill="url(#grad-ball)" stroke="#64748b" stroke-width="1.2"/>
+                  <!-- Upper Inner Ring Section -->
+                  <rect id="cad-sec-up-in" x="385" y="102" width="50" height="24" fill="url(#grad-ring)" stroke="#38bdf8" stroke-width="1.5"/>
+
+                  <!-- Lower Inner & Outer Rings with Ball -->
+                  <!-- Lower Inner Ring Section -->
+                  <rect id="cad-sec-low-in" x="385" y="154" width="50" height="24" fill="url(#grad-ring)" stroke="#38bdf8" stroke-width="1.5"/>
+                  <!-- Lower Ball Seated in Raceway -->
+                  <circle id="cad-sec-low-ball" cx="410" cy="192" r="14" fill="url(#grad-ball)" stroke="#64748b" stroke-width="1.2"/>
+                  <!-- Lower Outer Ring Section -->
+                  <rect id="cad-sec-low-out" x="385" y="204" width="50" height="26" fill="url(#grad-ring)" stroke="#38bdf8" stroke-width="1.5"/>
+
+                  <!-- Dimension Lines (Cotizado CAD) -->
+                  <!-- Width B (Top) -->
+                  <line id="cad-dim-b-line" x1="385" y1="40" x2="435" y2="40" stroke="#f59e0b" stroke-width="1.5"/>
+                  <polygon id="cad-dim-b-p1" points="385,40 391,37 391,43" fill="#f59e0b"/>
+                  <polygon id="cad-dim-b-p2" points="435,40 429,37 429,43" fill="#f59e0b"/>
+                  <text id="cad-dim-b-txt" x="410" y="35" text-anchor="middle" fill="#f59e0b" font-size="10" font-weight="bold">B = 23 mm</text>
+
+                  <!-- Inner Diameter d (Middle) -->
+                  <line id="cad-dim-d-line" x1="450" y1="126" x2="450" y2="154" stroke="#10b981" stroke-width="1.5"/>
+                  <polygon id="cad-dim-d-p1" points="450,126 447,132 453,132" fill="#10b981"/>
+                  <polygon id="cad-dim-d-p2" points="450,154 447,148 453,148" fill="#10b981"/>
+                  <text id="cad-dim-d-txt" x="480" y="144" fill="#10b981" font-size="10" font-weight="bold">d = 40 mm</text>
+
+                  <!-- Outer Diameter D (Left) -->
+                  <line id="cad-dim-D-line" x1="365" y1="50" x2="365" y2="230" stroke="#38bdf8" stroke-width="1.5"/>
+                  <polygon id="cad-dim-D-p1" points="365,50 362,56 368,56" fill="#38bdf8"/>
+                  <polygon id="cad-dim-D-p2" points="365,230 362,224 368,224" fill="#38bdf8"/>
+                  <text id="cad-dim-D-txt" x="350" y="144" text-anchor="middle" fill="#38bdf8" font-size="10" font-weight="bold" transform="rotate(-90 350 144)">D = 90 mm</text>
+                </g>
+
+                <!-- Separator line -->
+                <line x1="535" y1="20" x2="535" y2="255" stroke="#1f293d" stroke-width="1.5" stroke-dasharray="4 4"/>
+
+                <!-- 3. DIAGRAMA POLAR DE COMPOSICIÓN RADIAL (Right) -->
+                <g id="cad-polar-view">
+                  <text x="650" y="24" text-anchor="middle" fill="#f59e0b" font-size="11" font-weight="bold">COMPOSICIÓN VECTORIAL (x-y / x-z)</text>
+                  
+                  <!-- Axes -->
+                  <line x1="570" y1="180" x2="740" y2="180" stroke="#475569" stroke-width="1.5"/>
+                  <line x1="600" y1="230" x2="600" y2="50" stroke="#475569" stroke-width="1.5"/>
+                  <text x="735" y="174" fill="#94a3b8" font-size="10">Eje Z</text>
+                  <text x="605" y="60" fill="#94a3b8" font-size="10">Eje Y</text>
+
+                  <!-- Vector Ry -->
+                  <line id="vec-ry-line" x1="600" y1="180" x2="600" y2="105" stroke="#10b981" stroke-width="3"/>
+                  <polygon id="vec-ry-head" points="600,100 596,108 604,108" fill="#10b981"/>
+                  <text id="vec-ry-lbl" x="555" y="130" fill="#10b981" font-size="10" font-weight="bold">Ry=390 kgf</text>
+
+                  <!-- Vector Rz -->
+                  <line id="vec-rz-line" x1="600" y1="180" x2="700" y2="180" stroke="#3b82f6" stroke-width="3"/>
+                  <polygon id="vec-rz-head" points="705,180 697,176 697,184" fill="#3b82f6"/>
+                  <text id="vec-rz-lbl" x="650" y="200" text-anchor="middle" fill="#3b82f6" font-size="10" font-weight="bold">Rz=521 kgf</text>
+
+                  <!-- Resultant Fr & P -->
+                  <line id="vec-fr-dash1" x1="600" y1="105" x2="700" y2="105" stroke="#64748b" stroke-dasharray="3 3"/>
+                  <line id="vec-fr-dash2" x1="700" y1="180" x2="700" y2="105" stroke="#64748b" stroke-dasharray="3 3"/>
+                  <line id="vec-fr-line" x1="600" y1="180" x2="700" y2="105" stroke="#f59e0b" stroke-width="3.5"/>
+                  <polygon id="vec-fr-head" points="704,102 694,106 699,113" fill="#f59e0b"/>
+
+                  <!-- Resultant Label Box -->
+                  <rect x="620" y="80" width="125" height="34" rx="4" fill="#020617" stroke="#f59e0b" stroke-width="1.2"/>
+                  <text id="vec-fr-lbl" x="682" y="95" text-anchor="middle" fill="#fef08a" font-size="10" font-weight="bold">Fr = 650,8 kgf</text>
+                  <text id="vec-p-lbl" x="682" y="108" text-anchor="middle" fill="#10b981" font-size="10" font-weight="bold">P = 6,384 kN (θ=53°)</text>
+                </g>
+              </svg>
+            </div>
+
+            <!-- BEARING MECHANICAL SPECIFICATIONS STRIP -->
+            <div class="mt-3 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-2 text-xs font-mono">
+              <div class="p-2 rounded bg-slate-900 border border-slate-800">
+                <span class="text-slate-400 block text-[10px]">DESIGNACIÓN:</span>
+                <span id="cad-spec-desig" class="font-bold text-emerald-400 text-sm">* 6308</span>
+              </div>
+              <div class="p-2 rounded bg-slate-900 border border-slate-800">
+                <span class="text-slate-400 block text-[10px]">CAPACIDAD C / C₀:</span>
+                <span id="cad-spec-cap" class="font-bold text-slate-100">C = 42,3 / C₀ = 24 kN</span>
+              </div>
+              <div class="p-2 rounded bg-slate-900 border border-slate-800">
+                <span class="text-slate-400 block text-[10px]">DIMENSIONES:</span>
+                <span id="cad-spec-dim" class="font-bold text-cyan-300">d=40 | D=90 | B=23</span>
+              </div>
+              <div class="p-2 rounded bg-slate-900 border border-slate-800">
+                <span class="text-slate-400 block text-[10px]">VELOCIDAD LÍMITE:</span>
+                <span id="cad-spec-rpm" class="font-bold text-slate-100">11.000 rpm (n=2400)</span>
+              </div>
+              <div class="p-2 rounded bg-slate-900 border border-slate-800">
+                <span class="text-slate-400 block text-[10px]">VIDA NOMINAL L₁₀:</span>
+                <span id="cad-spec-l10" class="font-bold text-emerald-400">290,9 × 10⁶ rev</span>
+              </div>
+              <div class="p-2 rounded bg-slate-900 border border-slate-800">
+                <span class="text-slate-400 block text-[10px]">DURACIÓN L₁₀h:</span>
+                <span id="cad-spec-l10h" class="font-bold text-emerald-400 text-sm">2020 h (Cumple ✓)</span>
+              </div>
+            </div>
+
+            <!-- TOGGLEABLE CATALOG SCAN VIEW -->
+            <div id="bearing-scan-view" class="hidden mt-3 p-3 bg-slate-900/90 rounded-lg border border-slate-700">
+              <div class="flex justify-between items-center text-xs text-slate-300 font-semibold mb-2">
+                <span>Facsímil Oficial de Catálogo SKF — Tabla 1.1: Rodamientos rígidos de una hilera de bolas (d 25 - 35 mm y 40 mm)</span>
+                <button type="button" onclick="toggleBearingScan()" class="text-slate-400 hover:text-white px-2 py-0.5 rounded bg-slate-800">Cerrar ✕</button>
+              </div>
+              <div class="relative bg-white/5 rounded-lg p-2 flex justify-center">
+                <img src="catalogo_rodamientos_skf.jpg" alt="Tabla 1.1 Catálogo SKF Oficial" class="max-h-96 w-auto rounded border border-slate-800 shadow-xl">
+              </div>
+              <p class="text-[11px] text-slate-400 mt-2">
+                Tabla oficial del Catálogo General SKF (página 326/328) con dimensiones principales (d, D, B), capacidad de carga básica dinámica (C), estática (C0), carga límite de fatiga (Pu) y velocidades admisibles para los asientos de d = 40 mm (Apoyo 1, SKF * 6308) y d = 30 mm (Apoyo 2, SKF * 6206).
+              </p>
+            </div>
+          </div>
         </div>
 
         <!-- RIGHT: SIMULATION CONTROLS -->
@@ -921,6 +1124,160 @@ def build_web():
       computeTP6();
     }
 
+    
+    let activeCadSupport = 1;
+    function switchCadSupport(idx) {
+      activeCadSupport = idx;
+      const b1 = document.getElementById("btn-cad-b1");
+      const b2 = document.getElementById("btn-cad-b2");
+      if (idx === 1) {
+        b1.className = "px-2.5 py-1 rounded bg-emerald-600 text-white cursor-pointer transition";
+        b2.className = "px-2.5 py-1 rounded text-slate-400 hover:text-white cursor-pointer transition";
+      } else {
+        b2.className = "px-2.5 py-1 rounded bg-blue-600 text-white cursor-pointer transition";
+        b1.className = "px-2.5 py-1 rounded text-slate-400 hover:text-white cursor-pointer transition";
+      }
+      updateBearingCAD();
+    }
+
+    function toggleBearingScan() {
+      const el = document.getElementById("bearing-scan-view");
+      if (el) el.classList.toggle("hidden");
+    }
+
+    function updateBearingCAD() {
+      const n = parseFloat(document.getElementById("tp6-rpm").value) || 2400;
+      const ray = parseFloat(document.getElementById("tp6-ray").value) || 0;
+      const raz = parseFloat(document.getElementById("tp6-raz").value) || 0;
+      const rby = parseFloat(document.getElementById("tp6-rby").value) || 0;
+      const rbz = parseFloat(document.getElementById("tp6-rbz").value) || 0;
+
+      const d1 = parseFloat(document.getElementById("sel-tp6-d1").value);
+      const d2 = parseFloat(document.getElementById("sel-tp6-d2").value);
+      const rows1 = SKF_DATABASE.rodamientos_bolas.filter(r => r.d_int === d1).sort((a,b) => a.C_din - b.C_din);
+      const rows2 = SKF_DATABASE.rodamientos_bolas.filter(r => r.d_int === d2).sort((a,b) => a.C_din - b.C_din);
+
+      const desig1 = document.getElementById("sel-tp6-bearing1").value || (rows1[rows1.length-2] || rows1[0]).designacion;
+      const desig2 = document.getElementById("sel-tp6-bearing2").value || (rows2[4] || rows2[0]).designacion;
+
+      const bRow1 = rows1.find(r => r.designacion === desig1) || rows1[0];
+      const bRow2 = rows2.find(r => r.designacion === desig2) || rows2[0];
+
+      const bActive = (activeCadSupport === 1) ? bRow1 : bRow2;
+      const ryActive = (activeCadSupport === 1) ? ray : rby;
+      const rzActive = (activeCadSupport === 1) ? raz : rbz;
+      const frActive = Math.sqrt(ryActive*ryActive + rzActive*rzActive);
+      const pActive = (frActive * 9.81) / 1000.0;
+      const l10Active = Math.pow(bActive.C_din / Math.max(pActive, 0.001), 3);
+      const l10hActive = (1000000 / (60 * n)) * l10Active;
+
+      // Scale factors for CAD: reference D=90mm -> R=90px, d=40mm -> r=38px
+      const scaleD = Math.max(0.7, Math.min(1.4, bActive.D_ext / 90.0));
+      const rExt = 90 * scaleD;
+      const rInt = (bActive.d_int / bActive.D_ext) * rExt;
+      const rGrooveExt = rInt + (rExt - rInt) * 0.76;
+      const rGrooveInt = rInt + (rExt - rInt) * 0.24;
+      const rPCD = (rExt + rInt) / 2.0;
+      const rBall = (rGrooveExt - rGrooveInt) * 0.46;
+
+      // Update Front View
+      const fDext = document.getElementById("cad-front-d-ext");
+      const fDint = document.getElementById("cad-front-d-int");
+      const fGext = document.getElementById("cad-front-groove-ext");
+      const fGint = document.getElementById("cad-front-groove-int");
+      const fPCD = document.getElementById("cad-front-pcd");
+      if (fDext) fDext.setAttribute("r", rExt.toFixed(1));
+      if (fDint) fDint.setAttribute("r", rInt.toFixed(1));
+      if (fGext) fGext.setAttribute("r", rGrooveExt.toFixed(1));
+      if (fGint) fGint.setAttribute("r", rGrooveInt.toFixed(1));
+      if (fPCD) fPCD.setAttribute("r", rPCD.toFixed(1));
+
+      const fBore = document.getElementById("cad-front-bore-lbl");
+      const fExt = document.getElementById("cad-front-ext-lbl");
+      if (fBore) fBore.textContent = `d = ${bActive.d_int}`;
+      if (fExt) fExt.textContent = `D = ${bActive.D_ext} mm`;
+
+      // Update Section View (Width B and Diameters)
+      const secW = Math.max(30, Math.min(65, bActive.B_ancho * 2.1));
+      const secX = 410 - secW / 2;
+      const yExtUp = 140 - rExt;
+      const yIntUp = 140 - rInt;
+      const yIntLow = 140 + rInt;
+      const yExtLow = 140 + rExt;
+
+      const sUpOut = document.getElementById("cad-sec-up-out");
+      const sUpIn = document.getElementById("cad-sec-up-in");
+      const sLowIn = document.getElementById("cad-sec-low-in");
+      const sLowOut = document.getElementById("cad-sec-low-out");
+      const sUpBall = document.getElementById("cad-sec-up-ball");
+      const sLowBall = document.getElementById("cad-sec-low-ball");
+
+      if (sUpOut) { sUpOut.setAttribute("x", secX.toFixed(1)); sUpOut.setAttribute("width", secW.toFixed(1)); sUpOut.setAttribute("y", yExtUp.toFixed(1)); sUpOut.setAttribute("height", (rExt * 0.28).toFixed(1)); }
+      if (sUpIn) { sUpIn.setAttribute("x", secX.toFixed(1)); sUpIn.setAttribute("width", secW.toFixed(1)); sUpIn.setAttribute("y", (yIntUp - rExt * 0.26).toFixed(1)); sUpIn.setAttribute("height", (rExt * 0.26).toFixed(1)); }
+      if (sLowIn) { sLowIn.setAttribute("x", secX.toFixed(1)); sLowIn.setAttribute("width", secW.toFixed(1)); sLowIn.setAttribute("y", yIntLow.toFixed(1)); sLowIn.setAttribute("height", (rExt * 0.26).toFixed(1)); }
+      if (sLowOut) { sLowOut.setAttribute("x", secX.toFixed(1)); sLowOut.setAttribute("width", secW.toFixed(1)); sLowOut.setAttribute("y", (yExtLow - rExt * 0.28).toFixed(1)); sLowOut.setAttribute("height", (rExt * 0.28).toFixed(1)); }
+
+      if (sUpBall) { sUpBall.setAttribute("cy", (140 - rPCD).toFixed(1)); sUpBall.setAttribute("r", rBall.toFixed(1)); }
+      if (sLowBall) { sLowBall.setAttribute("cy", (140 + rPCD).toFixed(1)); sLowBall.setAttribute("r", rBall.toFixed(1)); }
+
+      // Update Section Dimension Lines
+      const dimBline = document.getElementById("cad-dim-b-line");
+      const dimBp1 = document.getElementById("cad-dim-b-p1");
+      const dimBp2 = document.getElementById("cad-dim-b-p2");
+      const dimBtxt = document.getElementById("cad-dim-b-txt");
+      if (dimBline) { dimBline.setAttribute("x1", secX.toFixed(1)); dimBline.setAttribute("x2", (secX + secW).toFixed(1)); }
+      if (dimBp1) dimBp1.setAttribute("points", `${secX},40 ${secX+6},37 ${secX+6},43`);
+      if (dimBp2) dimBp2.setAttribute("points", `${secX+secW},40 ${secX+secW-6},37 ${secX+secW-6},43`);
+      if (dimBtxt) dimBtxt.textContent = `B = ${bActive.B_ancho} mm`;
+
+      const dimDtxt = document.getElementById("cad-dim-D-txt");
+      const dimdtxt = document.getElementById("cad-dim-d-txt");
+      if (dimDtxt) dimDtxt.textContent = `D = ${bActive.D_ext} mm`;
+      if (dimdtxt) dimdtxt.textContent = `d = ${bActive.d_int} mm`;
+
+      // Update Force Vector Triangle
+      const vRy = document.getElementById("vec-ry-line");
+      const vRz = document.getElementById("vec-rz-line");
+      const vFr = document.getElementById("vec-fr-line");
+      const vDash1 = document.getElementById("vec-fr-dash1");
+      const vDash2 = document.getElementById("vec-fr-dash2");
+      const vRyHead = document.getElementById("vec-ry-head");
+      const vRzHead = document.getElementById("vec-rz-head");
+      const vFrHead = document.getElementById("vec-fr-head");
+
+      const scaleF = 0.16; // kgf to px
+      const pxRy = Math.min(110, Math.max(15, ryActive * scaleF));
+      const pxRz = Math.min(130, Math.max(15, rzActive * scaleF));
+      const yRy = 180 - pxRy;
+      const xRz = 600 + pxRz;
+
+      if (vRy) { vRy.setAttribute("y2", yRy.toFixed(1)); }
+      if (vRyHead) { vRyHead.setAttribute("points", `600,${yRy-5} 596,${yRy+3} 604,${yRy+3}`); }
+      if (vRz) { vRz.setAttribute("x2", xRz.toFixed(1)); }
+      if (vRzHead) { vRzHead.setAttribute("points", `${xRz+5},180 ${xRz-3},176 ${xRz-3},184`); }
+      if (vDash1) { vDash1.setAttribute("y1", yRy.toFixed(1)); vDash1.setAttribute("y2", yRy.toFixed(1)); vDash1.setAttribute("x2", xRz.toFixed(1)); }
+      if (vDash2) { vDash2.setAttribute("x1", xRz.toFixed(1)); vDash2.setAttribute("x2", xRz.toFixed(1)); vDash2.setAttribute("y2", yRy.toFixed(1)); }
+      if (vFr) { vFr.setAttribute("x2", xRz.toFixed(1)); vFr.setAttribute("y2", yRy.toFixed(1)); }
+      if (vFrHead) { vFrHead.setAttribute("points", `${xRz+4},${yRy-3} ${xRz-6},${yRy} ${xRz-2},${yRy+8}`); }
+
+      const theta = ryActive > 0 ? (Math.atan(rzActive / ryActive) * 180 / Math.PI) : 0;
+      document.getElementById("vec-ry-lbl").textContent = `Ry = ${Math.round(ryActive)} kgf`;
+      document.getElementById("vec-rz-lbl").textContent = `Rz = ${Math.round(rzActive)} kgf`;
+      document.getElementById("vec-fr-lbl").textContent = `Fr = ${fmt(frActive, 1)} kgf`;
+      document.getElementById("vec-p-lbl").textContent = `P = ${fmt(pActive, 3)} kN (θ=${Math.round(theta)}°)`;
+
+      // Update Specs Strip
+      document.getElementById("cad-spec-desig").textContent = bActive.designacion;
+      document.getElementById("cad-spec-cap").textContent = `C=${bActive.C_din} / C₀=${bActive.C0_est} kN`;
+      document.getElementById("cad-spec-dim").textContent = `d=${bActive.d_int} | D=${bActive.D_ext} | B=${bActive.B_ancho}`;
+      document.getElementById("cad-spec-rpm").textContent = `${bActive.vel_lim.toLocaleString()} rpm (n=${n})`;
+      document.getElementById("cad-spec-l10").textContent = `${fmt(l10Active, 1)} × 10⁶ rev`;
+      const cumple = l10hActive >= 2000;
+      const l10hEl = document.getElementById("cad-spec-l10h");
+      l10hEl.textContent = `${fmt(l10hActive, 0)} h (${cumple ? 'Cumple ✓' : 'Bajo ⚠'})`;
+      l10hEl.className = cumple ? "font-bold text-emerald-400 text-sm" : "font-bold text-red-400 text-sm";
+    }
+
     function computeTP6() {
       const mode = document.getElementById("tp6-mode").value;
       const n = parseFloat(document.getElementById("tp6-rpm").value) || 2400;
@@ -1029,6 +1386,7 @@ def build_web():
           <td class="p-2 font-bold">${r.designacion}</td><td>${r.D_ext}</td><td>${r.B_ancho}</td><td>${r.C_din}</td><td>${r.C0_est}</td><td class="text-blue-400 font-bold">${fmt(lh, 0)} h</td>
         </tr>`;
       }).join("");
+      updateBearingCAD();
     }
 
     function selectB(supportIdx, desig) {
@@ -1412,6 +1770,8 @@ def build_web():
         const shStripes = document.getElementById("tp6-stripes");
 
         if (spk1) spk1.setAttribute("transform", `rotate(${angleD} 200 160)`);
+        const cadBalls = document.getElementById("cad-front-balls");
+        if (cadBalls) cadBalls.setAttribute("transform", `rotate(${angleD * 1.5} 140 140)`);
         if (spk2) spk2.setAttribute("transform", `rotate(${angleN} 580 160)`);
         if (dash) dash.setAttribute("stroke-dashoffset", bOffset);
         if (shStripes) shStripes.setAttribute("transform", `translate(${Math.sin(sPhase*0.4)*2}, 0)`);
