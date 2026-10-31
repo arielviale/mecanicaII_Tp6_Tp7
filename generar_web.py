@@ -59,6 +59,30 @@ def build_web():
     ::-webkit-scrollbar-track { background: #0b1120; }
     ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
     ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+    .guide-hoverable {
+      position: relative;
+      cursor: help;
+      transition: all 0.2s ease;
+    }
+    .guide-hoverable:hover {
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.4) !important;
+      border-color: rgba(56, 189, 248, 0.8) !important;
+    }
+    #guide-floating-tooltip {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0;
+      transform: translate(-50%, -100%) scale(0.96);
+      transition: opacity 0.15s ease, transform 0.15s ease;
+      max-width: 340px;
+    }
+    #guide-floating-tooltip.active {
+      opacity: 1;
+      transform: translate(-50%, -120%) scale(1);
+    }
+
   </style>
 </head>
 <body class="grid-bg min-h-screen text-slate-100">
@@ -84,6 +108,9 @@ def build_web():
       </div>
 
       <div class="flex flex-wrap items-center gap-2">
+        <button id="btn-guide" onclick="toggleGuideMode()" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 hover:bg-cyan-500/30 transition flex items-center gap-1.5 cursor-pointer shadow-sm">
+          <span>🎓</span> <span id="guide-status-text">Guía Académica: ACTIVA</span>
+        </button>
         <button id="btn-anim" onclick="toggleAnim()" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition flex items-center gap-1.5 cursor-pointer">
           <span id="anim-icon">⏸</span> <span id="anim-text">Pausar Simulación</span>
         </button>
@@ -472,72 +499,108 @@ def build_web():
           </div>
 
           <div class="bg-slate-950/70 rounded-xl border border-slate-800 p-3 overflow-x-auto">
-            <svg id="svg-tp7" viewBox="0 0 840 340" class="w-full min-w-[620px] h-auto">
-              <line x1="80" y1="160" x2="760" y2="160" stroke="#334155" stroke-dasharray="6 4" stroke-width="1.5"/>
+            <svg id="svg-tp7" viewBox="0 0 840 340" class="w-full min-w-[620px] h-auto select-none">
+              <line x1="60" y1="160" x2="780" y2="160" stroke="#334155" stroke-dasharray="6 4" stroke-width="1.5"/>
 
-              <path d="M 200 66 L 580 88 A 72 72 0 0 1 580 232 L 200 254 A 94 94 0 0 1 200 66 Z"
-                    fill="none" stroke="#f59e0b" stroke-width="9" stroke-opacity="0.35"/>
+              <!-- DYNAMIC TANGENT BELT (Solid background + animated dashed overlay) -->
+              <path id="tp7-belt-bg" d="M 200 68 L 580 88 A 72 72 0 0 1 580 232 L 200 252 A 92 92 0 0 1 200 68 Z"
+                    fill="none" stroke="#f59e0b" stroke-width="10" stroke-opacity="0.35" class="guide-hoverable"
+                    data-guide-step="Cinemática de Transmisión"
+                    data-guide-title="Correa Trapezoidal Estrecha SPB-XP en Tensión"
+                    data-guide-desc="La correa abraza tangencialmente las poleas motriz y conducida. El ramal tenso y flojo se recalculan con trigonometría exacta al variar diámetros."
+                    data-guide-norm="Norma ISO 4184 / DIN 7753"/>
               <path id="tp7-belt-dash"
-                    d="M 200 66 L 580 88 A 72 72 0 0 1 580 232 L 200 254 A 94 94 0 0 1 200 66 Z"
-                    fill="none" stroke="#f59e0b" stroke-width="4" stroke-dasharray="15 10"/>
+                    d="M 200 68 L 580 88 A 72 72 0 0 1 580 232 L 200 252 A 92 92 0 0 1 200 68 Z"
+                    fill="none" stroke="#f59e0b" stroke-width="4" stroke-dasharray="16 10"/>
 
-              <circle cx="200" cy="160" r="94" fill="#1e293b" stroke="#10b981" stroke-width="3.5"/>
-              <circle cx="200" cy="160" r="76" fill="none" stroke="#10b981" stroke-width="1" stroke-dasharray="4 3"/>
-              <g id="tp7-spokes-driver" transform="rotate(0 200 160)">
-                <line x1="200" y1="70" x2="200" y2="250" stroke="#10b981" stroke-width="3" stroke-opacity="0.6"/>
-                <line x1="110" y1="160" x2="290" y2="160" stroke="#10b981" stroke-width="3" stroke-opacity="0.6"/>
-                <line x1="136" y1="96" x2="264" y2="224" stroke="#10b981" stroke-width="2" stroke-opacity="0.4"/>
-                <line x1="264" y1="96" x2="136" y2="224" stroke="#10b981" stroke-width="2" stroke-opacity="0.4"/>
+              <!-- DRIVER PULLEY (MOTOR) - SCALABLE GEOMETRY -->
+              <g id="tp7-driver-pulley-group" class="guide-hoverable"
+                 data-guide-step="Polea Motriz D"
+                 data-guide-title="Polea Conductora Acoplada al Motor (D = 320 mm)"
+                 data-guide-desc="Montada sobre el eje motor de 1450 rpm. Su radio gráfico en pantalla escala proporcionalmente según el diámetro D ingresado."
+                 data-guide-norm="DIN 2211 / Catálogo SKF">
+                <circle id="tp7-pulley-driver" cx="200" cy="160" r="92" fill="#1e293b" stroke="#10b981" stroke-width="3.5"/>
+                <circle id="tp7-pulley-driver-groove" cx="200" cy="160" r="76" fill="none" stroke="#10b981" stroke-width="1" stroke-dasharray="4 3"/>
+                <g id="tp7-spokes-driver" transform="rotate(0 200 160)">
+                  <line id="tp7-spk-d1" x1="200" y1="75" x2="200" y2="245" stroke="#10b981" stroke-width="3" stroke-opacity="0.6"/>
+                  <line id="tp7-spk-d2" x1="115" y1="160" x2="285" y2="160" stroke="#10b981" stroke-width="3" stroke-opacity="0.6"/>
+                  <line id="tp7-spk-d3" x1="140" y1="100" x2="260" y2="220" stroke="#10b981" stroke-width="2" stroke-opacity="0.4"/>
+                  <line id="tp7-spk-d4" x1="260" y1="100" x2="140" y2="220" stroke="#10b981" stroke-width="2" stroke-opacity="0.4"/>
+                </g>
+                <circle id="tp7-driver-hub" cx="200" cy="160" r="16" fill="#10b981"/>
               </g>
-              <circle cx="200" cy="160" r="16" fill="#10b981"/>
-              <text x="200" y="45" text-anchor="middle" fill="#10b981" font-size="12" font-weight="bold">POLEA CONDUCTORA (MOTOR)</text>
-              <text x="200" y="278" text-anchor="middle" fill="#e2e8f0" font-size="11" font-weight="bold" id="svg-tp7-motordesc">D = 320 mm • 1450 rpm</text>
+              <text id="svg-tp7-motortitle" x="200" y="45" text-anchor="middle" fill="#10b981" font-size="12" font-weight="bold">POLEA CONDUCTORA (MOTOR)</text>
+              <text id="svg-tp7-motordesc" x="200" y="280" text-anchor="middle" fill="#e2e8f0" font-size="11" font-weight="bold">D = 320 mm • 1450 rpm</text>
 
-              <path d="M 576 83 A 77 77 0 0 1 576 237" fill="none" stroke="#3b82f6" stroke-width="6" stroke-linecap="round"/>
-              <text x="675" y="155" fill="#3b82f6" font-size="12" font-weight="bold" id="svg-tp7-arclbl">Arco β = 174°</text>
-              <text x="675" y="172" fill="#94a3b8" font-size="11" id="svg-tp7-c3lbl">(C₃ = 0,99)</text>
+              <!-- CONTACT ARC HIGHLIGHT (BETA) -->
+              <path id="tp7-driven-arc-highlight" d="M 580 88 A 72 72 0 0 1 580 232" fill="none" stroke="#38bdf8" stroke-width="6" stroke-linecap="round" class="guide-hoverable"
+                    data-guide-step="Paso 4: Ángulo de Contacto"
+                    data-guide-title="Arco de Abrazo Activo sobre Polea Menor (β)"
+                    data-guide-desc="Indica la zona donde las correas transmiten potencia por rozamiento cuña. Se calcula con (D-d)/CC = 0,109 => β = 174° y factor C3 = 0,99."
+                    data-guide-norm="Tabla 7 SKF (pág. 40)"/>
+              <text id="svg-tp7-arclbl" x="675" y="155" fill="#38bdf8" font-size="12" font-weight="bold">Arco β = 174°</text>
+              <text id="svg-tp7-c3lbl" x="675" y="172" fill="#94a3b8" font-size="11">(C₃ = 0,99)</text>
 
-              <circle cx="580" cy="160" r="72" fill="#1e293b" stroke="#3b82f6" stroke-width="3.5"/>
-              <circle cx="580" cy="160" r="55" fill="none" stroke="#3b82f6" stroke-width="1" stroke-dasharray="4 3"/>
-              <g id="tp7-spokes-driven" transform="rotate(0 580 160)">
-                <line x1="580" y1="92" x2="580" y2="228" stroke="#3b82f6" stroke-width="3" stroke-opacity="0.6"/>
-                <line x1="512" y1="160" x2="648" y2="160" stroke="#3b82f6" stroke-width="3" stroke-opacity="0.6"/>
-                <line x1="532" y1="112" x2="628" y2="208" stroke="#3b82f6" stroke-width="2" stroke-opacity="0.4"/>
-                <line x1="628" y1="112" x2="532" y2="208" stroke="#3b82f6" stroke-width="2" stroke-opacity="0.4"/>
+              <!-- DRIVEN PULLEY (BOMBA) - SCALABLE GEOMETRY -->
+              <g id="tp7-driven-pulley-group" class="guide-hoverable"
+                 data-guide-step="Polea Conducida d"
+                 data-guide-title="Polea Conducida en Bomba Centrífuga (d = 250 mm)"
+                 data-guide-desc="Gira a 1856 rpm. Debe cumplir d >= d_mínimo (140 mm para SPB). Su escala gráfica reacciona en tiempo real a los cambios del diámetro."
+                 data-guide-norm="Tabla 5a SKF (pág. 36)">
+                <circle id="tp7-pulley-driven" cx="580" cy="160" r="72" fill="#1e293b" stroke="#3b82f6" stroke-width="3.5"/>
+                <circle id="tp7-pulley-driven-groove" cx="580" cy="160" r="56" fill="none" stroke="#3b82f6" stroke-width="1" stroke-dasharray="4 3"/>
+                <g id="tp7-spokes-driven" transform="rotate(0 580 160)">
+                  <line id="tp7-spk-n1" x1="580" y1="95" x2="580" y2="225" stroke="#3b82f6" stroke-width="3" stroke-opacity="0.6"/>
+                  <line id="tp7-spk-n2" x1="515" y1="160" x2="645" y2="160" stroke="#3b82f6" stroke-width="3" stroke-opacity="0.6"/>
+                  <line id="tp7-spk-n3" x1="535" y1="115" x2="625" y2="205" stroke="#3b82f6" stroke-width="2" stroke-opacity="0.4"/>
+                  <line id="tp7-spk-n4" x1="625" y1="115" x2="535" y2="205" stroke="#3b82f6" stroke-width="2" stroke-opacity="0.4"/>
+                </g>
+                <circle id="tp7-driven-hub" cx="580" cy="160" r="14" fill="#3b82f6"/>
               </g>
-              <circle cx="580" cy="160" r="14" fill="#3b82f6"/>
-              <text x="580" y="65" text-anchor="middle" fill="#3b82f6" font-size="12" font-weight="bold">POLEA CONDUCIDA</text>
-              <text x="580" y="278" text-anchor="middle" fill="#e2e8f0" font-size="11" font-weight="bold" id="svg-tp7-drivenpulley">d = 250 mm • 1856 rpm</text>
+              <text id="svg-tp7-driventitle" x="580" y="65" text-anchor="middle" fill="#3b82f6" font-size="12" font-weight="bold">POLEA CONDUCIDA (BOMBA)</text>
+              <text id="svg-tp7-drivenpulley" x="580" y="280" text-anchor="middle" fill="#e2e8f0" font-size="11" font-weight="bold">d = 250 mm • 1856 rpm</text>
 
+              <!-- CENTER DISTANCE LINE -->
               <line x1="200" y1="315" x2="580" y2="315" stroke="#f59e0b" stroke-width="2"/>
               <polygon points="200,315 210,310 210,320" fill="#f59e0b"/>
               <polygon points="580,315 570,310 570,320" fill="#f59e0b"/>
-              <text x="390" y="308" text-anchor="middle" fill="#f59e0b" font-size="11" font-weight="bold" id="svg-tp7-cctext">
-                CC preliminar = 650 mm → CC definitivo = 641,6 mm (PHG SPB2180)
+              <text id="svg-tp7-cctext" x="390" y="308" text-anchor="middle" fill="#f59e0b" font-size="11" font-weight="bold" class="guide-hoverable"
+                    data-guide-step="Paso 3: Distancia entre Centros Definitiva"
+                    data-guide-title="Ecuación Cuadrática Exacta SKF para CC"
+                    data-guide-desc="Con la longitud comercial de 2180 mm, el CC definitivo resulta 641,4 mm, garantizando el tensado óptimo de las correas."
+                    data-guide-norm="Fórmula SKF pág. 14">
+                CC preliminar = 650 mm → CC definitivo = 641,4 mm (PHG SPB2180XP)
               </text>
 
-              <rect x="320" y="132" width="140" height="52" rx="8" fill="#020617" fill-opacity="0.9" stroke="#f59e0b" stroke-width="1.5"/>
-              <text x="390" y="152" text-anchor="middle" fill="#f59e0b" font-size="12" font-weight="bold" id="svg-tp7-vtag">v = 24,30 m/s</text>
-              <text x="390" y="171" text-anchor="middle" fill="#10b981" font-size="11" font-weight="bold" id="svg-tp7-beltstag">4 × SPB2180</text>
+              <!-- VELOCITY & BELTS BADGE -->
+              <g class="guide-hoverable"
+                 data-guide-step="Cinemática y Cantidad"
+                 data-guide-title="Velocidad Tangencial v y Dotación de Correas"
+                 data-guide-desc="v = π·d·n2/60000 = 24,30 m/s (admisible < 30 m/s sin balanceo dinámico especial). Se precisan 4 correas SPB-XP para transmitir 72,71 kW."
+                 data-guide-norm="Límite centrífugo estándar: 30 m/s">
+                <rect x="315" y="132" width="150" height="52" rx="8" fill="#020617" fill-opacity="0.9" stroke="#f59e0b" stroke-width="1.5"/>
+                <text id="svg-tp7-vtag" x="390" y="152" text-anchor="middle" fill="#f59e0b" font-size="12" font-weight="bold">v = 24,30 m/s</text>
+                <text id="svg-tp7-beltstag" x="390" y="171" text-anchor="middle" fill="#10b981" font-size="11" font-weight="bold">4 × SPB2180XP</text>
+              </g>
             </svg>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs font-mono">
-            <div class="p-3 rounded-lg scada-card border-t-2 border-amber-500">
+            <div class="p-3 rounded-lg scada-card border-t-2 border-amber-500 guide-hoverable" data-guide-step="Paso 1: Factor de Servicio y Potencia" data-guide-title="Cálculo de la Potencia de Diseño Pd" data-guide-desc="C2 = 1,30 según Tabla 3 (Bomba centrífuga, Arranque directo, >16 h/día). Potencia de diseño: Pd = 55,93 kW · 1,30 = 72,71 kW." data-guide-norm="Cátedra Prof. Andrés Lanfranco">
               <div class="text-amber-400 font-bold mb-1">1. POTENCIA Y C₂</div>
               <div id="step-pr">Pr = 75 HP (55,93 kW)</div>
               <div id="step-c2">C₂ = 1,30 (Directo Tabla 3)</div>
               <div id="step-pd" class="font-bold text-slate-100">Pd = 72,71 kW</div>
             </div>
 
-            <div class="p-3 rounded-lg scada-card border-t-2 border-cyan-500">
+            <div class="p-3 rounded-lg scada-card border-t-2 border-cyan-500 guide-hoverable" data-guide-step="Pasos 2 y 3: Perfil y Distancia entre Centros" data-guide-title="Selección SPB-XP y Longitud Comercial" data-guide-desc="Con Pd=72,71 kW y n2=1856 rpm se adopta SPB-XP en Diagrama 2. Con Ld preliminar=2196,8 mm se adopta PHG SPB2180XP y CC exacto = 641,4 mm." data-guide-norm="Diagrama 2 y Tabla 8 SKF">
               <div class="text-cyan-400 font-bold mb-1">2 y 3. PERFIL Y CC</div>
               <div id="step-perfil">Perfil SPB (bo=16,3)</div>
               <div id="step-ld">Ld = 2196,8 → 2180 mm</div>
               <div id="step-cc" class="font-bold text-slate-100">CC def = 641,6 mm</div>
             </div>
 
-            <div class="p-3 rounded-lg scada-card border-t-2 border-emerald-500">
+            <div class="p-3 rounded-lg scada-card border-t-2 border-emerald-500 guide-hoverable" data-guide-step="Pasos 4, 5 y 6: Capacidad y Cantidad N" data-guide-title="Potencia Admisible Padm y Número de Correas" data-guide-desc="Interpolando Tabla 9h: Pb=21,75 kW. Con factores C1=0,92 y C3=0,99 da Padm=19,81 kW/correa. N = 72,71 / 19,81 = 3,67 => 4 correas SPB-XP." data-guide-norm="N = ceil(Pd / Padm) = 4 correas">
               <div class="text-emerald-400 font-bold mb-1">4, 5 y 6. CAPACIDAD Y N</div>
               <div id="step-pb">Pb = 20,89 + 0,87 = 21,75 kW</div>
               <div id="step-padm">Padm = 21,75·0,92·0,99 = 19,81 kW</div>
@@ -664,22 +727,22 @@ def build_web():
               <div class="grid grid-cols-2 gap-2">
                 <div>
                   <label class="text-slate-400 font-semibold block mb-1">Potencia Motor [HP]:</label>
-                  <input type="number" id="tp7-hp" value="75" step="1" oninput="computeTP7()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 font-bold text-slate-100">
+                  <input type="number" id="tp7-hp" value="75" step="1" oninput="computeTP7()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 font-bold text-slate-100 guide-hoverable" data-guide-step="Paso 1: Potencia Nominal" data-guide-title="Potencia del Motor Eléctrico (HP)" data-guide-desc="Potencia mecánica suministrada por el motor (75 HP). El sistema la convierte automáticamente a 55,93 kW para operar bajo normas métricas ISO." data-guide-norm="Pr = 75 HP · 0,7457 = 55,93 kW">
                 </div>
                 <div>
                   <label class="text-slate-400 font-semibold block mb-1">CC Preliminar [mm]:</label>
-                  <input type="number" id="tp7-ccp" value="650" step="10" oninput="computeTP7()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 font-bold text-slate-100">
+                  <input type="number" id="tp7-ccp" value="650" step="10" oninput="computeTP7()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 font-bold text-slate-100 guide-hoverable" data-guide-step="Paso 3a: Distancia entre Ejes" data-guide-title="Distancia entre Centros Preliminar CCp (mm)" data-guide-desc="Distancia tentativa estimada para el proyecto (650 mm). El sistema valida en vivo que esté en el rango 0,7(D+d) a 2(D+d)." data-guide-norm="Rango admisible: 399 mm a 1140 mm (Cumple ✓)">
                 </div>
               </div>
 
               <div class="grid grid-cols-2 gap-2">
                 <div>
                   <label class="text-emerald-400 font-bold block mb-1">D Motor [mm]:</label>
-                  <input type="number" id="tp7-D" value="320" step="5" oninput="onPulleyChange('D')" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 font-bold">
+                  <input type="number" id="tp7-D" value="320" step="5" oninput="onPulleyChange('D')" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 font-bold guide-hoverable" data-guide-step="Geometría Motriz" data-guide-title="Diámetro Primitivo Polea Motriz D (mm)" data-guide-desc="Diámetro primitivo normalizado de la polea motriz. Al cambiar este valor verá agrandarse o achicarse la polea en el sinóptico animado." data-guide-norm="Norma DIN 2211">
                 </div>
                 <div>
                   <label class="text-blue-400 font-bold block mb-1">d Conducida [mm]:</label>
-                  <input type="number" id="tp7-d" value="250" step="5" oninput="onPulleyChange('d')" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 font-bold">
+                  <input type="number" id="tp7-d" value="250" step="5" oninput="onPulleyChange('d')" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 font-bold guide-hoverable" data-guide-step="Geometría Conducida" data-guide-title="Diámetro Primitivo Polea Conducida d (mm)" data-guide-desc="Diámetro primitivo de la polea de la bomba. Se valida que cumpla d >= d_mín (140 mm para SPB) para evitar rotura prematura por fatiga." data-guide-norm="Tabla 5a: d_mín = 140 mm <= 250 mm">
                 </div>
               </div>
 
@@ -1126,6 +1189,7 @@ def build_web():
       document.getElementById("step-nbelts").textContent = `N = ${fmt(pd_kw, 2)} / ${fmt(padm, 2)} = ${fmt(n_exact, 2)} ⇒ ${n_belts}`;
 
       updateDiagram2(pd_kw, n_fast, profSel);
+      updatePulleySVG(D_in, d_in, beta);
 
       const minCC = 0.7 * (D_large + d_small);
       const maxCC = 2.0 * (D_large + d_small);
@@ -1158,6 +1222,123 @@ def build_web():
     function toggleDiagramScan() {
       const el = document.getElementById("diag2-scan-view");
       if (el) el.classList.toggle("hidden");
+    }
+
+        function updatePulleySVG(D_in, d_in, beta) {
+      const cx1 = 200, cy1 = 160;
+      const cx2 = 580, cy2 = 160;
+      const L = 380; // distance between centers in px
+
+      // Radius scaling: proportional to diameter
+      // Clamp R between 24 px and 125 px so pulleys fit perfectly in 340px viewBox
+      const R1 = Math.max(24, Math.min(125, D_in * 0.2875));
+      const R2 = Math.max(24, Math.min(125, d_in * 0.2875));
+
+      const deltaR = R1 - R2;
+      const sinGamma = Math.max(-0.99, Math.min(0.99, deltaR / L));
+      const gamma = Math.asin(sinGamma);
+      const cosGamma = Math.cos(gamma);
+
+      // Tangent Points (External Tangents)
+      const x1t = cx1 + R1 * sinGamma;
+      const y1t = cy1 - R1 * cosGamma;
+      const x2t = cx2 + R2 * sinGamma;
+      const y2t = cy2 - R2 * cosGamma;
+
+      const x2b = cx2 - R2 * sinGamma;
+      const y2b = cy2 + R2 * cosGamma;
+      const x1b = cx1 - R1 * sinGamma;
+      const y1b = cy1 + R1 * cosGamma;
+
+      const la2 = (R1 < R2) ? 1 : 0;
+      const la1 = (R1 > R2) ? 1 : 0;
+
+      const beltPath = `M ${x1t.toFixed(1)} ${y1t.toFixed(1)} ` +
+                       `L ${x2t.toFixed(1)} ${y2t.toFixed(1)} ` +
+                       `A ${R2.toFixed(1)} ${R2.toFixed(1)} 0 ${la2} 1 ${x2b.toFixed(1)} ${y2b.toFixed(1)} ` +
+                       `L ${x1b.toFixed(1)} ${y1b.toFixed(1)} ` +
+                       `A ${R1.toFixed(1)} ${R1.toFixed(1)} 0 ${la1} 1 ${x1t.toFixed(1)} ${y1t.toFixed(1)} Z`;
+
+      const arcPath = `M ${x2t.toFixed(1)} ${y2t.toFixed(1)} ` +
+                      `A ${R2.toFixed(1)} ${R2.toFixed(1)} 0 ${la2} 1 ${x2b.toFixed(1)} ${y2b.toFixed(1)}`;
+
+      const bgBelt = document.getElementById("tp7-belt-bg");
+      const dashBelt = document.getElementById("tp7-belt-dash");
+      const arcHighlight = document.getElementById("tp7-driven-arc-highlight");
+
+      if (bgBelt) bgBelt.setAttribute("d", beltPath);
+      if (dashBelt) dashBelt.setAttribute("d", beltPath);
+      if (arcHighlight) arcHighlight.setAttribute("d", arcPath);
+
+      // Driver Pulley update
+      const pD = document.getElementById("tp7-pulley-driver");
+      const pDG = document.getElementById("tp7-pulley-driver-groove");
+      const pDH = document.getElementById("tp7-driver-hub");
+      if (pD) pD.setAttribute("r", R1.toFixed(1));
+      if (pDG) pDG.setAttribute("r", (R1 * 0.82).toFixed(1));
+      if (pDH) pDH.setAttribute("r", Math.max(10, R1 * 0.18).toFixed(1));
+
+      // Driver Spokes update
+      const spk_d1 = document.getElementById("tp7-spk-d1");
+      const spk_d2 = document.getElementById("tp7-spk-d2");
+      const spk_d3 = document.getElementById("tp7-spk-d3");
+      const spk_d4 = document.getElementById("tp7-spk-d4");
+      const spkLen1 = R1 * 0.88;
+      const spkDiag1 = spkLen1 * 0.7071;
+      if (spk_d1) { spk_d1.setAttribute("y1", (cy1 - spkLen1).toFixed(1)); spk_d1.setAttribute("y2", (cy1 + spkLen1).toFixed(1)); }
+      if (spk_d2) { spk_d2.setAttribute("x1", (cx1 - spkLen1).toFixed(1)); spk_d2.setAttribute("x2", (cx1 + spkLen1).toFixed(1)); }
+      if (spk_d3) {
+        spk_d3.setAttribute("x1", (cx1 - spkDiag1).toFixed(1)); spk_d3.setAttribute("y1", (cy1 - spkDiag1).toFixed(1));
+        spk_d3.setAttribute("x2", (cx1 + spkDiag1).toFixed(1)); spk_d3.setAttribute("y2", (cy1 + spkDiag1).toFixed(1));
+      }
+      if (spk_d4) {
+        spk_d4.setAttribute("x1", (cx1 + spkDiag1).toFixed(1)); spk_d4.setAttribute("y1", (cy1 - spkDiag1).toFixed(1));
+        spk_d4.setAttribute("x2", (cx1 - spkDiag1).toFixed(1)); spk_d4.setAttribute("y2", (cy1 + spkDiag1).toFixed(1));
+      }
+
+      // Driven Pulley update
+      const pN = document.getElementById("tp7-pulley-driven");
+      const pNG = document.getElementById("tp7-pulley-driven-groove");
+      const pNH = document.getElementById("tp7-driven-hub");
+      if (pN) pN.setAttribute("r", R2.toFixed(1));
+      if (pNG) pNG.setAttribute("r", (R2 * 0.82).toFixed(1));
+      if (pNH) pNH.setAttribute("r", Math.max(9, R2 * 0.18).toFixed(1));
+
+      // Driven Spokes update
+      const spk_n1 = document.getElementById("tp7-spk-n1");
+      const spk_n2 = document.getElementById("tp7-spk-n2");
+      const spk_n3 = document.getElementById("tp7-spk-n3");
+      const spk_n4 = document.getElementById("tp7-spk-n4");
+      const spkLen2 = R2 * 0.88;
+      const spkDiag2 = spkLen2 * 0.7071;
+      if (spk_n1) { spk_n1.setAttribute("y1", (cy2 - spkLen2).toFixed(1)); spk_n1.setAttribute("y2", (cy2 + spkLen2).toFixed(1)); }
+      if (spk_n2) { spk_n2.setAttribute("x1", (cx2 - spkLen2).toFixed(1)); spk_n2.setAttribute("x2", (cx2 + spkLen2).toFixed(1)); }
+      if (spk_n3) {
+        spk_n3.setAttribute("x1", (cx2 - spkDiag2).toFixed(1)); spk_n3.setAttribute("y1", (cy2 - spkDiag2).toFixed(1));
+        spk_n3.setAttribute("x2", (cx2 + spkDiag2).toFixed(1)); spk_n3.setAttribute("y2", (cy2 + spkDiag2).toFixed(1));
+      }
+      if (spk_n4) {
+        spk_n4.setAttribute("x1", (cx2 + spkDiag2).toFixed(1)); spk_n4.setAttribute("y1", (cy2 - spkDiag2).toFixed(1));
+        spk_n4.setAttribute("x2", (cx2 - spkDiag2).toFixed(1)); spk_n4.setAttribute("y2", (cy2 + spkDiag2).toFixed(1));
+      }
+
+      // Dynamic text positioning
+      const tMotorTitle = document.getElementById("svg-tp7-motortitle");
+      const tMotorDesc = document.getElementById("svg-tp7-motordesc");
+      if (tMotorTitle) tMotorTitle.setAttribute("y", Math.max(28, (cy1 - R1 - 12)).toFixed(1));
+      if (tMotorDesc) tMotorDesc.setAttribute("y", Math.min(320, (cy1 + R1 + 22)).toFixed(1));
+
+      const tDrivenTitle = document.getElementById("svg-tp7-driventitle");
+      const tDrivenDesc = document.getElementById("svg-tp7-drivenpulley");
+      if (tDrivenTitle) tDrivenTitle.setAttribute("y", Math.max(28, (cy2 - R2 - 12)).toFixed(1));
+      if (tDrivenDesc) tDrivenDesc.setAttribute("y", Math.min(320, (cy2 + R2 + 22)).toFixed(1));
+
+      // Contact Arc label position
+      const tArcLbl = document.getElementById("svg-tp7-arclbl");
+      const tC3Lbl = document.getElementById("svg-tp7-c3lbl");
+      const arcTextX = Math.min(790, (cx2 + R2 + 18));
+      if (tArcLbl) { tArcLbl.setAttribute("x", arcTextX.toFixed(1)); tArcLbl.setAttribute("y", (cy2 - 5).toFixed(1)); }
+      if (tC3Lbl) { tC3Lbl.setAttribute("x", arcTextX.toFixed(1)); tC3Lbl.setAttribute("y", (cy2 + 12).toFixed(1)); }
     }
 
     function renderDatabaseTable() {
@@ -1236,6 +1417,76 @@ def build_web():
         if (shStripes) shStripes.setAttribute("transform", `translate(${Math.sin(sPhase*0.4)*2}, 0)`);
       }
       requestAnimationFrame(animate);
+    initGuideTooltips();
+
+    let guideModeActive = true;
+    function toggleGuideMode() {
+      guideModeActive = !guideModeActive;
+      const dock = document.getElementById("guide-dock");
+      const btn = document.getElementById("btn-guide");
+      const statusText = document.getElementById("guide-status-text");
+      
+      if (dock) {
+        dock.style.display = guideModeActive ? "flex" : "none";
+      }
+      if (statusText) {
+        statusText.textContent = guideModeActive ? "Guía Académica: ACTIVA" : "Guía: PAUSADA";
+      }
+      if (btn) {
+        btn.className = guideModeActive 
+          ? "px-3 py-1.5 rounded-lg text-xs font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 hover:bg-cyan-500/30 transition flex items-center gap-1.5 cursor-pointer shadow-sm"
+          : "px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-800 text-slate-400 border border-slate-700 hover:bg-slate-700 transition flex items-center gap-1.5 cursor-pointer";
+      }
+    }
+
+    // Attach Hover Listeners
+    function initGuideTooltips() {
+      const flTip = document.getElementById("guide-floating-tooltip");
+      const flStep = document.getElementById("fl-tip-step");
+      const flTitle = document.getElementById("fl-tip-title");
+      const flDesc = document.getElementById("fl-tip-desc");
+      const flNorm = document.getElementById("fl-tip-norm");
+
+      const dockStep = document.getElementById("guide-dock-step");
+      const dockTitle = document.getElementById("guide-dock-title");
+      const dockDesc = document.getElementById("guide-dock-desc");
+      const dockNorm = document.getElementById("guide-dock-norm");
+
+      document.querySelectorAll("[data-guide-title]").forEach(el => {
+        el.addEventListener("mouseenter", (e) => {
+          if (!guideModeActive) return;
+          const step = el.getAttribute("data-guide-step") || "GUÍA DE CÁLCULO";
+          const title = el.getAttribute("data-guide-title") || "";
+          const desc = el.getAttribute("data-guide-desc") || "";
+          const norm = el.getAttribute("data-guide-norm") || "Norma SKF Oficial";
+
+          if (dockStep) dockStep.textContent = step;
+          if (dockTitle) dockTitle.textContent = title;
+          if (dockDesc) dockDesc.textContent = desc;
+          if (dockNorm) dockNorm.textContent = norm;
+
+          if (flStep) flStep.textContent = step;
+          if (flTitle) flTitle.textContent = title;
+          if (flDesc) flDesc.textContent = desc;
+          if (flNorm) flNorm.textContent = norm;
+
+          if (flTip) flTip.classList.add("active");
+        });
+
+        el.addEventListener("mousemove", (e) => {
+          if (!guideModeActive || !flTip) return;
+          const x = e.clientX;
+          const y = e.clientY;
+          flTip.style.left = `${Math.min(window.innerWidth - 180, Math.max(180, x))}px`;
+          flTip.style.top = `${y}px`;
+        });
+
+        el.addEventListener("mouseleave", () => {
+          if (flTip) flTip.classList.remove("active");
+        });
+      });
+    }
+
     }
 
     populateBearingSelect(1, "* 6308");
@@ -1243,7 +1494,116 @@ def build_web():
     computeTP6();
     computeTP7();
     requestAnimationFrame(animate);
+    initGuideTooltips();
+
+    let guideModeActive = true;
+    function toggleGuideMode() {
+      guideModeActive = !guideModeActive;
+      const dock = document.getElementById("guide-dock");
+      const btn = document.getElementById("btn-guide");
+      const statusText = document.getElementById("guide-status-text");
+      
+      if (dock) {
+        dock.style.display = guideModeActive ? "flex" : "none";
+      }
+      if (statusText) {
+        statusText.textContent = guideModeActive ? "Guía Académica: ACTIVA" : "Guía: PAUSADA";
+      }
+      if (btn) {
+        btn.className = guideModeActive 
+          ? "px-3 py-1.5 rounded-lg text-xs font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 hover:bg-cyan-500/30 transition flex items-center gap-1.5 cursor-pointer shadow-sm"
+          : "px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-800 text-slate-400 border border-slate-700 hover:bg-slate-700 transition flex items-center gap-1.5 cursor-pointer";
+      }
+    }
+
+    // Attach Hover Listeners
+    function initGuideTooltips() {
+      const flTip = document.getElementById("guide-floating-tooltip");
+      const flStep = document.getElementById("fl-tip-step");
+      const flTitle = document.getElementById("fl-tip-title");
+      const flDesc = document.getElementById("fl-tip-desc");
+      const flNorm = document.getElementById("fl-tip-norm");
+
+      const dockStep = document.getElementById("guide-dock-step");
+      const dockTitle = document.getElementById("guide-dock-title");
+      const dockDesc = document.getElementById("guide-dock-desc");
+      const dockNorm = document.getElementById("guide-dock-norm");
+
+      document.querySelectorAll("[data-guide-title]").forEach(el => {
+        el.addEventListener("mouseenter", (e) => {
+          if (!guideModeActive) return;
+          const step = el.getAttribute("data-guide-step") || "GUÍA DE CÁLCULO";
+          const title = el.getAttribute("data-guide-title") || "";
+          const desc = el.getAttribute("data-guide-desc") || "";
+          const norm = el.getAttribute("data-guide-norm") || "Norma SKF Oficial";
+
+          if (dockStep) dockStep.textContent = step;
+          if (dockTitle) dockTitle.textContent = title;
+          if (dockDesc) dockDesc.textContent = desc;
+          if (dockNorm) dockNorm.textContent = norm;
+
+          if (flStep) flStep.textContent = step;
+          if (flTitle) flTitle.textContent = title;
+          if (flDesc) flDesc.textContent = desc;
+          if (flNorm) flNorm.textContent = norm;
+
+          if (flTip) flTip.classList.add("active");
+        });
+
+        el.addEventListener("mousemove", (e) => {
+          if (!guideModeActive || !flTip) return;
+          const x = e.clientX;
+          const y = e.clientY;
+          flTip.style.left = `${Math.min(window.innerWidth - 180, Math.max(180, x))}px`;
+          flTip.style.top = `${y}px`;
+        });
+
+        el.addEventListener("mouseleave", () => {
+          if (flTip) flTip.classList.remove("active");
+        });
+      });
+    }
+
   </script>
+
+  <!-- DOCKED ACADEMIC GUIDANCE HUD -->
+  <div id="guide-dock" class="fixed bottom-3 left-4 right-4 max-w-7xl mx-auto bg-slate-950/95 border border-cyan-500/40 shadow-2xl rounded-xl p-3 z-50 backdrop-blur-md flex flex-col md:flex-row items-start md:items-center justify-between gap-3 transition-transform duration-300">
+    <div class="flex items-start gap-3">
+      <div class="w-8 h-8 rounded-lg bg-cyan-500/20 border border-cyan-500/40 flex-shrink-0 flex items-center justify-center text-cyan-400 font-bold text-sm">
+        💡
+      </div>
+      <div>
+        <div class="flex items-center gap-2">
+          <span id="guide-dock-step" class="text-[10px] font-bold px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 uppercase tracking-wider border border-cyan-500/30">
+            GUÍA DE USO INTERACTIVA • CÁTEDRA MECÁNICA II
+          </span>
+          <span id="guide-dock-title" class="text-xs font-bold text-slate-100">
+            Pase el cursor sobre cualquier control, tarjeta o gráfico para ver la justificación técnica
+          </span>
+        </div>
+        <p id="guide-dock-desc" class="text-xs text-slate-300 mt-0.5">
+          Este simulador reproduce paso a paso los 6 pasos normativos de dimensionamiento de transmisiones según el Catálogo SKF y los criterios oficiales del Prof. Ing. Andrés Lanfranco.
+        </p>
+      </div>
+    </div>
+    <div class="flex items-center gap-2 flex-shrink-0 self-end md:self-center">
+      <span id="guide-dock-norm" class="text-[11px] text-amber-400 font-mono bg-amber-500/10 px-2 py-1 rounded border border-amber-500/20">
+        Prof. Ing. Andrés Lanfranco
+      </span>
+      <button onclick="toggleGuideMode()" class="text-slate-400 hover:text-white text-xs px-2 py-1 rounded bg-slate-800 border border-slate-700">Ocultar</button>
+    </div>
+  </div>
+
+  <!-- FLOATING TOOLTIP ELEMENT -->
+  <div id="guide-floating-tooltip" class="bg-slate-950/95 border border-cyan-400/80 shadow-2xl rounded-xl p-3 text-xs text-slate-100 backdrop-blur-md">
+    <div class="flex items-center gap-2 mb-1">
+      <span id="fl-tip-step" class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-300 uppercase tracking-wider"></span>
+      <span id="fl-tip-norm" class="text-[9px] font-mono text-amber-400"></span>
+    </div>
+    <div id="fl-tip-title" class="font-bold text-slate-100 mb-1"></div>
+    <div id="fl-tip-desc" class="text-slate-300 text-[11px] leading-relaxed"></div>
+  </div>
+
 </body>
 </html>"""
 
