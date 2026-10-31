@@ -183,86 +183,497 @@
       <!-- MAIN TP6 WORKSPACE -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
         
-        <!-- LEFT: SVG SHAFT MODEL -->
+        <!-- LEFT: MULTI-VIEW HIGH REALISM MECHANICAL WORKSPACE -->
         <div class="lg:col-span-8 scada-panel rounded-xl p-5 space-y-4">
           <div class="flex flex-wrap items-center justify-between gap-2">
             <div>
-              <span class="text-[11px] font-bold uppercase tracking-wider text-emerald-400">Sinóptico Cinemático Industrial</span>
-              <h2 class="text-base font-bold text-slate-100">Comportamiento Mecánico y Cargas Ortogonales (n = <span id="lbl-tp6-rpm" class="text-emerald-400">2400</span> rpm)</h2>
+              <span class="text-[11px] font-bold uppercase tracking-wider text-emerald-400">Modelado Fotorrealista • Mecánica II</span>
+              <h2 class="text-base font-bold text-slate-100 flex items-center gap-2">
+                <span>Eje Intermediario de Transmisión</span>
+                <span class="text-xs px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-mono font-normal">n = <strong id="lbl-tp6-rpm" class="text-emerald-400">2400</strong> rpm</span>
+              </h2>
             </div>
-            <div class="flex items-center gap-2 text-xs font-mono">
-              <span class="px-2 py-1 rounded bg-red-500/20 text-red-400 border border-red-500/30 font-semibold">Cargas Externas</span>
-              <span class="px-2 py-1 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-semibold">Reacciones Apoyo</span>
+
+            <!-- VIEW SELECTOR TABS -->
+            <div class="inline-flex rounded-lg bg-slate-900 border border-slate-700/80 p-0.5 text-xs font-bold shadow-inner">
+              <button type="button" id="btn-tab-cad" onclick="switchShaftView('cad')" class="px-2.5 py-1.5 rounded-md bg-emerald-600 text-white cursor-pointer transition flex items-center gap-1.5 shadow">
+                <span>🔧</span> Ensamblaje CAD
+              </button>
+              <button type="button" id="btn-tab-3d" onclick="switchShaftView('3d')" class="px-2.5 py-1.5 rounded-md text-slate-400 hover:text-white cursor-pointer transition flex items-center gap-1.5">
+                <span>🧊</span> Isométrico 3D
+              </button>
+              <button type="button" id="btn-tab-dcl" onclick="switchShaftView('dcl')" class="px-2.5 py-1.5 rounded-md text-slate-400 hover:text-white cursor-pointer transition flex items-center gap-1.5">
+                <span>📐</span> DCL Ortogonal
+              </button>
+              <button type="button" id="btn-tab-plates" onclick="switchShaftView('plates')" class="px-2.5 py-1.5 rounded-md text-slate-400 hover:text-white cursor-pointer transition flex items-center gap-1.5">
+                <span>🖼️</span> Láminas Cátedra
+              </button>
             </div>
           </div>
 
-          <div class="bg-slate-950/70 rounded-xl border border-slate-800 p-3 overflow-x-auto">
-            <svg id="svg-tp6" viewBox="0 0 840 420" class="w-full min-w-[650px] h-auto">
-              <line x1="80" y1="25" x2="80" y2="390" stroke="#334155" stroke-dasharray="3 3" stroke-width="1.5"/>
-              <line x1="210" y1="25" x2="210" y2="390" stroke="#10b981" stroke-dasharray="3 3" stroke-width="1.5" stroke-opacity="0.6"/>
-              <line x1="450" y1="25" x2="450" y2="390" stroke="#334155" stroke-dasharray="3 3" stroke-width="1.5"/>
-              <line x1="730" y1="25" x2="730" y2="390" stroke="#3b82f6" stroke-dasharray="3 3" stroke-width="1.5" stroke-opacity="0.6"/>
+          <!-- COMMON SVG DEFINITIONS (GRADIENTS & FILTERS) -->
+          <svg class="hidden">
+            <defs>
+              <!-- Chrome Metallic Shaft Gradient -->
+              <linearGradient id="grad-shaft-metal" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#94a3b8"/>
+                <stop offset="18%" stop-color="#e2e8f0"/>
+                <stop offset="35%" stop-color="#ffffff"/>
+                <stop offset="65%" stop-color="#cbd5e1"/>
+                <stop offset="88%" stop-color="#64748b"/>
+                <stop offset="100%" stop-color="#334155"/>
+              </linearGradient>
 
-              <text x="80" y="18" text-anchor="middle" fill="#94a3b8" font-size="11" font-weight="bold">Polea (x = 0)</text>
-              <text x="210" y="18" text-anchor="middle" fill="#10b981" font-size="11" font-weight="bold" id="svg-tp6-pos1">Apoyo 1 (x = 10 cm)</text>
-              <text x="450" y="18" text-anchor="middle" fill="#94a3b8" font-size="11" font-weight="bold" id="svg-tp6-posgear">Engranaje (x = 30 cm)</text>
-              <text x="730" y="18" text-anchor="middle" fill="#3b82f6" font-size="11" font-weight="bold" id="svg-tp6-pos2">Apoyo 2 (x = 55 cm)</text>
+              <!-- Pulley Metallic Blue Gradient -->
+              <linearGradient id="grad-pulley-blue" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#0284c7"/>
+                <stop offset="30%" stop-color="#38bdf8"/>
+                <stop offset="70%" stop-color="#0284c7"/>
+                <stop offset="100%" stop-color="#0369a1"/>
+              </linearGradient>
 
-              <rect x="55" y="65" width="705" height="24" rx="4" fill="#334155" stroke="#64748b" stroke-width="2"/>
-              <g id="tp6-stripes" fill="#94a3b8" opacity="0.4">
-                <rect x="110" y="68" width="30" height="6" rx="2"/>
-                <rect x="280" y="68" width="40" height="6" rx="2"/>
-                <rect x="540" y="68" width="40" height="6" rx="2"/>
+              <!-- Pulley Cross-Section Gradient (Vertical) -->
+              <linearGradient id="grad-pulley-v" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#38bdf8"/>
+                <stop offset="50%" stop-color="#bae6fd"/>
+                <stop offset="100%" stop-color="#0284c7"/>
+              </linearGradient>
+
+              <!-- Spur Gear Precision Green Gradient -->
+              <linearGradient id="grad-gear-green" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#22c55e"/>
+                <stop offset="25%" stop-color="#86efac"/>
+                <stop offset="50%" stop-color="#16a34a"/>
+                <stop offset="85%" stop-color="#15803d"/>
+                <stop offset="100%" stop-color="#14532d"/>
+              </linearGradient>
+
+              <!-- Structural Beam Blue Gradient -->
+              <linearGradient id="grad-beam-blue" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#2563eb"/>
+                <stop offset="25%" stop-color="#60a5fa"/>
+                <stop offset="75%" stop-color="#1d4ed8"/>
+                <stop offset="100%" stop-color="#1e3a8a"/>
+              </linearGradient>
+
+              <!-- Glow filter for 3D vectors -->
+              <filter id="glow-vector" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="0" dy="0" stdDeviation="2.5" flood-color="#22c55e" flood-opacity="0.8"/>
+              </filter>
+            </defs>
+          </svg>
+
+          <!-- 1. VISTA: ENSAMBLAJE CAD FOTORREALISTA (CORTE TÉCNICO) -->
+          <div id="view-shaft-cad" class="bg-slate-950/85 rounded-xl border border-slate-800 p-4 overflow-x-auto">
+            <svg id="svg-shaft-cad" viewBox="0 0 860 300" class="w-full min-w-[720px] h-auto select-none font-sans">
+              <!-- Centerline axis (Dash-dot) -->
+              <line x1="20" y1="130" x2="840" y2="130" stroke="#0284c7" stroke-width="1.2" stroke-dasharray="14 3 3 3" opacity="0.7"/>
+
+              <!-- STEPPED SHAFT (Exact stepped geometry with chrome specular reflection) -->
+              <g id="cad-stepped-shaft">
+                <!-- Section 1: Pulley seat stub (x=35 to 75, diam=35mm -> h=26) -->
+                <rect x="35" y="117" width="40" height="26" fill="url(#grad-shaft-metal)" stroke="#1e293b" stroke-width="1.2"/>
+                <line x1="75" y1="113" x2="75" y2="147" stroke="#475569" stroke-width="1"/>
+
+                <!-- Section 2: Shaft span to Bearing 1 (x=75 to 255, diam=38mm -> h=30) -->
+                <rect x="75" y="115" width="180" height="30" fill="url(#grad-shaft-metal)" stroke="#1e293b" stroke-width="1.2"/>
+                
+                <!-- Section 3: Bearing 1 seat (x=255 to 295, diam=40mm -> h=34) -->
+                <rect x="255" y="113" width="40" height="34" fill="url(#grad-shaft-metal)" stroke="#10b981" stroke-width="1.5"/>
+                <!-- Shoulder line behind bearing -->
+                <line x1="295" y1="111" x2="295" y2="149" stroke="#334155" stroke-width="1.5"/>
+
+                <!-- Section 4: Shaft middle span to Gear (x=295 to 480, diam=44mm -> h=38) -->
+                <rect x="295" y="111" width="185" height="38" fill="url(#grad-shaft-metal)" stroke="#1e293b" stroke-width="1.2"/>
+
+                <!-- Section 5: Gear seat (x=480 to 524, diam=44mm -> h=38) -->
+                <rect x="480" y="111" width="44" height="38" fill="url(#grad-shaft-metal)" stroke="#16a34a" stroke-width="1.2"/>
+                
+                <!-- Section 6: Shaft span to Bearing 2 (x=524 to 705, diam=36mm -> h=28) -->
+                <rect x="524" y="116" width="181" height="28" fill="url(#grad-shaft-metal)" stroke="#1e293b" stroke-width="1.2"/>
+
+                <!-- Section 7: Bearing 2 seat (x=705 to 741, diam=30mm -> h=24) -->
+                <rect x="705" y="118" width="36" height="24" fill="url(#grad-shaft-metal)" stroke="#3b82f6" stroke-width="1.5"/>
+
+                <!-- Section 8: Shaft end stub (x=741 to 765, diam=28mm -> h=20) -->
+                <rect x="741" y="120" width="24" height="20" fill="url(#grad-shaft-metal)" stroke="#1e293b" stroke-width="1.2"/>
               </g>
 
-              <rect x="66" y="30" width="28" height="94" rx="5" fill="#f59e0b" fill-opacity="0.2" stroke="#f59e0b" stroke-width="2.5"/>
-              <text x="80" y="138" text-anchor="middle" fill="#f59e0b" font-size="11" font-weight="bold">Polea Motriz</text>
+              <!-- 1. POLEA TRAPEZOIDAL (x=75, Exact V-groove cross-section in sky-blue) -->
+              <g id="cad-pulley-assy" class="cursor-pointer">
+                <!-- Upper half sheave with V-groove -->
+                <path d="M 45,35 L 62,35 L 75,70 L 88,35 L 105,35 L 105,115 L 45,115 Z" fill="url(#grad-pulley-v)" stroke="#0284c7" stroke-width="1.8"/>
+                <line x1="75" y1="70" x2="75" y2="115" stroke="#0284c7" stroke-width="1" stroke-opacity="0.6"/>
+                <!-- Lower half sheave with V-groove -->
+                <path d="M 45,145 L 105,145 L 105,225 L 88,225 L 75,190 L 62,225 L 45,225 Z" fill="url(#grad-pulley-v)" stroke="#0284c7" stroke-width="1.8"/>
+                <line x1="75" y1="145" x2="75" y2="190" stroke="#0284c7" stroke-width="1" stroke-opacity="0.6"/>
+                
+                <!-- Shaft hub retainer and chamfer -->
+                <rect x="42" y="112" width="6" height="36" rx="2" fill="#0369a1" stroke="#0284c7"/>
+                
+                <!-- Label with arrow -->
+                <text x="75" y="20" text-anchor="middle" fill="#38bdf8" font-size="12" font-weight="bold">Polea</text>
+                <path d="M 75,23 L 75,32" stroke="#38bdf8" stroke-width="1.5" marker-end="url(#arrow-cad)"/>
+                <polygon points="75,35 72,28 78,28" fill="#38bdf8"/>
+              </g>
 
-              <rect id="svg-b1-box" x="190" y="46" width="40" height="62" rx="6" fill="#10b981" fill-opacity="0.25" stroke="#10b981" stroke-width="2.5"/>
-              <circle cx="202" cy="56" r="4" fill="#10b981"/><circle cx="218" cy="56" r="4" fill="#10b981"/>
-              <circle cx="202" cy="98" r="4" fill="#10b981"/><circle cx="218" cy="98" r="4" fill="#10b981"/>
-              <text x="210" y="125" text-anchor="middle" fill="#10b981" font-size="11" font-weight="bold" id="svg-lbl-b1">Apoyo 1 (* 6308)</text>
+              <!-- 2. RODAMIENTO 1 (x=275, Housing with standard ISO bearing cross mark 'X') -->
+              <g id="cad-b1-assy" class="cursor-pointer">
+                <!-- Upper Bearing block -->
+                <rect x="257" y="70" width="36" height="43" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+                <rect x="260" y="74" width="30" height="35" fill="#bae6fd" fill-opacity="0.9" stroke="#0284c7" stroke-width="1.5"/>
+                <!-- ISO standard cross 'X' inside bearing -->
+                <line x1="260" y1="74" x2="290" y2="109" stroke="#0f172a" stroke-width="1.5"/>
+                <line x1="290" y1="74" x2="260" y2="109" stroke="#0f172a" stroke-width="1.5"/>
 
-              <rect x="436" y="25" width="28" height="104" rx="4" fill="#ec4899" fill-opacity="0.2" stroke="#ec4899" stroke-width="2.5"/>
-              <text x="450" y="143" text-anchor="middle" fill="#ec4899" font-size="11" font-weight="bold">Engranaje Impulsor</text>
+                <!-- Lower Bearing block -->
+                <rect x="257" y="147" width="36" height="43" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+                <rect x="260" y="151" width="30" height="35" fill="#bae6fd" fill-opacity="0.9" stroke="#0284c7" stroke-width="1.5"/>
+                <!-- ISO standard cross 'X' inside bearing -->
+                <line x1="260" y1="151" x2="290" y2="186" stroke="#0f172a" stroke-width="1.5"/>
+                <line x1="290" y1="151" x2="260" y2="186" stroke="#0f172a" stroke-width="1.5"/>
 
-              <rect id="svg-b2-box" x="712" y="50" width="36" height="54" rx="6" fill="#3b82f6" fill-opacity="0.25" stroke="#3b82f6" stroke-width="2.5"/>
-              <circle cx="723" cy="59" r="3.5" fill="#3b82f6"/><circle cx="737" cy="59" r="3.5" fill="#3b82f6"/>
-              <circle cx="723" cy="95" r="3.5" fill="#3b82f6"/><circle cx="737" cy="95" r="3.5" fill="#3b82f6"/>
-              <text x="730" y="122" text-anchor="middle" fill="#3b82f6" font-size="11" font-weight="bold" id="svg-lbl-b2">Apoyo 2 (* 6206)</text>
+                <!-- Housing step / shoulder -->
+                <rect x="252" y="66" width="46" height="6" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+                <rect x="252" y="188" width="46" height="6" fill="#1e293b" stroke="#475569" stroke-width="1"/>
 
-              <!-- DCL PLANO X-Y -->
-              <text x="15" y="180" fill="#cbd5e1" font-size="11" font-weight="bold">DCL PLANO x-y</text>
-              <line x1="60" y1="215" x2="760" y2="215" stroke="#475569" stroke-width="2.5"/>
-              <line x1="80" y1="165" x2="80" y2="210" stroke="#ef4444" stroke-width="3"/>
-              <polygon points="74,205 86,205 80,215" fill="#ef4444"/>
-              <text x="80" y="160" text-anchor="middle" fill="#ef4444" font-size="11" font-weight="bold" id="svg-ftp-val">Ftp = 227 kgf</text>
-              <line x1="210" y1="265" x2="210" y2="220" stroke="#10b981" stroke-width="3"/>
-              <polygon points="204,225 216,225 210,215" fill="#10b981"/>
-              <text x="210" y="280" text-anchor="middle" fill="#10b981" font-size="11" font-weight="bold" id="svg-ray-val">RAy = 390 kgf</text>
-              <line x1="450" y1="165" x2="450" y2="210" stroke="#ef4444" stroke-width="3"/>
-              <polygon points="444,205 456,205 450,215" fill="#ef4444"/>
-              <text x="450" y="160" text-anchor="middle" fill="#ef4444" font-size="11" font-weight="bold" id="svg-fte-val">Fte = 202 kgf</text>
-              <line x1="730" y1="260" x2="730" y2="220" stroke="#3b82f6" stroke-width="3"/>
-              <polygon points="724,225 736,225 730,215" fill="#3b82f6"/>
-              <text x="730" y="275" text-anchor="middle" fill="#3b82f6" font-size="11" font-weight="bold" id="svg-rby-val">RBy = 39 kgf</text>
+                <!-- Label with arrow -->
+                <text x="275" y="48" text-anchor="middle" fill="#10b981" font-size="12" font-weight="bold">Rodamiento 1</text>
+                <polygon points="275,64 271,55 279,55" fill="#10b981"/>
+                <line x1="275" y1="50" x2="275" y2="60" stroke="#10b981" stroke-width="1.5"/>
+                <text x="275" y="208" text-anchor="middle" fill="#10b981" font-size="10" font-weight="bold" id="cad-lbl-b1">* 6308 (d=40)</text>
+              </g>
 
-              <!-- DCL PLANO X-Z -->
-              <text x="15" y="315" fill="#cbd5e1" font-size="11" font-weight="bold">DCL PLANO x-z</text>
-              <line x1="60" y1="350" x2="760" y2="350" stroke="#475569" stroke-width="2.5"/>
-              <line x1="80" y1="395" x2="80" y2="355" stroke="#ef4444" stroke-width="3"/>
-              <polygon points="74,360 86,360 80,350" fill="#ef4444"/>
-              <text x="80" y="412" text-anchor="middle" fill="#ef4444" font-size="11" font-weight="bold" id="svg-frp-val">Frp = 393 kgf</text>
-              <line x1="210" y1="300" x2="210" y2="345" stroke="#10b981" stroke-width="3"/>
-              <polygon points="204,340 216,340 210,350" fill="#10b981"/>
-              <text x="210" y="295" text-anchor="middle" fill="#10b981" font-size="11" font-weight="bold" id="svg-raz-val">RAz = 521 kgf</text>
-              <line x1="450" y1="390" x2="450" y2="355" stroke="#ef4444" stroke-width="3"/>
-              <polygon points="444,360 456,360 450,350" fill="#ef4444"/>
-              <text x="450" y="408" text-anchor="middle" fill="#ef4444" font-size="11" font-weight="bold" id="svg-fre-val">Fre = 73 kgf</text>
-              <line x1="730" y1="390" x2="730" y2="355" stroke="#3b82f6" stroke-width="3"/>
-              <polygon points="724,360 736,360 730,350" fill="#3b82f6"/>
-              <text x="730" y="408" text-anchor="middle" fill="#3b82f6" font-size="11" font-weight="bold" id="svg-rbz-val">RBz = 55 kgf</text>
+              <!-- 3. ENGRANAJE (x=502, Spur gear with teeth lines in green) -->
+              <g id="cad-gear-assy" class="cursor-pointer">
+                <!-- Upper gear body with tooth lines -->
+                <rect x="490" y="28" width="24" height="83" fill="url(#grad-gear-green)" stroke="#15803d" stroke-width="1.8"/>
+                <!-- Gear teeth horizontal lines (representing spur gear teeth) -->
+                <line x1="490" y1="36" x2="514" y2="36" stroke="#14532d" stroke-width="1.2"/>
+                <line x1="490" y1="46" x2="514" y2="46" stroke="#14532d" stroke-width="1.2"/>
+                <line x1="490" y1="56" x2="514" y2="56" stroke="#14532d" stroke-width="1.2"/>
+                <line x1="490" y1="66" x2="514" y2="66" stroke="#14532d" stroke-width="1.2"/>
+                <line x1="490" y1="76" x2="514" y2="76" stroke="#14532d" stroke-width="1.2"/>
+                <line x1="490" y1="86" x2="514" y2="86" stroke="#14532d" stroke-width="1.2"/>
+                <line x1="490" y1="96" x2="514" y2="96" stroke="#14532d" stroke-width="1.2"/>
+                <line x1="490" y1="104" x2="514" y2="104" stroke="#14532d" stroke-width="1.2"/>
+
+                <!-- Lower gear body with tooth lines -->
+                <rect x="490" y="149" width="24" height="83" fill="url(#grad-gear-green)" stroke="#15803d" stroke-width="1.8"/>
+                <line x1="490" y1="157" x2="514" y2="157" stroke="#14532d" stroke-width="1.2"/>
+                <line x1="490" y1="167" x2="514" y2="167" stroke="#14532d" stroke-width="1.2"/>
+                <line x1="490" y1="177" x2="514" y2="177" stroke="#14532d" stroke-width="1.2"/>
+                <line x1="490" y1="187" x2="514" y2="187" stroke="#14532d" stroke-width="1.2"/>
+                <line x1="490" y1="197" x2="514" y2="197" stroke="#14532d" stroke-width="1.2"/>
+                <line x1="490" y1="207" x2="514" y2="207" stroke="#14532d" stroke-width="1.2"/>
+                <line x1="490" y1="217" x2="514" y2="217" stroke="#14532d" stroke-width="1.2"/>
+                <line x1="490" y1="225" x2="514" y2="225" stroke="#14532d" stroke-width="1.2"/>
+
+                <!-- Tooth tips at outer crest -->
+                <path d="M 499,28 L 502,23 L 505,28 Z" fill="#22c55e" stroke="#15803d"/>
+                <rect x="488" y="26" width="28" height="3" fill="#14532d"/>
+                <rect x="488" y="231" width="28" height="3" fill="#14532d"/>
+
+                <!-- Label with arrow -->
+                <text x="502" y="14" text-anchor="middle" fill="#4ade80" font-size="12" font-weight="bold">Engranaje</text>
+                <polygon points="502,23 498,16 506,16" fill="#4ade80"/>
+              </g>
+
+              <!-- 4. RODAMIENTO 2 (x=723, Housing with standard ISO bearing cross mark 'X') -->
+              <g id="cad-b2-assy" class="cursor-pointer">
+                <!-- Upper Bearing block -->
+                <rect x="707" y="78" width="32" height="40" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+                <rect x="710" y="82" width="26" height="32" fill="#bae6fd" fill-opacity="0.9" stroke="#0284c7" stroke-width="1.5"/>
+                <!-- ISO standard cross 'X' inside bearing -->
+                <line x1="710" y1="82" x2="736" y2="114" stroke="#0f172a" stroke-width="1.5"/>
+                <line x1="736" y1="82" x2="710" y2="114" stroke="#0f172a" stroke-width="1.5"/>
+
+                <!-- Lower Bearing block -->
+                <rect x="707" y="142" width="32" height="40" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+                <rect x="710" y="146" width="26" height="32" fill="#bae6fd" fill-opacity="0.9" stroke="#0284c7" stroke-width="1.5"/>
+                <!-- ISO standard cross 'X' inside bearing -->
+                <line x1="710" y1="146" x2="736" y2="178" stroke="#0f172a" stroke-width="1.5"/>
+                <line x1="736" y1="146" x2="710" y2="178" stroke="#0f172a" stroke-width="1.5"/>
+
+                <!-- Housing step / shoulder -->
+                <rect x="703" y="74" width="40" height="5" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+                <rect x="703" y="181" width="40" height="5" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+
+                <!-- Label with arrow -->
+                <text x="723" y="48" text-anchor="middle" fill="#60a5fa" font-size="12" font-weight="bold">Rodamiento 2</text>
+                <polygon points="723,72 719,63 727,63" fill="#60a5fa"/>
+                <line x1="723" y1="52" x2="723" y2="68" stroke="#60a5fa" stroke-width="1.5"/>
+                <text x="723" y="204" text-anchor="middle" fill="#60a5fa" font-size="10" font-weight="bold" id="cad-lbl-b2">* 6206 (d=30)</text>
+              </g>
+
+              <!-- ENGINEERING DIMENSION LINES (100, 200, 250 mm) -->
+              <g id="cad-dimensions" stroke="#cbd5e1" stroke-width="1.2">
+                <!-- Extension lines from components down to dimension arrows -->
+                <line x1="75" y1="228" x2="75" y2="280" stroke="#64748b" stroke-width="1"/>
+                <line x1="275" y1="210" x2="275" y2="280" stroke="#64748b" stroke-width="1"/>
+                <line x1="502" y1="234" x2="502" y2="280" stroke="#64748b" stroke-width="1"/>
+                <line x1="723" y1="206" x2="723" y2="280" stroke="#64748b" stroke-width="1"/>
+
+                <!-- Dimension 1: 100 mm (between 75 and 275) -->
+                <line x1="75" y1="265" x2="275" y2="265"/>
+                <!-- Arrow heads -->
+                <polygon points="75,265 83,262 83,268" fill="#cbd5e1"/>
+                <polygon points="275,265 267,262 267,268" fill="#cbd5e1"/>
+                <text x="175" y="258" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="bold">100</text>
+
+                <!-- Dimension 2: 200 mm (between 275 and 502) -->
+                <line x1="275" y1="265" x2="502" y2="265"/>
+                <!-- Arrow heads -->
+                <polygon points="275,265 283,262 283,268" fill="#cbd5e1"/>
+                <polygon points="502,265 494,262 494,268" fill="#cbd5e1"/>
+                <text x="388" y="258" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="bold">200</text>
+
+                <!-- Dimension 3: 250 mm (between 502 and 723) -->
+                <line x1="502" y1="265" x2="723" y2="265"/>
+                <!-- Arrow heads -->
+                <polygon points="502,265 510,262 510,268" fill="#cbd5e1"/>
+                <polygon points="723,265 715,262 715,268" fill="#cbd5e1"/>
+                <text x="612" y="258" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="bold">250</text>
+              </g>
             </svg>
+          </div>
+
+          <!-- 2. VISTA: PROYECCIÓN ISOMÉTRICA 3D (CARGAS ESPACIALES) -->
+          <div id="view-shaft-3d" class="hidden bg-slate-950/85 rounded-xl border border-slate-800 p-4 overflow-x-auto">
+            <svg id="svg-shaft-3d" viewBox="0 0 860 360" class="w-full min-w-[720px] h-auto select-none font-sans">
+              <!-- Spatial Reference System (Axes x, y, z at left origin) -->
+              <g id="iso-axes" stroke-width="1.8">
+                <!-- Origin at (110, 240) -->
+                <!-- Axis y (Vertical Upwards) -->
+                <line x1="110" y1="240" x2="110" y2="175" stroke="#94a3b8"/>
+                <polygon points="110,170 106,179 114,179" fill="#94a3b8"/>
+                <text x="110" y="162" text-anchor="middle" fill="#94a3b8" font-size="12" font-weight="bold">y</text>
+
+                <!-- Axis z (Oblique Front-Left) -->
+                <line x1="110" y1="240" x2="45" y2="275" stroke="#94a3b8"/>
+                <polygon points="40,278 47,270 52,277" fill="#94a3b8"/>
+                <text x="35" y="295" text-anchor="middle" fill="#94a3b8" font-size="12" font-weight="bold">z</text>
+
+                <!-- Axis x (Shaft center line into 3D space) -->
+                <line x1="110" y1="240" x2="810" y2="60" stroke="#64748b" stroke-dasharray="10 3 3 3"/>
+                <polygon points="815,58 804,60 809,69" fill="#94a3b8"/>
+                <text x="825" y="60" text-anchor="middle" fill="#94a3b8" font-size="12" font-weight="bold">x</text>
+              </g>
+
+              <!-- 3D ISOMETRIC SHAFT CYLINDER -->
+              <g id="iso-shaft-cylinder">
+                <!-- Shaft top & bottom contour paths -->
+                <path d="M 110,225 L 750,55" stroke="#cbd5e1" stroke-width="2"/>
+                <path d="M 110,255 L 750,85" stroke="#475569" stroke-width="2"/>
+                <!-- Shaded body with linear gradient -->
+                <polygon points="110,225 750,55 750,85 110,255" fill="url(#grad-shaft-metal)" fill-opacity="0.85"/>
+
+                <!-- Front face ellipse at x=0 (Polea) -->
+                <ellipse cx="110" cy="240" rx="14" ry="15" fill="#cbd5e1" stroke="#334155" stroke-width="2"/>
+                
+                <!-- Cross section lines along shaft -->
+                <!-- Apoyo 1 at x=10 cm -> (226, 207) -->
+                <ellipse cx="226" cy="207" rx="12" ry="15" fill="none" stroke="#10b981" stroke-width="1.5" stroke-dasharray="3 3"/>
+                <!-- Engranaje at x=30 cm -> (458, 140) -->
+                <ellipse cx="458" cy="140" rx="12" ry="15" fill="none" stroke="#22c55e" stroke-width="1.5" stroke-dasharray="3 3"/>
+                <!-- Apoyo 2 at x=55 cm -> (748, 70) -->
+                <ellipse cx="748" cy="70" rx="12" ry="15" fill="#94a3b8" stroke="#3b82f6" stroke-width="2"/>
+              </g>
+
+              <!-- 3D VECTOR FORCES (BRIGHT VIBRANT GREEN #22c55e AS IN IMAGE 2) -->
+              <g id="iso-vectors" filter="url(#glow-vector)">
+                
+                <!-- 1. POLEA (x=0, origin (110, 240)) -->
+                <!-- Ftp downwards along -y -->
+                <g id="iso-ftp-grp">
+                  <line x1="110" y1="240" x2="110" y2="330" stroke="#22c55e" stroke-width="3.5"/>
+                  <polygon points="110,338 104,324 116,324" fill="#22c55e"/>
+                  <text x="135" y="325" fill="#22c55e" font-size="13" font-weight="bold" id="iso-ftp-lbl">Ftp</text>
+                </g>
+                <!-- Frp forwards along +z -->
+                <g id="iso-frp-grp">
+                  <line x1="110" y1="240" x2="25" y2="285" stroke="#22c55e" stroke-width="3.5"/>
+                  <polygon points="18,289 27,277 34,285" fill="#22c55e"/>
+                  <text x="50" y="260" fill="#22c55e" font-size="13" font-weight="bold" id="iso-frp-lbl">Frp</text>
+                </g>
+
+                <!-- 2. RODAMIENTO 1 (x=10 cm, pos (226, 207)) -->
+                <!-- Ray upwards along +y -->
+                <g id="iso-ray-grp">
+                  <line x1="226" y1="290" x2="226" y2="215" stroke="#22c55e" stroke-width="3.5"/>
+                  <polygon points="226,207 220,221 232,221" fill="#22c55e"/>
+                  <text x="245" y="270" fill="#22c55e" font-size="13" font-weight="bold" id="iso-ray-lbl">Ray</text>
+                </g>
+                <!-- Raz backwards along -z -->
+                <g id="iso-raz-grp">
+                  <line x1="300" y1="168" x2="233" y2="203" stroke="#22c55e" stroke-width="3.5"/>
+                  <polygon points="226,207 236,201 241,211" fill="#22c55e"/>
+                  <text x="270" y="160" fill="#22c55e" font-size="13" font-weight="bold" id="iso-raz-lbl">Raz</text>
+                </g>
+
+                <!-- 3. ENGRANAJE (x=30 cm, pos (458, 140)) -->
+                <!-- Fte downwards along -y -->
+                <g id="iso-fte-grp">
+                  <line x1="458" y1="75" x2="458" y2="132" stroke="#22c55e" stroke-width="3.5"/>
+                  <polygon points="458,140 452,126 464,126" fill="#22c55e"/>
+                  <text x="480" y="95" fill="#22c55e" font-size="13" font-weight="bold" id="iso-fte-lbl">Fte</text>
+                </g>
+                <!-- Fre forwards along +z -->
+                <g id="iso-fre-grp">
+                  <line x1="535" y1="100" x2="465" y2="136" stroke="#22c55e" stroke-width="3.5"/>
+                  <polygon points="458,140 467,129 473,139" fill="#22c55e"/>
+                  <text x="530" y="130" fill="#22c55e" font-size="13" font-weight="bold" id="iso-fre-lbl">Fre</text>
+                </g>
+
+                <!-- 4. RODAMIENTO 2 (x=55 cm, pos (748, 70)) -->
+                <!-- Rby upwards along +y -->
+                <g id="iso-rby-grp">
+                  <line x1="748" y1="140" x2="748" y2="78" stroke="#22c55e" stroke-width="3.5"/>
+                  <polygon points="748,70 742,84 754,84" fill="#22c55e"/>
+                  <text x="765" y="125" fill="#22c55e" font-size="13" font-weight="bold" id="iso-rby-lbl">RBy</text>
+                </g>
+                <!-- Rbz backwards along -z -->
+                <g id="iso-rbz-grp">
+                  <line x1="820" y1="33" x2="755" y2="66" stroke="#22c55e" stroke-width="3.5"/>
+                  <polygon points="748,70 758,63 763,73" fill="#22c55e"/>
+                  <text x="805" y="30" fill="#22c55e" font-size="13" font-weight="bold" id="iso-rbz-lbl">RBz</text>
+                </g>
+              </g>
+            </svg>
+          </div>
+
+          <!-- 3. VISTA: DCL ORTOGONAL DESACOPLADO (PLANOS X-Y Y X-Z) -->
+          <div id="view-shaft-dcl" class="hidden bg-slate-950/85 rounded-xl border border-slate-800 p-4 overflow-x-auto">
+            <svg id="svg-shaft-dcl" viewBox="0 0 860 320" class="w-full min-w-[720px] h-auto select-none font-sans">
+              
+              <!-- ===== PLANO X-Y (Top beam) ===== -->
+              <g id="dcl-xy-plane">
+                <!-- Plane axes icon at left -->
+                <g transform="translate(30, 45)" stroke="#94a3b8" stroke-width="1.8">
+                  <line x1="0" y1="25" x2="0" y2="0"/>
+                  <polygon points="0,-4 -3,4 3,4" fill="#94a3b8"/>
+                  <text x="-8" y="2" fill="#cbd5e1" font-size="11" font-weight="bold">y</text>
+
+                  <line x1="0" y1="25" x2="25" y2="25"/>
+                  <polygon points="29,25 21,22 21,28" fill="#94a3b8"/>
+                  <text x="20" y="38" fill="#cbd5e1" font-size="11" font-weight="bold">x</text>
+                </g>
+
+                <!-- Structural Blue Beam (x=80 to 800, y=65 to 77) -->
+                <rect x="80" y="65" width="720" height="12" fill="url(#grad-beam-blue)" stroke="#1e40af" stroke-width="1.5"/>
+                <line x1="80" y1="65" x2="800" y2="65" stroke="#93c5fd" stroke-width="1"/>
+                <line x1="80" y1="77" x2="800" y2="77" stroke="#172554" stroke-width="1.2"/>
+
+                <!-- External load Ftp (Red arrow downwards at x=100) -->
+                <line x1="100" y1="20" x2="100" y2="60" stroke="#dc2626" stroke-width="3"/>
+                <polygon points="100,65 94,52 106,52" fill="#dc2626"/>
+                <text x="100" y="14" text-anchor="middle" fill="#ef4444" font-size="13" font-weight="bold" id="dcl-ftp-lbl">227 kg</text>
+
+                <!-- Reaction Ray (Upwards arrow at x=230) -->
+                <line x1="230" y1="120" x2="230" y2="82" stroke="#1e293b" stroke-width="3"/>
+                <polygon points="230,77 224,90 236,90" fill="#1e293b"/>
+                <polygon points="230,77 225,88 235,88" fill="#ffffff"/>
+                <text x="230" y="136" text-anchor="middle" fill="#0f172a" font-size="13" font-weight="bold" id="dcl-ray-lbl" class="bg-white px-1 font-mono">390 kg</text>
+
+                <!-- External load Fte (Red arrow downwards at x=490) -->
+                <line x1="490" y1="20" x2="490" y2="60" stroke="#dc2626" stroke-width="3"/>
+                <polygon points="490,65 484,52 496,52" fill="#dc2626"/>
+                <text x="490" y="14" text-anchor="middle" fill="#ef4444" font-size="13" font-weight="bold" id="dcl-fte-lbl">202 kg</text>
+
+                <!-- Reaction Rby (Upwards arrow at x=780) -->
+                <line x1="780" y1="120" x2="780" y2="82" stroke="#1e293b" stroke-width="3"/>
+                <polygon points="780,77 774,90 786,90" fill="#1e293b"/>
+                <polygon points="780,77 775,88 785,88" fill="#ffffff"/>
+                <text x="780" y="136" text-anchor="middle" fill="#0f172a" font-size="13" font-weight="bold" id="dcl-rby-lbl">39 kg</text>
+
+                <!-- Dimension lines for top beam -->
+                <g stroke="#64748b" stroke-width="1.2">
+                  <line x1="100" y1="77" x2="100" y2="155"/>
+                  <line x1="230" y1="77" x2="230" y2="155"/>
+                  <line x1="490" y1="77" x2="490" y2="155"/>
+                  <line x1="780" y1="77" x2="780" y2="155"/>
+
+                  <!-- 10 cm -->
+                  <line x1="100" y1="150" x2="230" y2="150"/>
+                  <polygon points="100,150 108,147 108,153" fill="#64748b"/>
+                  <polygon points="230,150 222,147 222,153" fill="#64748b"/>
+                  <text x="165" y="145" text-anchor="middle" fill="#cbd5e1" font-size="12" font-weight="bold">10 cm</text>
+
+                  <!-- 20 cm -->
+                  <line x1="230" y1="150" x2="490" y2="150"/>
+                  <polygon points="230,150 238,147 238,153" fill="#64748b"/>
+                  <polygon points="490,150 482,147 482,153" fill="#64748b"/>
+                  <text x="360" y="145" text-anchor="middle" fill="#cbd5e1" font-size="12" font-weight="bold">20 cm</text>
+
+                  <!-- 25 cm -->
+                  <line x1="490" y1="150" x2="780" y2="150"/>
+                  <polygon points="490,150 498,147 498,153" fill="#64748b"/>
+                  <polygon points="780,150 772,147 772,153" fill="#64748b"/>
+                  <text x="635" y="145" text-anchor="middle" fill="#cbd5e1" font-size="12" font-weight="bold">25 cm</text>
+                </g>
+              </g>
+
+              <!-- ===== PLANO X-Z (Bottom beam) ===== -->
+              <g id="dcl-xz-plane" transform="translate(0, 140)">
+                <!-- Plane axes icon at left -->
+                <g transform="translate(30, 45)" stroke="#94a3b8" stroke-width="1.8">
+                  <line x1="0" y1="0" x2="0" y2="25"/>
+                  <polygon points="0,29 -3,21 3,21" fill="#94a3b8"/>
+                  <text x="-8" y="24" fill="#cbd5e1" font-size="11" font-weight="bold">z</text>
+
+                  <line x1="0" y1="0" x2="25" y2="0"/>
+                  <polygon points="29,0 21,-3 21,3" fill="#94a3b8"/>
+                  <text x="20" y="-8" fill="#cbd5e1" font-size="11" font-weight="bold">x</text>
+                </g>
+
+                <!-- Structural Blue Beam (x=80 to 800, y=65 to 77) -->
+                <rect x="80" y="65" width="720" height="12" fill="url(#grad-beam-blue)" stroke="#1e40af" stroke-width="1.5"/>
+                <line x1="80" y1="65" x2="800" y2="65" stroke="#93c5fd" stroke-width="1"/>
+                <line x1="80" y1="77" x2="800" y2="77" stroke="#172554" stroke-width="1.2"/>
+
+                <!-- External load Frp (Red arrow upwards at x=100) -->
+                <line x1="100" y1="115" x2="100" y2="82" stroke="#dc2626" stroke-width="3"/>
+                <polygon points="100,77 94,90 106,90" fill="#dc2626"/>
+                <text x="100" y="132" text-anchor="middle" fill="#ef4444" font-size="13" font-weight="bold" id="dcl-frp-lbl">393 kg</text>
+
+                <!-- Reaction Raz (Downwards arrow at x=230) -->
+                <line x1="230" y1="20" x2="230" y2="60" stroke="#1e293b" stroke-width="3"/>
+                <polygon points="230,65 224,52 236,52" fill="#1e293b"/>
+                <text x="230" y="14" text-anchor="middle" fill="#0f172a" font-size="13" font-weight="bold" id="dcl-raz-lbl">521 kg</text>
+
+                <!-- External load Fre (Red arrow upwards at x=490) -->
+                <line x1="490" y1="115" x2="490" y2="82" stroke="#dc2626" stroke-width="3"/>
+                <polygon points="490,77 484,90 496,90" fill="#dc2626"/>
+                <text x="490" y="132" text-anchor="middle" fill="#ef4444" font-size="13" font-weight="bold" id="dcl-fre-lbl">73 kg</text>
+
+                <!-- Reaction Rbz (Upwards arrow at x=780) -->
+                <line x1="780" y1="115" x2="780" y2="82" stroke="#1e293b" stroke-width="3"/>
+                <polygon points="780,77 774,90 786,90" fill="#1e293b"/>
+                <text x="780" y="132" text-anchor="middle" fill="#0f172a" font-size="13" font-weight="bold" id="dcl-rbz-lbl">55 kg</text>
+              </g>
+            </svg>
+          </div>
+
+          <!-- 4. VISTA: LÁMINAS OFICIALES DE CÁTEDRA (COMPARADOR DIRECTO) -->
+          <div id="view-shaft-plates" class="hidden bg-slate-950/85 rounded-xl border border-slate-800 p-4 space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-2">
+              <span class="text-xs text-amber-400 font-bold uppercase tracking-wider">Láminas Oficiales Escaneadas del TP 6</span>
+              <span class="text-[11px] text-slate-400">Fuente: Enunciado Cátedra Mecánica II (Ing. Andrés Lanfranco)</span>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div class="bg-slate-900 rounded-lg p-2 border border-slate-800 space-y-1">
+                <span class="text-[11px] font-bold text-slate-300 block">1. Ensamblaje y Cotas (mm)</span>
+                <img src="eje_ensamblaje_cad.jpg" alt="Ensamblaje CAD Eje" class="w-full rounded border border-slate-700 hover:scale-105 transition-transform duration-300 cursor-zoom-in" onclick="window.open(this.src)"/>
+              </div>
+              <div class="bg-slate-900 rounded-lg p-2 border border-slate-800 space-y-1">
+                <span class="text-[11px] font-bold text-slate-300 block">2. Proyección Espacial 3D</span>
+                <img src="eje_isometrico_3d.jpg" alt="Proyección Espacial 3D" class="w-full rounded border border-slate-700 hover:scale-105 transition-transform duration-300 cursor-zoom-in" onclick="window.open(this.src)"/>
+              </div>
+              <div class="bg-slate-900 rounded-lg p-2 border border-slate-800 space-y-1">
+                <span class="text-[11px] font-bold text-slate-300 block">3. DCL Planos x-y y x-z</span>
+                <img src="eje_dcl_planos.jpg" alt="DCL Planos x-y y x-z" class="w-full rounded border border-slate-700 hover:scale-105 transition-transform duration-300 cursor-zoom-in" onclick="window.open(this.src)"/>
+              </div>
+            </div>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
@@ -2895,6 +3306,29 @@
 
     
     let activeCadSupport = 1;
+
+    function switchShaftView(v) {
+      const views = ["cad", "3d", "dcl", "plates"];
+      views.forEach(name => {
+        const p = document.getElementById("view-shaft-" + name);
+        const b = document.getElementById("btn-tab-" + name);
+        if (p) {
+          if (name === v) {
+            p.classList.remove("hidden");
+          } else {
+            p.classList.add("hidden");
+          }
+        }
+        if (b) {
+          if (name === v) {
+            b.className = "px-2.5 py-1.5 rounded-md bg-emerald-600 text-white cursor-pointer transition flex items-center gap-1.5 shadow";
+          } else {
+            b.className = "px-2.5 py-1.5 rounded-md text-slate-400 hover:text-white cursor-pointer transition flex items-center gap-1.5";
+          }
+        }
+      });
+    }
+
     function switchCadSupport(idx) {
       activeCadSupport = idx;
       const b1 = document.getElementById("btn-cad-b1");
@@ -3155,6 +3589,26 @@
           <td class="p-2 font-bold">${r.designacion}</td><td>${r.D_ext}</td><td>${r.B_ancho}</td><td>${r.C_din}</td><td>${r.C0_est}</td><td class="text-blue-400 font-bold">${fmt(lh, 0)} h</td>
         </tr>`;
       }).join("");
+      // Sincronizar etiquetas en vista CAD, 3D Isometrica y DCL
+      if (document.getElementById("cad-lbl-b1")) document.getElementById("cad-lbl-b1").textContent = `${b1.designacion} (d=${d1})`;
+      if (document.getElementById("cad-lbl-b2")) document.getElementById("cad-lbl-b2").textContent = `${b2.designacion} (d=${d2})`;
+      if (document.getElementById("iso-ftp-lbl")) document.getElementById("iso-ftp-lbl").textContent = `Ftp = ${Math.round(ftp)} kgf`;
+      if (document.getElementById("iso-frp-lbl")) document.getElementById("iso-frp-lbl").textContent = `Frp = ${Math.round(frp)} kgf`;
+      if (document.getElementById("iso-ray-lbl")) document.getElementById("iso-ray-lbl").textContent = `Ray = ${Math.round(ray)} kgf`;
+      if (document.getElementById("iso-raz-lbl")) document.getElementById("iso-raz-lbl").textContent = `Raz = ${Math.round(raz)} kgf`;
+      if (document.getElementById("iso-fte-lbl")) document.getElementById("iso-fte-lbl").textContent = `Fte = ${Math.round(fte)} kgf`;
+      if (document.getElementById("iso-fre-lbl")) document.getElementById("iso-fre-lbl").textContent = `Fre = ${Math.round(fre)} kgf`;
+      if (document.getElementById("iso-rby-lbl")) document.getElementById("iso-rby-lbl").textContent = `RBy = ${Math.round(rby)} kgf`;
+      if (document.getElementById("iso-rbz-lbl")) document.getElementById("iso-rbz-lbl").textContent = `RBz = ${Math.round(rbz)} kgf`;
+      if (document.getElementById("dcl-ftp-lbl")) document.getElementById("dcl-ftp-lbl").textContent = `${Math.round(ftp)} kg`;
+      if (document.getElementById("dcl-frp-lbl")) document.getElementById("dcl-frp-lbl").textContent = `${Math.round(frp)} kg`;
+      if (document.getElementById("dcl-ray-lbl")) document.getElementById("dcl-ray-lbl").textContent = `${Math.round(ray)} kg`;
+      if (document.getElementById("dcl-raz-lbl")) document.getElementById("dcl-raz-lbl").textContent = `${Math.round(raz)} kg`;
+      if (document.getElementById("dcl-fte-lbl")) document.getElementById("dcl-fte-lbl").textContent = `${Math.round(fte)} kg`;
+      if (document.getElementById("dcl-fre-lbl")) document.getElementById("dcl-fre-lbl").textContent = `${Math.round(fre)} kg`;
+      if (document.getElementById("dcl-rby-lbl")) document.getElementById("dcl-rby-lbl").textContent = `${Math.round(rby)} kg`;
+      if (document.getElementById("dcl-rbz-lbl")) document.getElementById("dcl-rbz-lbl").textContent = `${Math.round(rbz)} kg`;
+
 
       // CÁLCULO AVANZADO SKF EXPLORER (ISO 281 & ISO 76)
       const nu = parseFloat(document.getElementById("tp6-lub-visc") ? document.getElementById("tp6-lub-visc").value : 25) || 25;
