@@ -2821,7 +2821,7 @@
         if (shStripes) shStripes.setAttribute("transform", `translate(${Math.sin(sPhase*0.4)*2}, 0)`);
       }
       requestAnimationFrame(animate);
-    initGuideTooltips();
+    }
 
     let guideModeActive = true;
     function toggleGuideMode() {
@@ -2843,54 +2843,28 @@
       }
     }
 
-    // Attach Hover Listeners
-    function initGuideTooltips() {
-      const flTip = document.getElementById("guide-floating-tooltip");
-      const flStep = document.getElementById("fl-tip-step");
-      const flTitle = document.getElementById("fl-tip-title");
-      const flDesc = document.getElementById("fl-tip-desc");
-      const flNorm = document.getElementById("fl-tip-norm");
-
+    // Passive event delegation: Zero overhead, butter smooth 60 FPS
+    function initGuideSystem() {
       const dockStep = document.getElementById("guide-dock-step");
       const dockTitle = document.getElementById("guide-dock-title");
       const dockDesc = document.getElementById("guide-dock-desc");
       const dockNorm = document.getElementById("guide-dock-norm");
 
-      document.querySelectorAll("[data-guide-title]").forEach(el => {
-        el.addEventListener("mouseenter", (e) => {
-          if (!guideModeActive) return;
-          const step = el.getAttribute("data-guide-step") || "GUÍA DE CÁLCULO";
-          const title = el.getAttribute("data-guide-title") || "";
-          const desc = el.getAttribute("data-guide-desc") || "";
-          const norm = el.getAttribute("data-guide-norm") || "Norma SKF Oficial";
+      document.addEventListener("mouseover", (e) => {
+        if (!guideModeActive) return;
+        const target = e.target.closest("[data-guide-title]");
+        if (!target) return;
 
-          if (dockStep) dockStep.textContent = step;
-          if (dockTitle) dockTitle.textContent = title;
-          if (dockDesc) dockDesc.textContent = desc;
-          if (dockNorm) dockNorm.textContent = norm;
+        const step = target.getAttribute("data-guide-step") || "GUÍA DE CÁLCULO";
+        const title = target.getAttribute("data-guide-title") || "";
+        const desc = target.getAttribute("data-guide-desc") || "";
+        const norm = target.getAttribute("data-guide-norm") || "Norma SKF Oficial";
 
-          if (flStep) flStep.textContent = step;
-          if (flTitle) flTitle.textContent = title;
-          if (flDesc) flDesc.textContent = desc;
-          if (flNorm) flNorm.textContent = norm;
-
-          if (flTip) flTip.classList.add("active");
-        });
-
-        el.addEventListener("mousemove", (e) => {
-          if (!guideModeActive || !flTip) return;
-          const x = e.clientX;
-          const y = e.clientY;
-          flTip.style.left = `${Math.min(window.innerWidth - 180, Math.max(180, x))}px`;
-          flTip.style.top = `${y}px`;
-        });
-
-        el.addEventListener("mouseleave", () => {
-          if (flTip) flTip.classList.remove("active");
-        });
-      });
-    }
-
+        if (dockStep) dockStep.textContent = step;
+        if (dockTitle) dockTitle.textContent = title;
+        if (dockDesc) dockDesc.textContent = desc;
+        if (dockNorm) dockNorm.textContent = norm;
+      }, { passive: true });
     }
 
     populateBearingSelect(1, "* 6308");
@@ -2898,76 +2872,7 @@
     computeTP6();
     computeTP7();
     requestAnimationFrame(animate);
-    initGuideTooltips();
-
-    let guideModeActive = true;
-    function toggleGuideMode() {
-      guideModeActive = !guideModeActive;
-      const dock = document.getElementById("guide-dock");
-      const btn = document.getElementById("btn-guide");
-      const statusText = document.getElementById("guide-status-text");
-      
-      if (dock) {
-        dock.style.display = guideModeActive ? "flex" : "none";
-      }
-      if (statusText) {
-        statusText.textContent = guideModeActive ? "Guía Académica: ACTIVA" : "Guía: PAUSADA";
-      }
-      if (btn) {
-        btn.className = guideModeActive 
-          ? "px-3 py-1.5 rounded-lg text-xs font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 hover:bg-cyan-500/30 transition flex items-center gap-1.5 cursor-pointer shadow-sm"
-          : "px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-800 text-slate-400 border border-slate-700 hover:bg-slate-700 transition flex items-center gap-1.5 cursor-pointer";
-      }
-    }
-
-    // Attach Hover Listeners
-    function initGuideTooltips() {
-      const flTip = document.getElementById("guide-floating-tooltip");
-      const flStep = document.getElementById("fl-tip-step");
-      const flTitle = document.getElementById("fl-tip-title");
-      const flDesc = document.getElementById("fl-tip-desc");
-      const flNorm = document.getElementById("fl-tip-norm");
-
-      const dockStep = document.getElementById("guide-dock-step");
-      const dockTitle = document.getElementById("guide-dock-title");
-      const dockDesc = document.getElementById("guide-dock-desc");
-      const dockNorm = document.getElementById("guide-dock-norm");
-
-      document.querySelectorAll("[data-guide-title]").forEach(el => {
-        el.addEventListener("mouseenter", (e) => {
-          if (!guideModeActive) return;
-          const step = el.getAttribute("data-guide-step") || "GUÍA DE CÁLCULO";
-          const title = el.getAttribute("data-guide-title") || "";
-          const desc = el.getAttribute("data-guide-desc") || "";
-          const norm = el.getAttribute("data-guide-norm") || "Norma SKF Oficial";
-
-          if (dockStep) dockStep.textContent = step;
-          if (dockTitle) dockTitle.textContent = title;
-          if (dockDesc) dockDesc.textContent = desc;
-          if (dockNorm) dockNorm.textContent = norm;
-
-          if (flStep) flStep.textContent = step;
-          if (flTitle) flTitle.textContent = title;
-          if (flDesc) flDesc.textContent = desc;
-          if (flNorm) flNorm.textContent = norm;
-
-          if (flTip) flTip.classList.add("active");
-        });
-
-        el.addEventListener("mousemove", (e) => {
-          if (!guideModeActive || !flTip) return;
-          const x = e.clientX;
-          const y = e.clientY;
-          flTip.style.left = `${Math.min(window.innerWidth - 180, Math.max(180, x))}px`;
-          flTip.style.top = `${y}px`;
-        });
-
-        el.addEventListener("mouseleave", () => {
-          if (flTip) flTip.classList.remove("active");
-        });
-      });
-    }
-
+    initGuideSystem();
   </script>
 
   <!-- DOCKED ACADEMIC GUIDANCE HUD -->
@@ -2997,16 +2902,5 @@
       <button onclick="toggleGuideMode()" class="text-slate-400 hover:text-white text-xs px-2 py-1 rounded bg-slate-800 border border-slate-700">Ocultar</button>
     </div>
   </div>
-
-  <!-- FLOATING TOOLTIP ELEMENT -->
-  <div id="guide-floating-tooltip" class="bg-slate-950/95 border border-cyan-400/80 shadow-2xl rounded-xl p-3 text-xs text-slate-100 backdrop-blur-md">
-    <div class="flex items-center gap-2 mb-1">
-      <span id="fl-tip-step" class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-300 uppercase tracking-wider"></span>
-      <span id="fl-tip-norm" class="text-[9px] font-mono text-amber-400"></span>
-    </div>
-    <div id="fl-tip-title" class="font-bold text-slate-100 mb-1"></div>
-    <div id="fl-tip-desc" class="text-slate-300 text-[11px] leading-relaxed"></div>
-  </div>
-
 </body>
 </html>
