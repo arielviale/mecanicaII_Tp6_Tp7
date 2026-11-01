@@ -257,8 +257,9 @@ def generar_pdf(pdf_path="Entrega_Oficial_TP6_TP7_Hugo_Martinez.pdf"):
     story.append(Spacer(1, 4))
 
     # DOS GRAFICOS DE TP6: Figura 1 (Ensamble CAD) y Figura 2 (DCL Ortogonal con Cargas)
-    p1_img1 = Image("eje_ensamblaje_cad.jpg", width=9.0 * cm, height=3.8 * cm) if os.path.exists("eje_ensamblaje_cad.jpg") else Paragraph("Img 1", body_style)
-    p1_img2 = Image("eje_resolucion_cargas.png", width=9.2 * cm, height=3.8 * cm) if os.path.exists("eje_resolucion_cargas.png") else Paragraph("Img 2", body_style)
+    # Ratios: CAD = 1007/527 = 1.911 (w=8.8 cm, h=4.6 cm) | DCL = 2023/924 = 2.189 (w=8.8 cm, h=4.02 cm)
+    p1_img1 = Image("eje_ensamblaje_cad.jpg", width=8.8 * cm, height=4.6 * cm) if os.path.exists("eje_ensamblaje_cad.jpg") else Paragraph("Img 1", body_style)
+    p1_img2 = Image("eje_resolucion_cargas.png", width=8.8 * cm, height=4.02 * cm) if os.path.exists("eje_resolucion_cargas.png") else Paragraph("Img 2", body_style)
 
     cap1 = Paragraph("<i>Figura 1: Ensamble CAD y cotas longitudinales (10-20-25 cm).</i>", fig_caption_style)
     cap2 = Paragraph("<i>Figura 2: Resolucion DCL ortogonal (cargas y reacciones calculadas).</i>", fig_caption_style)
@@ -269,7 +270,7 @@ def generar_pdf(pdf_path="Entrega_Oficial_TP6_TP7_Hugo_Martinez.pdf"):
     ], colWidths=[9.3 * cm, 9.3 * cm])
     graphics_tp6_table.setStyle(TableStyle([
         ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
-        ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+        ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
         ('TOPPADDING', (0, 0), (-1, -1), 1),
         ('BOTTOMPADDING', (0, 0), (-1, -1), 1),
         ('LEFTPADDING', (0, 0), (-1, -1), 2),
@@ -398,15 +399,20 @@ def generar_pdf(pdf_path="Entrega_Oficial_TP6_TP7_Hugo_Martinez.pdf"):
     ))
 
     # AMBOS GRAFICOS DE TP7: Figura 3 (Diagrama 2 Resuelto) y Figura 4 (Transmision Cinematica)
+    # Proporciones reales estrictas (sin distorsion ni achatamiento):
+    # Diag 2 SKF: 860x535 (ratio 1.607) -> 11.0 cm x 6.84 cm
+    # Transmision Poleas: 2200x1011 (ratio 2.176) -> 13.0 cm x 5.97 cm
     if os.path.exists("diagrama2_skf_resuelto.png"):
-        img3 = Image("diagrama2_skf_resuelto.png", width=15.5 * cm, height=5.5 * cm)
+        img3 = Image("diagrama2_skf_resuelto.png", width=11.2 * cm, height=6.97 * cm)
+        img3.hAlign = 'CENTER'
         story.append(img3)
         story.append(Paragraph("<i>Figura 3: Resolucion en Diagrama 2 SKF - Punto exacto de trabajo (Pd = 72,71 kW @ 1856 rpm) en el campo SPB-XP.</i>", fig_caption_style))
 
     if os.path.exists("transmision_correas_resuelto.png"):
-        img4 = Image("transmision_correas_resuelto.png", width=15.5 * cm, height=4.5 * cm)
+        img4 = Image("transmision_correas_resuelto.png", width=13.0 * cm, height=5.97 * cm)
+        img4.hAlign = 'CENTER'
         story.append(img4)
-        story.append(Paragraph("<i>Figura 4: Resolucion geometrica y cinematica de la transmision con poleas, correa, CC = 671,4 mm y dotacion de 4 correas SKF PHG SPB2240XP.</i>", fig_caption_style))
+        story.append(Paragraph("<i>Figura 4: Resolucion geometrica y cinematica de la transmision con poleas circulares, CC = 671,4 mm y 4 correas SKF PHG SPB2240XP.</i>", fig_caption_style))
 
     # =========================================================================
     # PAGINA 4: PASOS 3 A 6 TP7, ESPECIFICACIONES RESUMEN Y FIRMAS
