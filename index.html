@@ -54,6 +54,19 @@
     ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
     ::-webkit-scrollbar-thumb:hover { background: #475569; }
 
+        .step-accordion details {
+      transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease, background-color 0.25s ease;
+    }
+    .step-accordion details[open] {
+      border-color: rgba(34, 211, 238, 0.5) !important;
+      box-shadow: 0 6px 24px -4px rgba(6, 182, 212, 0.2);
+      background-color: rgba(15, 23, 42, 0.96) !important;
+    }
+    .step-accordion details:hover {
+      border-color: rgba(56, 189, 248, 0.75) !important;
+      transform: translateY(-1px);
+    }
+
     .guide-hoverable {
       position: relative;
       cursor: help;
@@ -1273,13 +1286,18 @@
               <p class="text-xs text-slate-400">Metodología normalizada del Catálogo General SKF (Págs. 62–95) para el Trabajo Práctico N° 6</p>
             </div>
           </div>
-          <button type="button" onclick="printOrExportReport()" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-cyan-600/30 hover:bg-cyan-600/50 text-cyan-200 border border-cyan-500/50 transition flex items-center gap-1.5 cursor-pointer">
-            <span>📄</span> Ver Memoria Técnica Completa
-          </button>
+          <div class="flex items-center gap-2">
+            <span class="text-[11px] bg-cyan-500/15 text-cyan-300 border border-cyan-500/40 px-2.5 py-1.5 rounded-lg flex items-center gap-1.5 font-bold shadow-sm">
+              <span class="animate-pulse">⚡</span> Despliegue automático al pasar el ratón
+            </span>
+            <button type="button" onclick="printOrExportReport()" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-cyan-600/30 hover:bg-cyan-600/50 text-cyan-200 border border-cyan-500/50 transition flex items-center gap-1.5 cursor-pointer">
+              <span>📄</span> Ver Memoria Técnica Completa
+            </button>
+          </div>
         </div>
 
-        <!-- STEP BY STEP ACCORDION -->
-        <div class="space-y-3 text-xs">
+        <!-- STEP BY STEP ACCORDION (DESPLIEGUE AUTOMÁTICO EN HOVER) -->
+        <div id="tp6-accordion-container" class="step-accordion space-y-3 text-xs">
           
           <!-- PASO 1 -->
           <details class="group bg-slate-900/90 rounded-xl border border-slate-800 overflow-hidden" open>
@@ -4205,7 +4223,21 @@
       document.getElementById("tp6-rbz").value = 55;
       document.getElementById("sel-tp6-d1").value = "40";
       document.getElementById("sel-tp6-d2").value = "30";
-      populateBearingSelect(1, "* 6308");
+          function initAccordionHover() {
+      const container = document.getElementById("tp6-accordion-container");
+      if (!container) return;
+      const detailsList = container.querySelectorAll("details");
+      detailsList.forEach(item => {
+        item.addEventListener("mouseenter", () => {
+          detailsList.forEach(other => {
+            if (other !== item) other.open = false;
+          });
+          item.open = true;
+        });
+      });
+    }
+
+    populateBearingSelect(1, "* 6308");
       populateBearingSelect(2, "61906");
 
       document.getElementById("tp7-hp").value = 75;
@@ -4466,12 +4498,27 @@
       }, { passive: true });
     }
 
+        function initAccordionHover() {
+      const container = document.getElementById("tp6-accordion-container");
+      if (!container) return;
+      const detailsList = container.querySelectorAll("details");
+      detailsList.forEach(item => {
+        item.addEventListener("mouseenter", () => {
+          detailsList.forEach(other => {
+            if (other !== item) other.open = false;
+          });
+          item.open = true;
+        });
+      });
+    }
+
     populateBearingSelect(1, "* 6308");
     populateBearingSelect(2, "61906");
     computeTP6();
     computeTP7();
     requestAnimationFrame(animate);
     initGuideSystem();
+    initAccordionHover();
   </script>
 
     <!-- FLOATING INTERACTIVE HELP CARTEL -->
