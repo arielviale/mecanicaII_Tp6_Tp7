@@ -141,7 +141,7 @@ def build_web():
       
       <!-- KPIs STRIP TP6 -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div class="scada-panel rounded-xl p-4">
+        <div class="scada-panel rounded-xl p-4 guide-hoverable" data-guide-step="Apoyo 1: Cargas" data-guide-title="Fuerza Radial y Carga Dinámica P1" data-guide-desc="Fr1 = √(RAy² + RAz²) = √(390² + 521²) = 650,8 kgf. Multiplicando por 0,00981 da la carga dinámica equivalente P1 = 6,384 kN." data-guide-norm="Norma ISO 281">
           <div class="flex justify-between items-center text-xs text-slate-400">
             <span>CARGA APOYO 1 (A)</span>
             <span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-mono font-bold" id="kpi-tp6-d1">d₁ = 40 mm</span>
@@ -152,7 +152,7 @@ def build_web():
           </div>
         </div>
 
-        <div class="scada-panel rounded-xl p-4">
+        <div class="scada-panel rounded-xl p-4 guide-hoverable" data-guide-step="Apoyo 1: Rodamiento" data-guide-title="Rodamiento SKF Explorer * 6308 (d1 = 40 mm)" data-guide-desc="Capacidad dinámica C = 42,3 kN. Vida nominal básica L10h = 2020 h, superando la vida mínima requerida de 2000 h." data-guide-norm="Catálogo General SKF pág. 328">
           <div class="flex justify-between items-center text-xs text-slate-400">
             <span>RODAMIENTO 1 SELECCIONADO</span>
             <span class="px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-400 font-mono font-bold" id="kpi-tp6-desig1">* 6308</span>
@@ -163,7 +163,7 @@ def build_web():
           </div>
         </div>
 
-        <div class="scada-panel rounded-xl p-4">
+        <div class="scada-panel rounded-xl p-4 guide-hoverable" data-guide-step="Apoyo 2: Cargas" data-guide-title="Fuerza Radial y Carga Dinámica P2" data-guide-desc="Fr2 = √(RBy² + RBz²) = √(39² + 55²) = 67,42 kgf. Carga dinámica equivalente P2 = 0,661 kN." data-guide-norm="Norma ISO 281">
           <div class="flex justify-between items-center text-xs text-slate-400">
             <span>CARGA APOYO 2 (B)</span>
             <span class="px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 font-mono font-bold" id="kpi-tp6-d2">d₂ = 30 mm</span>
@@ -174,7 +174,7 @@ def build_web():
           </div>
         </div>
 
-        <div class="scada-panel rounded-xl p-4">
+        <div class="scada-panel rounded-xl p-4 guide-hoverable" data-guide-step="Apoyo 2: Rodamiento" data-guide-title="Rodamiento SKF 61906 (d2 = 30 mm)" data-guide-desc="Rodamiento elegido en clase. C = 7,28 kN, D = 47 mm, B = 9 mm. Vida nominal básica L10h = 9261 h con factor de seguridad estática s0 = 6,88." data-guide-norm="Elección Oficial de Cátedra">
           <div class="flex justify-between items-center text-xs text-slate-400">
             <span>RODAMIENTO 2 SELECCIONADO</span>
             <span class="px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-400 font-mono font-bold" id="kpi-tp6-desig2">61906 (Cátedra)</span>
@@ -202,16 +202,16 @@ def build_web():
 
             <!-- VIEW SELECTOR TABS -->
             <div class="inline-flex rounded-lg bg-slate-900 border border-slate-700/80 p-0.5 text-xs font-bold shadow-inner">
-              <button type="button" id="btn-tab-cad" onclick="switchShaftView('cad')" class="px-2.5 py-1.5 rounded-md bg-emerald-600 text-white cursor-pointer transition flex items-center gap-1.5 shadow">
+              <button type="button" id="btn-tab-cad" onclick="switchShaftView('cad')" class="px-2.5 py-1.5 rounded-md bg-emerald-600 text-white cursor-pointer transition flex items-center gap-1.5 shadow guide-hoverable" data-guide-step="Vista 1: CAD" data-guide-title="Plano de Ensamblaje CAD con Cotas Oficiales" data-guide-desc="Muestra la geometría técnica normalizada del árbol con cotas de 10 cm, 20 cm y 25 cm, ubicando la polea impulsora, apoyos 1 y 2 y el engranaje central." data-guide-norm="Lámina Cátedra Mecánica II">
                 <span>🔧</span> Ensamblaje CAD
               </button>
-              <button type="button" id="btn-tab-3d" onclick="switchShaftView('3d')" class="px-2.5 py-1.5 rounded-md text-slate-400 hover:text-white cursor-pointer transition flex items-center gap-1.5">
+              <button type="button" id="btn-tab-3d" onclick="switchShaftView('3d')" class="px-2.5 py-1.5 rounded-md text-slate-400 hover:text-white cursor-pointer transition flex items-center gap-1.5 guide-hoverable" data-guide-step="Vista 2: Isométrica 3D" data-guide-title="Proyección Espacial 3D y 8 Vectores de Fuerza" data-guide-desc="Representa el árbol en el espacio cartesiano tridimensional (x, y, z) con los 8 vectores de carga concurrentes a 2400 rpm." data-guide-norm="Modelo Espacial 3D UTN">
                 <span>🧊</span> Isométrico 3D
               </button>
-              <button type="button" id="btn-tab-dcl" onclick="switchShaftView('dcl')" class="px-2.5 py-1.5 rounded-md text-slate-400 hover:text-white cursor-pointer transition flex items-center gap-1.5">
+              <button type="button" id="btn-tab-dcl" onclick="switchShaftView('dcl')" class="px-2.5 py-1.5 rounded-md text-slate-400 hover:text-white cursor-pointer transition flex items-center gap-1.5 guide-hoverable" data-guide-step="Vista 3: DCL" data-guide-title="DCL Ortogonal Desacoplado (Planos x-y y x-z)" data-guide-desc="Descompone los esfuerzos en Plano Vertical x-y (Ftp=227, Fte=202, RAy=390, RBy=39 kgf) y Plano Horizontal x-z (Frp=393, Fre=73, RAz=521, RBz=55 kgf)." data-guide-norm="Equilibrio Estático ΣF=0, ΣM=0">
                 <span>📐</span> DCL Ortogonal
               </button>
-              <button type="button" id="btn-tab-plates" onclick="switchShaftView('plates')" class="px-2.5 py-1.5 rounded-md text-slate-400 hover:text-white cursor-pointer transition flex items-center gap-1.5">
+              <button type="button" id="btn-tab-plates" onclick="switchShaftView('plates')" class="px-2.5 py-1.5 rounded-md text-slate-400 hover:text-white cursor-pointer transition flex items-center gap-1.5 guide-hoverable" data-guide-step="Vista 4: Láminas" data-guide-title="Facsímiles Originales Digitalizados" data-guide-desc="Fotografías en alta resolución de las láminas teóricas oficiales entregadas por el Prof. Ing. Andrés Lanfranco." data-guide-norm="UTN - FRC (2026)">
                 <span>🖼️</span> Láminas Cátedra
               </button>
             </div>
@@ -832,7 +832,7 @@ def build_web():
                 </defs>
 
                 <!-- 1. VISTA FRONTAL CON BOLAS ROTANDO (Left) -->
-                <g id="cad-front-view">
+                <g id="cad-front-view" class="guide-hoverable" data-guide-step="CAD Frontal" data-guide-title="Corte Frontal con Bolas a 2400 rpm" data-guide-desc="Muestra la pista exterior, camino de rodadura y el tren de bolas de acero templado girando orbitalmente." data-guide-norm="SKF Explorer">
                   <text x="140" y="24" text-anchor="middle" fill="#10b981" font-size="11" font-weight="bold">VISTA FRONTAL (Rotación a 2400 rpm)</text>
                   
                   <!-- Outer ring -->
@@ -869,7 +869,7 @@ def build_web():
                 <line x1="270" y1="20" x2="270" y2="255" stroke="#1f293d" stroke-width="1.5" stroke-dasharray="4 4"/>
 
                 <!-- 2. CORTE LONGITUDINAL TÉCNICO (Figura 1.1 Catálogo SKF) -->
-                <g id="cad-section-view">
+                <g id="cad-section-view" class="guide-hoverable" data-guide-step="Corte Técnico" data-guide-title="Plano de Sección SKF 1.1" data-guide-desc="Representación ortogonal normalizada con diámetros d, D, ancho B y chaflanes de acuerdo a la Tabla 1.1 de SKF." data-guide-norm="ISO 15 / SKF">
                   <text x="410" y="24" text-anchor="middle" fill="#38bdf8" font-size="11" font-weight="bold">CORTE TÉCNICO 1.1 (Plano Normalizado SKF)</text>
                   
                   <!-- Centerline -->
@@ -1003,7 +1003,7 @@ def build_web():
             <div class="space-y-3 text-xs">
               <div>
                 <label class="text-slate-400 font-semibold block mb-1">Modo de Ingreso:</label>
-                <select id="tp6-mode" onchange="onTP6ModeToggle()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-slate-100 font-semibold">
+                <select id="tp6-mode" onchange="onTP6ModeToggle()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-slate-100 font-semibold guide-hoverable" data-guide-step="Configuración" data-guide-title="Modo de Ingreso de Esfuerzos" data-guide-desc="Permite alternar entre el ingreso directo de las reacciones en los apoyos o el cálculo por sumatoria de momentos estáticos con cargas externas." data-guide-norm="Mecánica II">
                   <option value="direct">1. Ingreso Directo de Reacciones RA y RB</option>
                   <option value="static">2. Calcular Reacciones por Equilibrio (ΣM = 0)</option>
                 </select>
@@ -1011,7 +1011,7 @@ def build_web():
 
               <div>
                 <label class="text-slate-400 font-semibold block mb-1">Velocidad del Eje n [rpm]:</label>
-                <input type="number" id="tp6-rpm" value="2400" step="50" oninput="computeTP6()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 font-bold text-slate-100">
+                <input type="number" id="tp6-rpm" value="2400" step="50" oninput="computeTP6()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 font-bold text-slate-100 guide-hoverable" data-guide-step="Cinemática" data-guide-title="Velocidad del Eje Impulsor n [rpm]" data-guide-desc="Velocidad de rotación constante (2400 rpm). A mayor velocidad, menor es la vida útil en horas para un mismo número de revoluciones L10." data-guide-norm="ISO 281">
               </div>
 
               <!-- Static sub-panel -->
@@ -1034,22 +1034,22 @@ def build_web():
               <div class="grid grid-cols-2 gap-2">
                 <div>
                   <label class="text-emerald-400 font-bold block mb-1">RAy [kgf]:</label>
-                  <input type="number" id="tp6-ray" value="390" step="1" oninput="computeTP6()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 font-bold">
+                  <input type="number" id="tp6-ray" value="390" step="1" oninput="computeTP6()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 font-bold guide-hoverable" data-guide-step="Reacción RAy" data-guide-title="Reacción Vertical en Apoyo 1 (RAy = 390 kgf)" data-guide-desc="Soporta la fuerza tangencial de la polea y del engranaje en el plano vertical x-y." data-guide-norm="DCL Plano x-y">
                 </div>
                 <div>
                   <label class="text-emerald-400 font-bold block mb-1">RAz [kgf]:</label>
-                  <input type="number" id="tp6-raz" value="521" step="1" oninput="computeTP6()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 font-bold">
+                  <input type="number" id="tp6-raz" value="521" step="1" oninput="computeTP6()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 font-bold guide-hoverable" data-guide-step="Reacción RAz" data-guide-title="Reacción Horizontal en Apoyo 1 (RAz = 521 kgf)" data-guide-desc="Soporta la fuerza radial de la polea y del engranaje en el plano horizontal x-z." data-guide-norm="DCL Plano x-z">
                 </div>
               </div>
 
               <div class="grid grid-cols-2 gap-2">
                 <div>
                   <label class="text-blue-400 font-bold block mb-1">RBy [kgf]:</label>
-                  <input type="number" id="tp6-rby" value="39" step="1" oninput="computeTP6()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 font-bold">
+                  <input type="number" id="tp6-rby" value="39" step="1" oninput="computeTP6()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 font-bold guide-hoverable" data-guide-step="Reacción RBy" data-guide-title="Reacción Vertical en Apoyo 2 (RBy = 39 kgf)" data-guide-desc="Carga de equilibrio vertical en el apoyo extremo derecho." data-guide-norm="DCL Plano x-y">
                 </div>
                 <div>
                   <label class="text-blue-400 font-bold block mb-1">RBz [kgf]:</label>
-                  <input type="number" id="tp6-rbz" value="55" step="1" oninput="computeTP6()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 font-bold">
+                  <input type="number" id="tp6-rbz" value="55" step="1" oninput="computeTP6()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 font-bold guide-hoverable" data-guide-step="Reacción RBz" data-guide-title="Reacción Horizontal en Apoyo 2 (RBz = 55 kgf)" data-guide-desc="Carga de equilibrio horizontal en el apoyo extremo derecho." data-guide-norm="DCL Plano x-z">
                 </div>
               </div>
 
@@ -2991,27 +2991,74 @@ def build_web():
       }
     }
 
-    // Passive event delegation: Zero overhead, butter smooth 60 FPS
+    // Passive event delegation: Zero overhead, butter smooth 60 FPS floating tooltip
     function initGuideSystem() {
       const dockStep = document.getElementById("guide-dock-step");
       const dockTitle = document.getElementById("guide-dock-title");
       const dockDesc = document.getElementById("guide-dock-desc");
       const dockNorm = document.getElementById("guide-dock-norm");
 
-      document.addEventListener("mouseover", (e) => {
-        if (!guideModeActive) return;
+      const tip = document.getElementById("guide-floating-tooltip");
+      const tipStep = document.getElementById("tip-step");
+      const tipTitle = document.getElementById("tip-title");
+      const tipDesc = document.getElementById("tip-desc");
+      const tipNorm = document.getElementById("tip-norm");
+
+      let currentTarget = null;
+
+      document.addEventListener("pointermove", (e) => {
+        if (!guideModeActive) {
+          if (tip) tip.style.opacity = "0";
+          return;
+        }
+
         const target = e.target.closest("[data-guide-title]");
-        if (!target) return;
+        if (target) {
+          if (currentTarget !== target) {
+            currentTarget = target;
+            const step = target.getAttribute("data-guide-step") || "GUÍA DE CÁLCULO";
+            const title = target.getAttribute("data-guide-title") || "";
+            const desc = target.getAttribute("data-guide-desc") || "";
+            const norm = target.getAttribute("data-guide-norm") || "Norma SKF Oficial";
 
-        const step = target.getAttribute("data-guide-step") || "GUÍA DE CÁLCULO";
-        const title = target.getAttribute("data-guide-title") || "";
-        const desc = target.getAttribute("data-guide-desc") || "";
-        const norm = target.getAttribute("data-guide-norm") || "Norma SKF Oficial";
+            if (tipStep) tipStep.textContent = step;
+            if (tipTitle) tipTitle.textContent = title;
+            if (tipDesc) tipDesc.textContent = desc;
+            if (tipNorm) tipNorm.textContent = norm;
 
-        if (dockStep) dockStep.textContent = step;
-        if (dockTitle) dockTitle.textContent = title;
-        if (dockDesc) dockDesc.textContent = desc;
-        if (dockNorm) dockNorm.textContent = norm;
+            if (dockStep) dockStep.textContent = step;
+            if (dockTitle) dockTitle.textContent = title;
+            if (dockDesc) dockDesc.textContent = desc;
+            if (dockNorm) dockNorm.textContent = norm;
+
+            if (tip) tip.style.opacity = "1";
+          }
+
+          if (tip) {
+            const tipW = 310;
+            const tipH = 110;
+            let posX = e.clientX;
+            let posY = e.clientY - 16; // place above cursor
+
+            // Check viewport boundaries
+            if (posY - tipH < 10) {
+              posY = e.clientY + 28; // place below cursor if near top
+            }
+            if (posX - tipW / 2 < 12) {
+              posX = tipW / 2 + 12;
+            } else if (posX + tipW / 2 > window.innerWidth - 12) {
+              posX = window.innerWidth - tipW / 2 - 12;
+            }
+
+            tip.style.left = posX + "px";
+            tip.style.top = posY + "px";
+          }
+        } else {
+          if (currentTarget) {
+            currentTarget = null;
+            if (tip) tip.style.opacity = "0";
+          }
+        }
       }, { passive: true });
     }
 
@@ -3022,6 +3069,24 @@ def build_web():
     requestAnimationFrame(animate);
     initGuideSystem();
   </script>
+
+    <!-- FLOATING INTERACTIVE HELP CARTEL -->
+  <div id="guide-floating-tooltip" class="fixed pointer-events-none z-[9999] bg-slate-900/95 border-2 border-cyan-400 shadow-[0_10px_35px_rgba(0,0,0,0.8),0_0_20px_rgba(34,211,238,0.35)] rounded-xl p-3.5 backdrop-blur-md max-w-xs text-left transition-opacity duration-150 opacity-0 transform -translate-x-1/2 -translate-y-full mb-3" style="top: -999px; left: -999px;">
+    <div class="flex items-center justify-between gap-2 mb-1.5 pb-1 border-b border-slate-700/80">
+      <span id="tip-step" class="text-[10px] font-black px-2 py-0.5 rounded bg-cyan-500/25 text-cyan-300 uppercase tracking-wider border border-cyan-400/40">
+        GUÍA ACADÉMICA
+      </span>
+      <span id="tip-norm" class="text-[10px] text-amber-300 font-mono font-bold bg-amber-500/15 px-2 py-0.5 rounded border border-amber-500/30">
+        Norma SKF
+      </span>
+    </div>
+    <div id="tip-title" class="text-xs font-black text-white mb-1 leading-snug">
+      Título del Componente
+    </div>
+    <p id="tip-desc" class="text-[11px] text-slate-300 leading-relaxed">
+      Descripción técnica y criterio de cálculo.
+    </p>
+  </div>
 
   <!-- DOCKED ACADEMIC GUIDANCE HUD -->
   <div id="guide-dock" class="fixed bottom-3 left-4 right-4 max-w-7xl mx-auto bg-slate-950/95 border border-cyan-500/40 shadow-2xl rounded-xl p-3 z-50 backdrop-blur-md flex flex-col md:flex-row items-start md:items-center justify-between gap-3 transition-transform duration-300">
