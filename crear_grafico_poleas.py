@@ -81,7 +81,7 @@ def create_pulley_graphic():
     # Center distance dimension line
     ax.annotate('', xy=(cx1, 2.2), xytext=(cx2, 2.2),
                 arrowprops=dict(arrowstyle='<->', color='#b45309', lw=1.6))
-    ax.text((cx1+cx2)/2, 3.2, "Distancia entre Centros Definitiva: CC = 641,4 mm (4 x SKF PHG SPB2180XP)",
+    ax.text((cx1+cx2)/2, 3.2, "Distancia entre Centros Definitiva: CC = 671,4 mm (4 x SKF PHG SPB2240XP)",
             color='#92400e', fontsize=8.5, fontweight='bold', ha='center',
             bbox=dict(boxstyle='square,pad=0.2', facecolor='#fef3c7', edgecolor='#f59e0b', lw=1.0))
             

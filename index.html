@@ -1563,7 +1563,7 @@
             <span>SOLUCIÓN FINAL DE TRANSMISIÓN</span>
             <span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-mono font-bold">CUMPLE</span>
           </div>
-          <div class="text-2xl font-black text-emerald-400 mt-1" id="kpi-tp7-belts">4 × PHG SPB2180XP</div>
+          <div class="text-2xl font-black text-emerald-400 mt-1" id="kpi-tp7-belts">4 × PHG SPB2240XP</div>
           <div class="text-xs text-slate-400 mt-1">
             Pot. Admisible: <span class="text-emerald-300 font-semibold" id="kpi-tp7-padm">19,81 kW/correa</span>
           </div>
@@ -1654,9 +1654,9 @@
               <text id="svg-tp7-cctext" x="390" y="308" text-anchor="middle" fill="#f59e0b" font-size="11" font-weight="bold" class="guide-hoverable"
                     data-guide-step="Paso 3: Distancia entre Centros Definitiva"
                     data-guide-title="Ecuación Cuadrática Exacta SKF para CC"
-                    data-guide-desc="Con la longitud comercial de 2180 mm, el CC definitivo resulta 641,4 mm, garantizando el tensado óptimo de las correas."
+                    data-guide-desc="Con la longitud normalizada de 2240 mm (elección de cátedra), el CC definitivo resulta 671,4 mm, garantizando el tensado óptimo de las correas."
                     data-guide-norm="Fórmula SKF pág. 14">
-                CC preliminar = 650 mm → CC definitivo = 641,4 mm (PHG SPB2180XP)
+                CC preliminar = 650 mm → CC definitivo = 671,4 mm (PHG SPB2240XP)
               </text>
 
               <!-- VELOCITY & BELTS BADGE -->
@@ -1667,7 +1667,7 @@
                  data-guide-norm="Límite centrífugo estándar: 30 m/s">
                 <rect x="315" y="132" width="150" height="52" rx="8" fill="#020617" fill-opacity="0.9" stroke="#f59e0b" stroke-width="1.5"/>
                 <text id="svg-tp7-vtag" x="390" y="152" text-anchor="middle" fill="#f59e0b" font-size="12" font-weight="bold">v = 24,30 m/s</text>
-                <text id="svg-tp7-beltstag" x="390" y="171" text-anchor="middle" fill="#10b981" font-size="11" font-weight="bold">4 × SPB2180XP</text>
+                <text id="svg-tp7-beltstag" x="390" y="171" text-anchor="middle" fill="#10b981" font-size="11" font-weight="bold">4 × SPB2240XP</text>
               </g>
             </svg>
           </div>
@@ -1680,11 +1680,11 @@
               <div id="step-pd" class="font-bold text-slate-100">Pd = 72,71 kW</div>
             </div>
 
-            <div class="p-3 rounded-lg scada-card border-t-2 border-cyan-500 guide-hoverable" data-guide-step="Pasos 2 y 3: Perfil y Distancia entre Centros" data-guide-title="Selección SPB-XP y Longitud Comercial" data-guide-desc="Con Pd=72,71 kW y n2=1856 rpm se adopta SPB-XP en Diagrama 2. Con Ld preliminar=2196,8 mm se adopta PHG SPB2180XP y CC exacto = 641,4 mm." data-guide-norm="Diagrama 2 y Tabla 8 SKF">
+            <div class="p-3 rounded-lg scada-card border-t-2 border-cyan-500 guide-hoverable" data-guide-step="Pasos 2 y 3: Perfil y Distancia entre Centros" data-guide-title="Selección SPB-XP y Longitud Comercial" data-guide-desc="Con Pd=72,71 kW y n2=1856 rpm se adopta SPB-XP en Diagrama 2. Con Ld preliminar=2196,8 mm se adopta la longitud normalizada de cátedra PHG SPB2240XP y CC exacto = 671,4 mm." data-guide-norm="Diagrama 2 y Tabla 8 SKF">
               <div class="text-cyan-400 font-bold mb-1">2 y 3. PERFIL Y CC</div>
               <div id="step-perfil">Perfil SPB (bo=16,3)</div>
-              <div id="step-ld">Ld = 2196,8 → 2180 mm</div>
-              <div id="step-cc" class="font-bold text-slate-100">CC def = 641,6 mm</div>
+              <div id="step-ld">Ld = 2196,8 → 2240 mm</div>
+              <div id="step-cc" class="font-bold text-slate-100">CC def = 671,4 mm</div>
             </div>
 
             <div class="p-3 rounded-lg scada-card border-t-2 border-emerald-500 guide-hoverable" data-guide-step="Pasos 4, 5 y 6: Capacidad y Cantidad N" data-guide-title="Potencia Admisible Padm y Número de Correas" data-guide-desc="Interpolando Tabla 9h: Pb=21,75 kW. Con factores C1=0,92 y C3=0,99 da Padm=19,81 kW/correa. N = 72,71 / 19,81 = 3,67 => 4 correas SPB-XP." data-guide-norm="N = ceil(Pd / Padm) = 4 correas">
@@ -1899,8 +1899,8 @@
                     <option value="1800">1800 mm</option>
                     <option value="2000">2000 mm</option>
                     <option value="2150">2150 mm</option>
-                    <option value="2180" selected>2180 mm (TP 7)</option>
-                    <option value="2240">2240 mm (ISO Sup)</option>
+                    <option value="2180">2180 mm (Intermedia SKF)</option>
+                    <option value="2240" selected>2240 mm (TP 7 - Elección Cátedra)</option>
                     <option value="2360">2360 mm</option>
                     <option value="2500">2500 mm</option>
                   </select>
@@ -2048,9 +2048,9 @@
               <tr><td class="py-1.5 text-slate-400">Perfil Adoptado</td><td class="py-1.5 font-bold text-amber-400 text-right">SPB-XP (Diagrama 2 SKF)</td></tr>
               <tr><td class="py-1.5 text-slate-400">Poleas (Conductora / Conducida)</td><td class="py-1.5 font-bold text-slate-200 text-right">D = 320 mm / d = 250 mm</td></tr>
               <tr><td class="py-1.5 text-slate-400">Velocidad Lineal v</td><td class="py-1.5 font-bold text-cyan-300 text-right">24,30 m/s (&le; 30 m/s)</td></tr>
-              <tr><td class="py-1.5 text-slate-400">Distancia entre Centros Definitiva</td><td class="py-1.5 font-bold text-emerald-400 text-right">CC = 641,4 mm (SKF cuadrática)</td></tr>
+              <tr><td class="py-1.5 text-slate-400">Distancia entre Centros Definitiva</td><td class="py-1.5 font-bold text-emerald-400 text-right">CC = 671,4 mm (SKF cuadrática)</td></tr>
               <tr><td class="py-1.5 text-slate-400">Potencia Admisible Padm</td><td class="py-1.5 font-bold text-slate-200 text-right">19,81 kW / correa (C1=0,92, C3=0,99)</td></tr>
-              <tr><td class="py-1.5 text-slate-400">Cantidad Definitiva N</td><td class="py-1.5 font-bold text-emerald-400 text-right">4 Correas SKF PHG SPB2180XP</td></tr>
+              <tr><td class="py-1.5 text-slate-400">Cantidad Definitiva N</td><td class="py-1.5 font-bold text-emerald-400 text-right">4 Correas SKF PHG SPB2240XP (Elección Cátedra)</td></tr>
             </tbody>
           </table>
         </div>
@@ -4340,7 +4340,7 @@
       document.getElementById("tp7-horas").value = "gt16";
       document.getElementById("tp7-chk-mult").checked = false;
       document.getElementById("tp7-profsel").value = "AUTO";
-      document.getElementById("tp7-lensel").value = "2180";
+      document.getElementById("tp7-lensel").value = "2240";
 
       computeTP6();
       computeTP7();

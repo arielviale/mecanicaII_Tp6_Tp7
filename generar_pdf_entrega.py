@@ -406,7 +406,7 @@ def generar_pdf(pdf_path="Entrega_Oficial_TP6_TP7_Hugo_Martinez.pdf"):
     if os.path.exists("transmision_correas_resuelto.png"):
         img4 = Image("transmision_correas_resuelto.png", width=15.5 * cm, height=4.5 * cm)
         story.append(img4)
-        story.append(Paragraph("<i>Figura 4: Resolucion geometrica y cinematica de la transmision con poleas, correa, CC = 641,4 mm y dotacion de 4 correas.</i>", fig_caption_style))
+        story.append(Paragraph("<i>Figura 4: Resolucion geometrica y cinematica de la transmision con poleas, correa, CC = 671,4 mm y dotacion de 4 correas SKF PHG SPB2240XP.</i>", fig_caption_style))
 
     # =========================================================================
     # PAGINA 4: PASOS 3 A 6 TP7, ESPECIFICACIONES RESUMEN Y FIRMAS
@@ -419,14 +419,17 @@ def generar_pdf(pdf_path="Entrega_Oficial_TP6_TP7_Hugo_Martinez.pdf"):
         "- Rango admisible para CCp: 0,7 * (D + d) = 399 mm &lt;= <b>650 mm</b> &lt;= 2,0 * (D + d) = 1140 mm (Cumple [OK]).<br/>"
         "- Longitud primitiva preliminar:<br/>"
         "&nbsp;&nbsp;Ld,prelim = 2 * CCp + 1,57 * (D + d) + (D - d)<sup>2</sup> / (4 * CCp) = 2(650) + 1,57(570) + 70<sup>2</sup> / 2600 = <b>2196,8 mm</b>.<br/>"
-        "- Seleccion comercial SKF (Tabla 8): Longitud estandar <b>Ld = 2180 mm -&gt; SKF PHG SPB2180XP</b> (Factor de longitud <b>C<sub>1</sub> = 0,92</b>).<br/>"
-        "- Distancia entre centros definitiva por ecuacion cuadratica exacta SKF:<br/>"
-        "&nbsp;&nbsp;A = Ld/4 - (pi/8) * (D + d) = 545 - 223,84 = 321,16 mm &nbsp;|&nbsp; B = (D - d)<sup>2</sup> / 8 = 4900 / 8 = 612,5 mm<sup>2</sup><br/>"
-        "&nbsp;&nbsp;<b>CC = A + raiz(A<sup>2</sup> - B) = 321,16 + raiz(321,16<sup>2</sup> - 612,5) = 321,16 + 320,21 = 641,4 mm</b>.<br/>"
+        "- <b>Seleccion Normalizada Oficial de Catedra (Serie ISO 4184 / Tabla 8 SKF):</b><br/>"
+        "&nbsp;&nbsp;Se adopta la longitud normalizada inmediata superior: <b>Ld = 2240 mm -&gt; SKF PHG SPB2240XP</b> (Factor de longitud <b>C<sub>1</sub> = 0,92</b>).<br/>"
+        "&nbsp;&nbsp;<i>(Nota de catalogo: SKF comercializa ademas la medida intermedia no preferida Ld = 2180 mm con CC = 641,4 mm; ambas entregan identico factor C1 = 0,92).</i><br/>"
+        "- Distancia entre centros definitiva por ecuacion cuadratica exacta SKF con Ld = 2240 mm:<br/>"
+        "&nbsp;&nbsp;A = Ld/4 - (pi/8) * (D + d) = 560 - 223,84 = 336,16 mm &nbsp;|&nbsp; B = (D - d)<sup>2</sup> / 8 = 4900 / 8 = 612,5 mm<sup>2</sup><br/>"
+        "&nbsp;&nbsp;<b>CC = A + raiz(A<sup>2</sup> - B) = 336,16 + raiz(336,16<sup>2</sup> - 612,5) = 336,16 + 335,25 = 671,4 mm</b>.<br/>"
+        "&nbsp;&nbsp;Verificacion de rango: 399 mm &lt;= <b>671,4 mm</b> &lt;= 1140 mm (Cumple holgadamente [OK]).<br/>"
         "&nbsp;&nbsp;Ajuste de recorrido segun Tabla SKF: -19 mm (montaje facil) y +27 mm (compensacion por elongacion).<br/>"
         "<b>PASO 4: Cinematica, Velocidad Tangencial y Factor de Arco (C<sub>3</sub>):</b><br/>"
         "- Velocidad lineal: <b>v = (pi * d * n<sub>2</sub>) / 60 000 = (pi * 250 * 1856) / 60 000 = 24,30 m/s</b> (&lt;= 30 m/s admisible [OK]).<br/>"
-        "- Geometria de contacto: (D - d) / CC = (320 - 250) / 641,4 = 0,109 -&gt; De Tabla 7 SKF: <b>beta = 174 grados -&gt; Factor C<sub>3</sub> = 0,99</b>.<br/>"
+        "- Geometria de contacto: (D - d) / CC = (320 - 250) / 671,4 = 0,104 -&gt; De Tabla 7 SKF: <b>beta = 174 grados -&gt; Factor C<sub>3</sub> = 0,99</b>.<br/>"
         "<b>PASO 5: Capacidad y Potencia Admisible por Correa (Padm):</b><br/>"
         "- De la Tabla 9h (Pag. 47) para perfil SPB a 1856 rpm con d = 250 mm:<br/>"
         "&nbsp;&nbsp;Potencia basica nominal interpolada: <b>Pb = 20,89 kW</b>.<br/>"
@@ -435,7 +438,7 @@ def generar_pdf(pdf_path="Entrega_Oficial_TP6_TP7_Hugo_Martinez.pdf"):
         "- Potencia admisible corregida: <b>Padm = Pb,total * C<sub>1</sub> * C<sub>3</sub> = 21,75 kW * 0,92 * 0,99 = 19,81 kW / correa</b>.<br/>"
         "<b>PASO 6: Numero Definitivo de Correas (N):</b><br/>"
         "- Cantidad teorica: <b>N_teor = Pd / Padm = 72,71 kW / 19,81 kW = 3,67 correas</b>.<br/>"
-        "- Redondeo al entero superior inmediato: <b>N = 4 correas SKF PHG SPB2180XP</b>.",
+        "- Redondeo al entero superior inmediato: <b>N = 4 correas SKF PHG SPB2240XP</b> (Eleccion Catedra).",
         body_style
     ))
     story.append(Spacer(1, 3))
@@ -443,11 +446,11 @@ def generar_pdf(pdf_path="Entrega_Oficial_TP6_TP7_Hugo_Martinez.pdf"):
     # Summary Table TP7
     summary_tp7 = [
         [Paragraph("<b>Componente</b>", table_header_style), Paragraph("<b>Especificacion Tecnica Comercial Definitiva</b>", table_header_style)],
-        [Paragraph("Correas Trapezoidales", table_cell_bold), Paragraph("<b>4 Correas Estrechas de Alta Potencia SKF PHG SPB2180XP</b>", table_cell_style)],
+        [Paragraph("Correas Trapezoidales", table_cell_bold), Paragraph("<b>4 Correas Estrechas de Alta Potencia SKF PHG SPB2240XP (Eleccion Catedra)</b>", table_cell_style)],
         [Paragraph("Perfil y Seccion", table_cell_bold), Paragraph("<b>SPB-XP</b> (bo = 16,3 mm | bd = 14,0 mm | h = 13,0 mm)", table_cell_style)],
         [Paragraph("Polea Conductora (Motor)", table_cell_bold), Paragraph("Polea comercial 4 ranuras SPB, diametro primitivo <b>D = 320 mm</b>, eje 1450 rpm", table_cell_style)],
         [Paragraph("Polea Conducida (Bomba)", table_cell_bold), Paragraph("Polea comercial 4 ranuras SPB, diametro primitivo <b>d = 250 mm</b>, eje 1856 rpm", table_cell_style)],
-        [Paragraph("Distancia entre Ejes", table_cell_bold), Paragraph("<b>CC = 641,4 mm</b> (carrera de tensado: -19 mm instalacion, +27 mm retensado)", table_cell_style)],
+        [Paragraph("Distancia entre Ejes", table_cell_bold), Paragraph("<b>CC = 671,4 mm</b> (carrera de tensado: -19 mm instalacion, +27 mm retensado)", table_cell_style)],
         [Paragraph("Rendimiento Operativo", table_cell_bold), Paragraph("Apto para regimen continuo industrial <b>20 h/dia</b> con arranque directo (Seguridad 109%)", table_cell_style)],
     ]
     t_sum7 = Table(summary_tp7, colWidths=[5.4 * cm, 13.2 * cm])
