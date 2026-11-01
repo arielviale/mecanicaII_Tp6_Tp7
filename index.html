@@ -115,6 +115,9 @@
       </div>
 
       <div class="flex flex-wrap items-center gap-2">
+        <a href="Entrega_Oficial_TP6_TP7_Hugo_Martinez.pdf" download="Entrega_Oficial_TP6_TP7_Hugo_Martinez.pdf" target="_blank" class="px-3.5 py-1.5 rounded-lg text-xs font-black bg-gradient-to-r from-rose-600 via-red-600 to-amber-600 hover:from-rose-500 hover:to-amber-500 text-white shadow-lg border border-rose-400/50 transition flex items-center gap-2 cursor-pointer">
+          <span>📑</span> Descargar PDF Oficial (TP 6 & TP 7)
+        </a>
         <button id="btn-guide" onclick="toggleGuideMode()" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 hover:bg-cyan-500/30 transition flex items-center gap-1.5 cursor-pointer shadow-sm">
           <span>🎓</span> <span id="guide-status-text">Guía Académica: ACTIVA</span>
         </button>
@@ -137,6 +140,9 @@
       </button>
       <button onclick="switchTab('db')" id="tab-btn-db" class="px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-2 bg-slate-900 text-slate-400 hover:text-slate-200 border border-slate-800 cursor-pointer">
         <span>🗄️</span> MÓDULO 3: Explorador de Base de Datos SQL SKF
+      </button>
+      <button onclick="switchTab('pdf')" id="tab-btn-pdf" class="px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-2 bg-slate-900 text-slate-400 hover:text-slate-200 border border-slate-800 cursor-pointer">
+        <span>📑</span> MÓDULO 4: Informe Formal de Entrega (PDF Viewer)
       </button>
     </div>
   </header>
@@ -1954,6 +1960,103 @@
       </div>
     </div>
 
+    
+    <!-- VIEW: MODULE 4 - FORMAL PDF DELIVERY REPORT -->
+    <div id="view-pdf" class="space-y-6 hidden">
+      <!-- HEADER BANNER -->
+      <div class="scada-panel rounded-2xl p-6 border-2 border-rose-500/30 bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 shadow-2xl">
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-2 mb-2">
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-rose-500/20 text-rose-300 border border-rose-500/40">
+                DOCUMENTO TÉCNICO OFICIAL DE CÁTEDRA
+              </span>
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40">
+                UTN - FRC • 2026
+              </span>
+            </div>
+            <h2 class="text-xl font-black text-white tracking-wide">
+              INFORME TÉCNICO FORMAL DE ENTREGA ACADÉMICA
+            </h2>
+            <p class="text-xs text-slate-300 mt-1">
+              Resolución exhaustiva, memorias de cálculo, esquemas y tablas de selección para los Trabajos Prácticos N° 6 y N° 7.
+            </p>
+            <div class="flex flex-wrap items-center gap-4 mt-3 text-xs text-slate-400">
+              <div>👨‍💻 Estudiante / Autor: <strong class="text-emerald-400">Hugo Ariel Martinez</strong></div>
+              <div>🎓 Docente: <strong class="text-cyan-400">Prof. Ing. Andrés Lanfranco</strong></div>
+              <div>🏛️ Asignatura: <strong class="text-slate-200">Mecánica II (Mecatrónica)</strong></div>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-3">
+            <a href="Entrega_Oficial_TP6_TP7_Hugo_Martinez.pdf" download="Entrega_Oficial_TP6_TP7_Hugo_Martinez.pdf" target="_blank" class="px-4 py-2.5 rounded-xl font-black text-xs bg-gradient-to-r from-rose-600 via-red-600 to-amber-600 hover:from-rose-500 hover:to-amber-500 text-white shadow-xl border border-rose-400/50 transition flex items-center gap-2 cursor-pointer">
+              <span>📥</span> Descargar PDF Oficial (A4)
+            </a>
+            <button onclick="printOrExportReport()" class="px-4 py-2.5 rounded-xl font-bold text-xs bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-cyan-500/40 transition flex items-center gap-2 cursor-pointer">
+              <span>🖨️</span> Imprimir / Guardar HTML a PDF
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- EMBEDDED PDF VIEWER -->
+      <div class="scada-panel rounded-2xl p-4 border border-slate-800">
+        <div class="flex items-center justify-between mb-3 text-xs">
+          <div class="flex items-center gap-2 text-slate-300 font-semibold">
+            <span>📄</span> Visualizador del Documento Oficial Compilado (ReportLab Python Engine)
+          </div>
+          <a href="Entrega_Oficial_TP6_TP7_Hugo_Martinez.pdf" target="_blank" class="text-cyan-400 hover:text-cyan-300 underline font-mono text-[11px]">
+            Abrir en pestaña nueva ↗
+          </a>
+        </div>
+        <div class="w-full h-[850px] rounded-xl overflow-hidden border border-slate-800 bg-slate-950">
+          <iframe src="Entrega_Oficial_TP6_TP7_Hugo_Martinez.pdf" class="w-full h-full border-none"></iframe>
+        </div>
+      </div>
+
+      <!-- SUMMARY VERIFICATION MATRIX -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- TP6 Card Summary -->
+        <div class="scada-card rounded-xl p-5 border border-emerald-500/30">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-2 mb-3">
+            <span class="text-xs font-black text-emerald-400 uppercase tracking-wider">Resumen Formal TP N° 6 (Rodamientos)</span>
+            <span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 text-[10px] font-bold">VERIFICADO ✓</span>
+          </div>
+          <table class="w-full text-xs text-left">
+            <tbody class="divide-y divide-slate-800/60 font-mono text-[11px]">
+              <tr><td class="py-1.5 text-slate-400">Apoyo 1 (d = 40 mm)</td><td class="py-1.5 font-bold text-slate-100 text-right">SKF Explorer * 6308</td></tr>
+              <tr><td class="py-1.5 text-slate-400">Carga Dinámica P1</td><td class="py-1.5 font-bold text-cyan-300 text-right">6,384 kN (Fr1 = 650,8 kgf)</td></tr>
+              <tr><td class="py-1.5 text-slate-400">Vida Nominal L10h (1)</td><td class="py-1.5 font-bold text-emerald-400 text-right">2.020 h (&ge; 2.000 h requeridas)</td></tr>
+              <tr><td class="py-1.5 text-slate-400">Seguridad Estática s0 (1)</td><td class="py-1.5 font-bold text-slate-200 text-right">3,76 (&ge; 1,5 s/Tabla 11)</td></tr>
+              <tr><td class="py-1.5 text-slate-400">Apoyo 2 (d = 30 mm)</td><td class="py-1.5 font-bold text-blue-400 text-right">SKF 61906 (Elección cátedra)</td></tr>
+              <tr><td class="py-1.5 text-slate-400">Carga Dinámica P2</td><td class="py-1.5 font-bold text-cyan-300 text-right">0,661 kN (Fr2 = 67,4 kgf)</td></tr>
+              <tr><td class="py-1.5 text-slate-400">Vida Nominal L10h (2)</td><td class="py-1.5 font-bold text-emerald-400 text-right">9.261 h</td></tr>
+              <tr><td class="py-1.5 text-slate-400">Seguridad Estática s0 (2)</td><td class="py-1.5 font-bold text-slate-200 text-right">6,88</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- TP7 Card Summary -->
+        <div class="scada-card rounded-xl p-5 border border-cyan-500/30">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-2 mb-3">
+            <span class="text-xs font-black text-cyan-400 uppercase tracking-wider">Resumen Formal TP N° 7 (Correas)</span>
+            <span class="px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-400 text-[10px] font-bold">VERIFICADO ✓</span>
+          </div>
+          <table class="w-full text-xs text-left">
+            <tbody class="divide-y divide-slate-800/60 font-mono text-[11px]">
+              <tr><td class="py-1.5 text-slate-400">Potencia de Diseño Pd</td><td class="py-1.5 font-bold text-slate-100 text-right">72,71 kW (Pr=75 HP, C2=1,30)</td></tr>
+              <tr><td class="py-1.5 text-slate-400">Perfil Adoptado</td><td class="py-1.5 font-bold text-amber-400 text-right">SPB-XP (Diagrama 2 SKF)</td></tr>
+              <tr><td class="py-1.5 text-slate-400">Poleas (Conductora / Conducida)</td><td class="py-1.5 font-bold text-slate-200 text-right">D = 320 mm / d = 250 mm</td></tr>
+              <tr><td class="py-1.5 text-slate-400">Velocidad Lineal v</td><td class="py-1.5 font-bold text-cyan-300 text-right">24,30 m/s (&le; 30 m/s)</td></tr>
+              <tr><td class="py-1.5 text-slate-400">Distancia entre Centros Definitiva</td><td class="py-1.5 font-bold text-emerald-400 text-right">CC = 641,4 mm (SKF cuadrática)</td></tr>
+              <tr><td class="py-1.5 text-slate-400">Potencia Admisible Padm</td><td class="py-1.5 font-bold text-slate-200 text-right">19,81 kW / correa (C1=0,92, C3=0,99)</td></tr>
+              <tr><td class="py-1.5 text-slate-400">Cantidad Definitiva N</td><td class="py-1.5 font-bold text-emerald-400 text-right">4 Correas SKF PHG SPB2180XP</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
     <!-- INDUSTRIAL ACADEMIC FOOTER -->
     <footer class="border-t border-slate-800/80 pt-6 pb-12 mt-12 text-center text-xs text-slate-400">
       <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 px-4">
@@ -3392,7 +3495,7 @@
     }
 
     function switchTab(t) {
-      ["tp6", "tp7", "db"].forEach(id => {
+      ["tp6", "tp7", "db", "pdf"].forEach(id => {
         document.getElementById("view-" + id).classList.toggle("hidden", id !== t);
         const btn = document.getElementById("tab-btn-" + id);
         if (id === t) {
@@ -4223,20 +4326,6 @@
       document.getElementById("tp6-rbz").value = 55;
       document.getElementById("sel-tp6-d1").value = "40";
       document.getElementById("sel-tp6-d2").value = "30";
-          function initAccordionHover() {
-      const container = document.getElementById("tp6-accordion-container");
-      if (!container) return;
-      const detailsList = container.querySelectorAll("details");
-      detailsList.forEach(item => {
-        item.addEventListener("mouseenter", () => {
-          detailsList.forEach(other => {
-            if (other !== item) other.open = false;
-          });
-          item.open = true;
-        });
-      });
-    }
-
     populateBearingSelect(1, "* 6308");
       populateBearingSelect(2, "61906");
 
@@ -4498,9 +4587,9 @@
       }, { passive: true });
     }
 
-        function initAccordionHover() {
+    function initAccordionHover() {
       const container = document.getElementById("tp6-accordion-container");
-      if (!container) return;
+      if (!container || !container.querySelectorAll) return;
       const detailsList = container.querySelectorAll("details");
       detailsList.forEach(item => {
         item.addEventListener("mouseenter", () => {

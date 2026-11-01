@@ -227,6 +227,8 @@ c:\Mecatronica 2026\Mecanica2\ULTIMO\
 │
 ├── ingenieria_skf.py            # Motor de cálculo y clases de ingeniería (Backend Python)
 ├── cli_ingenieria.py            # Interfaz de consola interactiva para verificación
+├── generar_pdf_entrega.py       # Generador del informe formal académico en PDF (ReportLab)
+├── Entrega_Oficial_TP6_TP7_Hugo_Martinez.pdf # Documento PDF oficial de entrega (A4, UTN-FRC)
 ├── generar_web.py               # Generador automatizado de la web con inyección de datos
 │
 ├── Resolucion_Completa_TP6_y_TP7.md   # Memoria de cálculo exhaustiva con KaTeX
