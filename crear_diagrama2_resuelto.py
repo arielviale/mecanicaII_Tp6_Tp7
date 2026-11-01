@@ -70,3 +70,4 @@ def create_annotated_diagram2():
 
 if __name__ == '__main__':
     create_annotated_diagram2()
+
