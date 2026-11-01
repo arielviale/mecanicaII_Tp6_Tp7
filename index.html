@@ -3597,7 +3597,8 @@
       document.getElementById("cad-spec-desig").textContent = bActive.designacion;
       document.getElementById("cad-spec-cap").textContent = `C=${bActive.C_din} / C₀=${bActive.C0_est} kN`;
       document.getElementById("cad-spec-dim").textContent = `d=${bActive.d_int} | D=${bActive.D_ext} | B=${bActive.B_ancho}`;
-      document.getElementById("cad-spec-rpm").textContent = `${bActive.vel_lim.toLocaleString()} rpm (n=${n})`;
+      const rpmLim = bActive.n_lim || bActive.vel_lim || 10000;
+      document.getElementById("cad-spec-rpm").textContent = `${rpmLim.toLocaleString()} rpm (n=${n})`;
       document.getElementById("cad-spec-l10").textContent = `${fmt(l10Active, 1)} × 10⁶ rev`;
       const cumple = l10hActive >= 2000;
       const l10hEl = document.getElementById("cad-spec-l10h");
@@ -3608,18 +3609,18 @@
     function computeTP6() {
       const mode = document.getElementById("tp6-mode").value;
       const n = parseFloat(document.getElementById("tp6-rpm").value) || 2400;
-      document.getElementById("lbl-tp6-rpm").textContent = n;
+      if (document.getElementById("lbl-tp6-rpm")) document.getElementById("lbl-tp6-rpm").textContent = n;
+
+      const ftp = parseFloat(document.getElementById("tp6-ftp") ? document.getElementById("tp6-ftp").value : 227) || 227;
+      const frp = parseFloat(document.getElementById("tp6-frp") ? document.getElementById("tp6-frp").value : 393) || 393;
+      const fte = parseFloat(document.getElementById("tp6-fte") ? document.getElementById("tp6-fte").value : 202) || 202;
+      const fre = parseFloat(document.getElementById("tp6-fre") ? document.getElementById("tp6-fre").value : 73) || 73;
+      const l1 = parseFloat(document.getElementById("tp6-l1") ? document.getElementById("tp6-l1").value : 10) || 10;
+      const l2 = parseFloat(document.getElementById("tp6-l2") ? document.getElementById("tp6-l2").value : 20) || 20;
+      const l3 = parseFloat(document.getElementById("tp6-l3") ? document.getElementById("tp6-l3").value : 25) || 25;
+      const span = l2 + l3;
 
       if (mode === "static") {
-        const ftp = parseFloat(document.getElementById("tp6-ftp").value) || 0;
-        const frp = parseFloat(document.getElementById("tp6-frp").value) || 0;
-        const fte = parseFloat(document.getElementById("tp6-fte").value) || 0;
-        const fre = parseFloat(document.getElementById("tp6-fre").value) || 0;
-        const l1 = parseFloat(document.getElementById("tp6-l1").value) || 10;
-        const l2 = parseFloat(document.getElementById("tp6-l2").value) || 20;
-        const l3 = parseFloat(document.getElementById("tp6-l3").value) || 25;
-        const span = l2 + l3;
-
         const rayCalc = Math.round((ftp * (l1 + span) + fte * l3) / span);
         const rbyCalc = Math.round(Math.abs(ftp + fte - rayCalc));
         const razCalc = Math.round((frp * (l1 + span) + fre * l3) / span);
@@ -3630,9 +3631,9 @@
         document.getElementById("tp6-rby").value = rbyCalc;
         document.getElementById("tp6-rbz").value = rbzCalc;
 
-        document.getElementById("svg-tp6-pos1").textContent = `Apoyo 1 (x = ${l1} cm)`;
-        document.getElementById("svg-tp6-posgear").textContent = `Engranaje (x = ${l1+l2} cm)`;
-        document.getElementById("svg-tp6-pos2").textContent = `Apoyo 2 (x = ${l1+span} cm)`;
+        if (document.getElementById("svg-tp6-pos1")) document.getElementById("svg-tp6-pos1").textContent = `Apoyo 1 (x = ${l1} cm)`;
+        if (document.getElementById("svg-tp6-posgear")) document.getElementById("svg-tp6-posgear").textContent = `Engranaje (x = ${l1+l2} cm)`;
+        if (document.getElementById("svg-tp6-pos2")) document.getElementById("svg-tp6-pos2").textContent = `Apoyo 2 (x = ${l1+span} cm)`;
       }
 
       const ray = parseFloat(document.getElementById("tp6-ray").value) || 0;
@@ -3677,12 +3678,12 @@
       document.getElementById("kpi-tp6-l10h2").textContent = `${fmt(l10h_2, 0)} h`;
       document.getElementById("kpi-tp6-c2").textContent = `C = ${fmt(b2.C_din, 1)} kN`;
 
-      document.getElementById("svg-ray-val").textContent = `RAy = ${ray} kgf`;
-      document.getElementById("svg-raz-val").textContent = `RAz = ${raz} kgf`;
-      document.getElementById("svg-rby-val").textContent = `RBy = ${rby} kgf`;
-      document.getElementById("svg-rbz-val").textContent = `RBz = ${rbz} kgf`;
-      document.getElementById("svg-lbl-b1").textContent = `${b1.designacion} (d=${d1})`;
-      document.getElementById("svg-lbl-b2").textContent = `${b2.designacion} (d=${d2})`;
+      if (document.getElementById("svg-ray-val")) document.getElementById("svg-ray-val").textContent = `RAy = ${ray} kgf`;
+      if (document.getElementById("svg-raz-val")) document.getElementById("svg-raz-val").textContent = `RAz = ${raz} kgf`;
+      if (document.getElementById("svg-rby-val")) document.getElementById("svg-rby-val").textContent = `RBy = ${rby} kgf`;
+      if (document.getElementById("svg-rbz-val")) document.getElementById("svg-rbz-val").textContent = `RBz = ${rbz} kgf`;
+      if (document.getElementById("svg-lbl-b1")) document.getElementById("svg-lbl-b1").textContent = `${b1.designacion} (d=${d1})`;
+      if (document.getElementById("svg-lbl-b2")) document.getElementById("svg-lbl-b2").textContent = `${b2.designacion} (d=${d2})`;
 
       document.getElementById("mem-d1").textContent = d1;
       document.getElementById("mem-fr1").textContent = `Fr₁ = √(${ray}² + ${raz}²) = ${fmt(fr1, 2)} kgf`;
@@ -3858,8 +3859,8 @@
       if (document.getElementById("doc-frm1-val2")) document.getElementById("doc-frm1-val2").textContent = fmt(frm1, 3);
       if (document.getElementById("doc-frm2-val")) document.getElementById("doc-frm2-val").textContent = fmt(frm2, 3);
       if (document.getElementById("doc-frm2-val2")) document.getElementById("doc-frm2-val2").textContent = fmt(frm2, 3);
-      if (document.getElementById("doc-nlim1-val")) document.getElementById("doc-nlim1-val").textContent = fmt(b1.vel_lim || 10000, 0);
-      if (document.getElementById("doc-nlim2-val")) document.getElementById("doc-nlim2-val").textContent = fmt(b2.vel_lim || 15000, 0);
+      if (document.getElementById("doc-nlim1-val")) document.getElementById("doc-nlim1-val").textContent = fmt(b1.n_lim || b1.vel_lim || 10000, 0);
+      if (document.getElementById("doc-nlim2-val")) document.getElementById("doc-nlim2-val").textContent = fmt(b2.n_lim || b2.vel_lim || 15000, 0);
 
       updateBearingCAD();
     }
@@ -4325,7 +4326,7 @@
           <tr>
             <td>Apoyo 1</td>
             <td><strong>${b1}</strong></td>
-            <td>${document.getElementById("cad-spec-c").textContent}</td>
+            <td>${(document.getElementById("cad-spec-cap") ? document.getElementById("cad-spec-cap").textContent : "C=" + b1.C_din + " kN")}</td>
             <td>${document.getElementById("doc-l10-1").textContent} × 10⁶ rev</td>
             <td class="highlight">${l1}</td>
           </tr>
