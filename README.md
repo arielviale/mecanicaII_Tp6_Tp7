@@ -12,7 +12,7 @@
 
 ## 🏛️ Datos Académicos y Autoría
 * **Institución:** Universidad Tecnológica Nacional — Facultad Regional Córdoba (UTN-FRC)
-* **Carrera:** Ingeniería Mecatrónica (Plan 2026)
+* **Carrera:** Tecnicatura Universitaria en Mecatrónica (Plan 2026)
 * **Cátedra:** Mecánica II
 * **Profesor a cargo:** Ing. Andrés Lanfranco
 * **Autor / Estudiante:** **Hugo Ariel Martinez**
@@ -260,7 +260,7 @@ python cli_ingenieria.py
 
 ## 👨‍💻 Autor
 * **Estudiante:** **Hugo Ariel Martinez**
-* **Carrera:** Ingeniería Mecatrónica (Plan 2026)
+* **Carrera:** Tecnicatura Universitaria en Mecatrónica (Plan 2026)
 * **Institución:** Universidad Tecnológica Nacional — Facultad Regional Córdoba (UTN-FRC)
 * **Cátedra:** Mecánica II — Prof. Ing. Andrés Lanfranco
 * **Fecha de Entrega:** Octubre / Noviembre 2026

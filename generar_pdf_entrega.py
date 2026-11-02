@@ -53,7 +53,7 @@ class NumberedCanvas(canvas.Canvas):
         self.setLineWidth(0.5)
         self.line(1.2 * cm, 1.3 * cm, 19.8 * cm, 1.3 * cm)
 
-        self.drawString(1.2 * cm, 0.9 * cm, "Autor: Hugo Ariel Martinez - Ingenieria Mecatronica (UTN-FRC)")
+        self.drawString(1.2 * cm, 0.9 * cm, "Autor: Hugo Ariel Martinez - Tecnicatura Universitaria en Mecatronica (UTN-FRC)")
         page_text = f"Pagina {self._pageNumber} de {page_count}"
         self.drawRightString(19.8 * cm, 0.9 * cm, page_text)
         self.restoreState()
@@ -186,7 +186,7 @@ def generar_pdf(pdf_path="Entrega_Oficial_TP6_TP7_Hugo_Martinez.pdf"):
     header_data = [
         [
             Paragraph("<b>UNIVERSIDAD TECNOLOGICA NACIONAL</b><br/>Facultad Regional Cordoba", ParagraphStyle('Utn', fontName='Helvetica-Bold', fontSize=9, leading=11.5, textColor=colors.HexColor("#0f172a"))),
-            Paragraph("<b>CATEDRA DE MECANICA II</b><br/>Ingenieria Mecatronica - Ciclo 2026", ParagraphStyle('Cat', fontName='Helvetica-Bold', fontSize=9, leading=11.5, alignment=2, textColor=colors.HexColor("#0f172a")))
+            Paragraph("<b>CATEDRA DE MECANICA II</b><br/>Tecnicatura Universitaria en Mecatronica - Ciclo 2026", ParagraphStyle('Cat', fontName='Helvetica-Bold', fontSize=9, leading=11.5, alignment=2, textColor=colors.HexColor("#0f172a")))
         ]
     ]
     t_header = Table(header_data, colWidths=[9.3 * cm, 9.3 * cm])
@@ -202,7 +202,7 @@ def generar_pdf(pdf_path="Entrega_Oficial_TP6_TP7_Hugo_Martinez.pdf"):
     story.append(Paragraph("<b>TRABAJO PRACTICO N 6:</b> Rodamientos SKF (Eje Intermediario) &nbsp;|&nbsp; <b>TRABAJO PRACTICO N 7:</b> Correas Trapezoidales SKF (Bomba Centrifuga)", subtitle_style))
 
     meta_data = [
-        [Paragraph("<b>Autor / Estudiante:</b>", body_style), Paragraph("<b>Hugo Ariel Martinez</b> (Ingenieria Mecatronica)", body_style)],
+        [Paragraph("<b>Autor / Estudiante:</b>", body_style), Paragraph("<b>Hugo Ariel Martinez</b> (Tecnicatura Universitaria en Mecatronica)", body_style)],
         [Paragraph("<b>Docente Titular:</b>", body_style), Paragraph("<b>Prof. Ing. Andres Lanfranco</b>", body_style)],
         [Paragraph("<b>Catedra e Institucion:</b>", body_style), Paragraph("Mecanica II - Universidad Tecnologica Nacional (UTN-FRC)", body_style)],
         [Paragraph("<b>Normativa Oficial:</b>", body_style), Paragraph("Normas ISO 281:2007, ISO 76:2006, ISO 4184, DIN 2211, DIN 7753 y Catalogo General SKF", body_style)],
@@ -475,7 +475,7 @@ def generar_pdf(pdf_path="Entrega_Oficial_TP6_TP7_Hugo_Martinez.pdf"):
     # Formal Signature / Approval Box
     sign_data = [
         [
-            Paragraph("<b>FIRMA DEL ESTUDIANTE / AUTOR:</b><br/><br/><br/>_____________________________________<br/><b>Hugo Ariel Martinez</b><br/>Ingenieria Mecatronica - UTN-FRC", ParagraphStyle('Sign1', fontName='Helvetica', fontSize=8, alignment=1)),
+            Paragraph("<b>FIRMA DEL ESTUDIANTE / AUTOR:</b><br/><br/><br/>_____________________________________<br/><b>Hugo Ariel Martinez</b><br/>Tecnicatura Universitaria en Mecatronica - UTN-FRC", ParagraphStyle('Sign1', fontName='Helvetica', fontSize=8, alignment=1)),
             Paragraph("<b>VISADO Y APROBACION DE CATEDRA:</b><br/><br/><br/>_____________________________________<br/><b>Prof. Ing. Andres Lanfranco</b><br/>Titular de Catedra Mecanica II", ParagraphStyle('Sign2', fontName='Helvetica', fontSize=8, alignment=1))
         ]
     ]

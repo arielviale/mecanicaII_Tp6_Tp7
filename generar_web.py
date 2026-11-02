@@ -2068,7 +2068,7 @@ def build_web():
       <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 px-4">
         <div class="text-left">
           <div class="font-bold text-slate-200">Universidad Tecnológica Nacional — Facultad Regional Córdoba</div>
-          <div class="text-[11px] text-slate-400">Cátedra de Mecánica II • Carrera: Ingeniería Mecatrónica (2026)</div>
+          <div class="text-[11px] text-slate-400">Cátedra de Mecánica II • Carrera: Tecnicatura Universitaria en Mecatrónica (2026)</div>
         </div>
         <div class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 flex items-center gap-2">
           <span>👨‍💻</span> Autor: <strong class="text-emerald-400">Hugo Ariel Martinez</strong>
@@ -3012,9 +3012,9 @@ def build_web():
         <button class="btn-print" onclick="window.print()">🖨️ Imprimir / Guardar como PDF</button>
         <div class="header-box">
           <div style="font-size: 16px; font-weight: bold; color: #0f172a;">UNIVERSIDAD TECNOLÓGICA NACIONAL — FACULTAD REGIONAL CÓRDOBA</div>
-          <div>Cátedra: <strong>Mecánica II</strong> | Carrera: <strong>Ingeniería Mecatrónica (2026)</strong></div>
+          <div>Cátedra: <strong>Mecánica II</strong> | Carrera: <strong>Tecnicatura Universitaria en Mecatrónica (2026)</strong></div>
           <div>Docente: <strong>Ing. Andrés Lanfranco</strong> | Trabajo Práctico: <strong>N° 6 (Rodamientos SKF)</strong></div>
-          <div>Estudiante / Autor: <strong>Hugo Ariel Martinez</strong> (Ingeniería Mecatrónica 2026)</div>
+          <div>Estudiante / Autor: <strong>Hugo Ariel Martinez</strong> (Tecnicatura Universitaria en Mecatrónica 2026)</div>
         </div>
 
         <h1>MEMORIA DE CÁLCULO Y DIMENSIONAMIENTO DE RODAMIENTOS SKF</h1>
