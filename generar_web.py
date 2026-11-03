@@ -1154,9 +1154,6 @@ def build_web():
         </div>
       </div>
 
-    </div>
-
-
       <!-- PANEL DE CÁLCULO AVANZADO SKF & VERIFICACIÓN NORMATIVA (ISO 281 & ISO 76) -->
       <div class="scada-panel rounded-xl p-5 space-y-4 border border-teal-500/30">
         <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-3">
