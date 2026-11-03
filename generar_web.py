@@ -1522,6 +1522,7 @@ def build_web():
 
         </div>
       </div>
+    </div>
 
     <!-- VIEW: TP 7 - CORREAS SKF -->
     <div id="view-tp7" class="space-y-6 hidden">
